@@ -91,7 +91,7 @@ export default function Contactuser() {
         >
 
          
-          <Slide in timeout={3000} direction="down">
+         
             <Box
               sx={{
                 width: "100%",
@@ -172,7 +172,7 @@ export default function Contactuser() {
 </Button>
               </Box>
             </Box>
-          </Slide>
+      
         </Box>
 
         <Footer />
