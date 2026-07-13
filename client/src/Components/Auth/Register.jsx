@@ -12,14 +12,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 
-import videoBg from "../../assets/video/register.mp4";
-import { useTheme } from "@mui/material/styles";
-import { useAuth } from "../../Hooks/useAuth.js"; 
+import videoBg from "../../assets/video/register.mp4"; // تأكد من مسار الفيديو
+import { useAuth } from "../../Hooks/useAuth";
+
+const mainColor = "#3e4a3a";
 
 export default function Register() {
-  const theme = useTheme();
   const navigate = useNavigate();
-  const { register } = useAuth(); 
+  const { register } = useAuth();
 
   const [userData, setUserData] = useState({
     name: "",
@@ -45,7 +45,7 @@ export default function Register() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        bgcolor: theme.palette.secondary.main,
+        bgcolor: "#f3efe6",
         px: 2,
       }}
     >
@@ -74,7 +74,6 @@ export default function Register() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              objectPosition: "center bottom",
               position: "absolute",
               top: 0,
               left: 0,
@@ -86,7 +85,7 @@ export default function Register() {
           sx={{
             flex: 1,
             p: 4,
-            bgcolor: theme.palette.background.paper,
+            bgcolor: "white",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -96,7 +95,7 @@ export default function Register() {
             variant="h4"
             sx={{
               fontWeight: "bold",
-              color: theme.palette.primary.main,
+              color: mainColor,
               mb: 2,
             }}
           >
@@ -109,94 +108,75 @@ export default function Register() {
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1.2 }}>
             <Button
-              startIcon={<FcGoogle />}
+              startIcon={<FcGoogle size={22} />}
               fullWidth
               sx={{
                 py: 1,
                 border: "1px solid #ddd",
                 color: "#333",
                 textTransform: "none",
-                borderRadius: "4px",
-                "&:hover": {
-                  border: "1px solid #3e4a3a",
-                  backgroundColor: "rgba(62, 74, 58, 0.05)",
-                },
               }}
             >
               Google
             </Button>
 
             <Button
-              startIcon={<FaApple />}
+              startIcon={<FaApple size={22} />}
               fullWidth
               sx={{
                 py: 1,
                 border: "1px solid #ddd",
                 color: "#333",
                 textTransform: "none",
-                borderRadius: "4px",
-                "&:hover": {
-                  border: "1px solid #3e4a3a",
-                  backgroundColor: "rgba(62, 74, 58, 0.05)",
-                },
               }}
             >
               Apple
             </Button>
           </Box>
 
-          <Typography
-            sx={{
-              mt: 1.5,
-              fontSize: 13,
-              textAlign: "center",
-              color: "#666",
-            }}
-          >
+          <Typography sx={{ mt: 2, fontSize: 13, textAlign: "center", color: "#666" }}>
             or create an account
           </Typography>
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 2 }}>
-            <TextField 
-              label="Full Name" 
-              fullWidth 
-              size="small" 
+            <TextField
+              label="Full Name"
+              fullWidth
+              size="small"
               value={userData.name}
               onChange={(e) => setUserData({ ...userData, name: e.target.value })}
             />
-            <TextField 
-              label="Email" 
-              fullWidth 
-              size="small" 
+            <TextField
+              label="Email"
+              fullWidth
+              size="small"
               value={userData.email}
               onChange={(e) => setUserData({ ...userData, email: e.target.value })}
             />
-            <TextField 
-              label="Password" 
-              type="password" 
-              fullWidth 
-              size="small" 
+            <TextField
+              label="Password"
+              type="password"
+              fullWidth
+              size="small"
               value={userData.password}
               onChange={(e) => setUserData({ ...userData, password: e.target.value })}
             />
-            <TextField 
-              label="Confirm Password" 
-              type="password" 
-              fullWidth 
-              size="small" 
+            <TextField
+              label="Confirm Password"
+              type="password"
+              fullWidth
+              size="small"
               value={userData.confirmPassword}
               onChange={(e) => setUserData({ ...userData, confirmPassword: e.target.value })}
             />
 
             <Button
               variant="contained"
-              onClick={handleRegister} 
+              onClick={handleRegister}
               sx={{
                 mt: 1,
-                bgcolor: theme.palette.primary.main,
-                "&:hover": {
-                  bgcolor: "#2f3a2e",
-                },
+                bgcolor: mainColor,
+                "&:hover": { bgcolor: "#2f3a2e" },
                 py: 1,
               }}
             >
@@ -208,7 +188,7 @@ export default function Register() {
               <Link
                 to="/login"
                 style={{
-                  color: theme.palette.primary.main,
+                  color: mainColor,
                   fontWeight: "bold",
                   textDecoration: "none",
                 }}

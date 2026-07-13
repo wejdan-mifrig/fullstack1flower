@@ -10,7 +10,7 @@ export const useAuth = () => {
 
   const login = async (userData) => {
     try {
-      console.log(userData);
+   
 
       const res = await api.post("/auth/login", userData);
 
