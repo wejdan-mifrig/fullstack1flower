@@ -23,11 +23,11 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
    ASSETS — Update these paths only
    ============================================================ */
 import heroImage from '../../assets/images/designer1.jpg';
-import heroVideo2 from '../../assets/video/Hero.mp4';
-import heroVideo3 from '../../assets/video/Hero.mp4';
-import heroVideo4 from '../../assets/video/Hero.mp4';
-import heroVideo5 from '../../assets/video/Hero.mp4';
-import heroVideo6 from '../../assets/video/Hero.mp4';
+import heroVideo2 from '../../assets/video/vv11.mp4';
+import heroVideo3 from '../../assets/video/vv22.mp4';
+import heroVideo4 from '../../assets/video/vv33.mp4';
+import heroVideo5 from '../../assets/video/vv44.mp4';
+import heroVideo6 from '../../assets/video/vv66.mp4';
 
 import designerImg1 from '../../assets/images/wedd11.jpg';
 import designerImg2 from '../../assets/images/wedd22.jpg';
