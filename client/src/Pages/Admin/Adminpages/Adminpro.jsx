@@ -25,13 +25,13 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import { useContext, useEffect, useState, useMemo } from "react";
 import { menuContext } from "../../../Context/MenuContext.jsx";
 import { categoriesContext } from "../../../Context/CategoriesContext.jsx";
 
 import api from "../../../api";
-
 import AdminNavbar from "../../../Components/NavUserAdmin/Navadmin.jsx";
 
 export default function AdminPro() {
@@ -46,8 +46,10 @@ export default function AdminPro() {
   const [form, setForm] = useState({
     name: "",
     description: "",
+    price: "",
     category_id: "",
   });
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     loadMenu();
@@ -58,45 +60,70 @@ export default function AdminPro() {
     if (item) {
       setEditId(item.id);
       setForm({
-        name: item.name,
-        description: item.description,
-        category_id: item.category_id,
+        name: item.name || "",
+        description: item.description || "",
+        price: item.price !== undefined && item.price !== null ? item.price : "",
+        category_id: item.category_id || "",
       });
     } else {
       setEditId(null);
       setForm({
         name: "",
         description: "",
+        price: "",
         category_id: "",
       });
     }
-
+    setImageFile(null);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
     setEditId(null);
+    setImageFile(null);
   };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
   const handleSave = async () => {
     try {
       setLoading(true);
 
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("description", form.description);
+      formData.append("price", form.price);
+      formData.append("category_id", form.category_id);
+
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
       if (editId) {
-        const res = await api.put(`/menu/${editId}`, form);
+        const res = await api.put(`/menu/${editId}`, formData, config);
         toast.success(res.data.message || "Updated successfully");
       } else {
-        const res = await api.post(`/menu`, form);
+        const res = await api.post(`/menu`, formData, config);
         toast.success(res.data.message || "Created successfully");
       }
 
       handleClose();
-      loadMenu();
+      await loadMenu(); // ✅ جلب المنيو المحدثة من السيرفر فوراً
     } catch (err) {
       toast.error(err.response?.data?.message || "Something went wrong");
     } finally {
@@ -105,10 +132,12 @@ export default function AdminPro() {
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
+
     try {
       const res = await api.delete(`/menu/${id}`);
       toast.success(res.data.message || "Deleted successfully");
-      loadMenu();
+      await loadMenu();
     } catch (err) {
       toast.error(err.response?.data?.message || "Delete failed");
     }
@@ -139,7 +168,6 @@ export default function AdminPro() {
         }}
       >
         <Container maxWidth="xl">
-
           <Paper
             elevation={0}
             sx={{
@@ -159,9 +187,7 @@ export default function AdminPro() {
                 gap: 2,
               }}
             >
-              <Typography variant="h4">
-                Menu Management
-              </Typography>
+              <Typography variant="h4">Menu Management</Typography>
 
               <Button
                 variant="contained"
@@ -191,7 +217,6 @@ export default function AdminPro() {
               boxShadow: "0 15px 45px rgba(0,0,0,.15)",
             }}
           >
-
             <Box
               sx={{
                 mb: 3,
@@ -211,23 +236,25 @@ export default function AdminPro() {
                     backgroundColor: "#f7f7f7",
                   },
                 }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon sx={{ color: "#6f8a67" }} />
-                    </InputAdornment>
-                  ),
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon sx={{ color: "#6f8a67" }} />
+                      </InputAdornment>
+                    ),
+                  },
                 }}
               />
             </Box>
 
             <TableContainer>
               <Table>
-
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
                     <TableCell>Description</TableCell>
+                    <TableCell>Price</TableCell>
                     <TableCell>Category</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
@@ -238,6 +265,12 @@ export default function AdminPro() {
                     <TableRow key={item.id}>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.description}</TableCell>
+                      
+                      {/* ✅ عرض السعر مع التأكد من تحويل الرقم */}
+                      <TableCell sx={{ fontWeight: "bold", color: "#6f8a67" }}>
+                        ${item.price !== undefined && item.price !== null ? Number(item.price).toFixed(2) : "0.00"}
+                      </TableCell>
+                      
                       <TableCell>
                         {item.category_name || "No Category"}
                       </TableCell>
@@ -254,19 +287,15 @@ export default function AdminPro() {
                     </TableRow>
                   ))}
                 </TableBody>
-
               </Table>
             </TableContainer>
-
           </Paper>
-
         </Container>
       </Box>
 
+      {/* Dialog إضافة / تعديل منتج */}
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle>
-          {editId ? "Edit Item" : "Add Item"}
-        </DialogTitle>
+        <DialogTitle>{editId ? "Edit Item" : "Add Item"}</DialogTitle>
 
         <DialogContent>
           <Stack spacing={2} mt={1}>
@@ -276,6 +305,7 @@ export default function AdminPro() {
               value={form.name}
               onChange={handleChange}
               fullWidth
+              required
             />
 
             <TextField
@@ -284,6 +314,22 @@ export default function AdminPro() {
               value={form.description}
               onChange={handleChange}
               fullWidth
+              multiline
+              rows={2}
+            />
+
+            {/* ✅ حقل السعر المحدث باستخدام slotProps للتخلص من تحذيرات MUI */}
+            <TextField
+              label="Price ($)"
+              name="price"
+              type="number"
+              slotProps={{
+                htmlInput: { step: "0.01" },
+              }}
+              value={form.price}
+              onChange={handleChange}
+              fullWidth
+              required
             />
 
             <TextField
@@ -293,6 +339,7 @@ export default function AdminPro() {
               value={form.category_id}
               onChange={handleChange}
               fullWidth
+              required
             >
               {categories?.map((cat) => (
                 <MenuItem key={cat.id} value={cat.id}>
@@ -300,6 +347,31 @@ export default function AdminPro() {
                 </MenuItem>
               ))}
             </TextField>
+
+            <Button
+              variant="outlined"
+              component="label"
+              startIcon={<CloudUploadIcon />}
+              sx={{
+                borderColor: "#6f8a67",
+                color: "#6f8a67",
+                "&:hover": { borderColor: "#5f6f5a", color: "#5f6f5a" },
+              }}
+            >
+              Upload Image
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            </Button>
+
+            {imageFile && (
+              <Typography variant="caption" color="textSecondary">
+                Selected file: {imageFile.name}
+              </Typography>
+            )}
 
             <Button
               variant="contained"
@@ -312,11 +384,7 @@ export default function AdminPro() {
                 },
               }}
             >
-              {loading ? (
-                <CircularProgress size={20} />
-              ) : (
-                "Save"
-              )}
+              {loading ? <CircularProgress size={20} /> : "Save"}
             </Button>
           </Stack>
         </DialogContent>
