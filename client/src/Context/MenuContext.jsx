@@ -10,9 +10,13 @@ export default function MenuProvider({ children }) {
   const loadMenu = async () => {
     try {
       const res = await api.get("/all-menu");
-
-     
-      setMenu(res.data.menuItem);
+      
+      // تأكد من أن البيانات تحتوي على price
+      // إذا كانت الـ API ترجع البيانات مباشرة
+      setMenu(res.data.menuItem || res.data || []);
+      
+      // للتحقق من البيانات في الـ console (اختياري)
+      console.log("Menu data loaded:", res.data.menuItem);
 
     } catch (error) {
       console.error(error);
@@ -30,7 +34,7 @@ export default function MenuProvider({ children }) {
   };
 
   return (
-    <menuContext.Provider value={{ menu, loadMenu }}>
+    <menuContext.Provider value={{ menu, loadMenu, setMenu }}>
       {children}
     </menuContext.Provider>
   );

@@ -57,7 +57,7 @@ import gra22 from '../../assets/Images/gra22.jpg';
 import gra23 from '../../assets/Images/gra23.jpg';
 import gra24 from '../../assets/Images/gra24.jpg';
 import gra25 from '../../assets/Images/gra25.jpg';
-
+import gra99 from '../../assets/Images/gra99.jpg';
 const allImages = [gra1, gra2, gra3, gra4, gra5, gra6, gra7, gra8, gra9, gra10, gra11, gra12, gra13, gra14, gra15, gra16, gra17, gra18, gra19, gra20, gra21, gra22, gra23, gra24, gra25];
 
 // Demo data — booked dates for the month
@@ -562,48 +562,72 @@ function VideoGalleryFirst({ video }) {
     </Box>
   );
 }
-
 /* ============================================================
-   SECTION 4 — IMAGE GALLERY FIRST (Convex Lens / Curved Display)
+   SECTION 4 — IMAGE GALLERY FIRST (3D Coverflow Carousel)
    تم التعديل: 
-   - بوردر خمري لجميع الصور
-   - النص يظهر على جميع الصور عند hover
-   - إزالة انيميشن الجزيئات المتحركة من تحت الصور
+   - بطاقات كبيرة الحجم
+   - حركة يدوية فقط (بدون دوران تلقائي)
+   - البطاقات خلف بعضها البعض
+   - التنقل عبر الأسهم فقط
+   - إضافة صورة gra99
+   - إزالة الظل من البطاقات
+   - خلفية أغمق
    ============================================================ */
 function ImageGalleryFirst({ images }) {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [rotation, setRotation] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const carouselRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  
+  // إضافة صورة gra99 إلى بداية قائمة الصور
+  const allImages = [gra99, ...images];
+  const totalImages = allImages.length;
 
-  const totalImages = images.length;
-  const angleStep = 360 / totalImages;
-  const radius = 500;
-
-  useEffect(() => {
-    if (isDragging) return;
-    const interval = setInterval(() => {
-      setRotation((prev) => prev + 0.2);
-    }, 50);
-    return () => clearInterval(interval);
-  }, [isDragging]);
-
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setStartX(e.clientX || e.touches?.[0]?.clientX || 0);
+  // التنقل يدوياً عبر الأسهم فقط
+  const goToPrevious = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => (prev - 1 + totalImages) % totalImages);
+    setTimeout(() => setIsTransitioning(false), 800);
   };
 
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    const currentX = e.clientX || e.touches?.[0]?.clientX || 0;
-    const deltaX = currentX - startX;
-    setStartX(currentX);
-    setRotation((prev) => prev + deltaX * 0.3);
+  const goToNext = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => (prev + 1) % totalImages);
+    setTimeout(() => setIsTransitioning(false), 800);
   };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
+  // Get position for each image in coverflow
+  const getImageStyle = (index) => {
+    let distance = index - currentIndex;
+    if (distance > totalImages / 2) distance -= totalImages;
+    if (distance < -totalImages / 2) distance += totalImages;
+    
+    const absDistance = Math.abs(distance);
+    
+    // البطاقات خلف بعضها البعض - تصغير أقل
+    const scale = 1 - (absDistance * 0.05);
+    const clampedScale = Math.max(0.85, Math.min(1, scale));
+    
+    // شفافية أقل - البطاقات الخلفية شبه مرئية
+    const opacity = 1 - (absDistance * 0.08);
+    const clampedOpacity = Math.max(0.7, Math.min(1, opacity));
+    
+    // Z-index: البطاقة الأمامية أعلى
+    const zIndex = Math.round(100 - absDistance * 20);
+    
+    // دوران أقل للبطاقات الخلفية
+    const rotateY = distance * 8;
+    const clampedRotateY = Math.max(-25, Math.min(25, rotateY));
+    
+    // المسافة بين البطاقات (أصغر لتكون خلف بعضها)
+    const translateX = distance * 120;
+    
+    return {
+      transform: `translateX(${translateX}px) scale(${clampedScale}) rotateY(${clampedRotateY}deg)`,
+      opacity: clampedOpacity,
+      zIndex: zIndex,
+      transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    };
   };
 
   const imageTexts = [
@@ -615,170 +639,265 @@ function ImageGalleryFirst({ images }) {
     { title: "Perfectly Curated", subtitle: "Every detail tells a story" },
     { title: "Radiant Celebrations", subtitle: "Shining bright on your special day" },
     { title: "Legacy of Excellence", subtitle: "Crafting moments that last forever" },
+    { title: "Prestige Collection", subtitle: "The epitome of elegance" },
   ];
+
+  // Navigation dots
+  const handleDotClick = (index) => {
+    if (isTransitioning || index === currentIndex) return;
+    setIsTransitioning(true);
+    setCurrentIndex(index);
+    setTimeout(() => setIsTransitioning(false), 800);
+  };
 
   return (
     <Box
       sx={{
         px: { xs: 2, md: 6 },
         py: { xs: 8, md: 14 },
-        background: `linear-gradient(180deg, ${COLORS.bg} 0%, ${COLORS.bgLight} 100%)`,
+        // خلفية أغمق - استخدام deepGreen بدلاً من bg
+        background: `linear-gradient(180deg, ${COLORS.deepGreen} 0%, ${COLORS.deepGreenLight} 50%, ${COLORS.mediumGreen} 100%)`,
         overflow: 'hidden',
         position: 'relative',
+        perspective: '1200px',
       }}
     >
       <Container maxWidth="xl">
         <ScrollReveal>
           <Box sx={{ textAlign: 'center', mb: 6 }}>
-            <Typography sx={{ color: COLORS.burgundy, letterSpacing: 8, fontFamily: 'sans-serif', fontSize: 16, fontWeight: 700, mb: 1 }}>
+            <Typography sx={{ color: COLORS.gold, letterSpacing: 8, fontFamily: 'sans-serif', fontSize: 16, fontWeight: 700, mb: 1 }}>
               CREATIVE GALLERY
             </Typography>
-            <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3.5rem' }, color: COLORS.deepGreen, fontWeight: 600 }}>
+            <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3.5rem' }, color: COLORS.cream, fontWeight: 600 }}>
               Graduation Frames
             </Typography>
-            <Box sx={{ width: 80, height: 2, bgcolor: COLORS.burgundy, mx: 'auto', mt: 2 }} />
+            <Box sx={{ width: 80, height: 2, bgcolor: COLORS.gold, mx: 'auto', mt: 2 }} />
           </Box>
         </ScrollReveal>
 
         <Box
-          ref={carouselRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onTouchStart={handleMouseDown}
-          onTouchMove={handleMouseMove}
-          onTouchEnd={handleMouseUp}
           sx={{
             position: 'relative',
             width: '100%',
-            height: 600,
+            height: { xs: 500, md: 700 },
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            cursor: isDragging ? 'grabbing' : 'grab',
-            perspective: '1600px',
+            perspective: '1200px',
             mt: 4,
+            overflow: 'hidden',
           }}
         >
+          {/* Decorative glow behind center image - لون أغمق */}
           <Box
             sx={{
-              position: 'relative',
-              width: '100%',
-              height: '100%',
-              transformStyle: 'preserve-3d',
-              transform: `rotateY(${rotation}deg)`,
-              transition: isDragging ? 'none' : 'transform 0.1s ease',
+              position: 'absolute',
+              width: '500px',
+              height: '500px',
+              borderRadius: '50%',
+              background: `radial-gradient(circle, ${COLORS.gold}10 0%, transparent 70%)`,
+              pointerEvents: 'none',
+              zIndex: 0,
             }}
-          >
-            {images.map((src, i) => {
-              const angle = (i / totalImages) * 360;
-              const rad = (angle * Math.PI) / 180;
-              const x = Math.sin(rad) * radius;
-              const z = Math.cos(rad) * radius;
+          />
 
-              return (
-                <Box
-                  key={i}
-                  onMouseEnter={() => setHoveredIndex(i)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                  sx={{
+          {allImages.map((src, i) => {
+            const style = getImageStyle(i);
+            const isCenter = i === currentIndex;
+            const distance = Math.abs(i - currentIndex);
+            const circularDistance = Math.min(distance, totalImages - distance);
+            const isNearCenter = circularDistance <= 2;
+
+            return (
+              <Box
+                key={i}
+                sx={{
+                  position: 'absolute',
+                  width: { xs: 320, md: 420 },
+                  height: { xs: 400, md: 520 },
+                  borderRadius: 4,
+                  overflow: 'hidden',
+                  border: `3px solid ${isCenter ? COLORS.gold : COLORS.goldSoft}`,
+                  // إزالة الظل تماماً
+                  boxShadow: 'none',
+                  transformStyle: 'preserve-3d',
+                  willChange: 'transform, opacity',
+                  ...style,
+                  '&::before': isCenter ? {
+                    content: '""',
                     position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    width: 280,
-                    height: 340,
-                    transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${angle}deg)`,
-                    transformStyle: 'preserve-3d',
-                    borderRadius: 4,
-                    overflow: 'hidden',
-                    border: `3px solid ${hoveredIndex === i ? COLORS.gold : COLORS.burgundy}`,
-                    boxShadow: hoveredIndex === i
-                      ? `0 10px 50px ${COLORS.burgundy}60`
-                      : `0 5px 30px ${COLORS.burgundy}30`,
-                    opacity: 1,
-                    transition: 'all 0.4s cubic-bezier(.22,1,.36,1)',
-                    cursor: 'pointer',
-                    '&:hover': {
-                      transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z + 50}px) rotateY(${angle}deg) scale(1.08)`,
-                      borderColor: COLORS.gold,
-                      boxShadow: `0 25px 70px ${COLORS.burgundy}80`,
-                      zIndex: 100,
-                    },
+                    top: '-50%',
+                    left: '-50%',
+                    width: '200%',
+                    height: '200%',
+                    background: `linear-gradient(45deg, transparent 30%, ${COLORS.gold}10 50%, transparent 70%)`,
+                    animation: 'shine 4s ease-in-out infinite',
+                    pointerEvents: 'none',
+                    zIndex: 2,
+                  } : {},
+                  '@keyframes shine': {
+                    '0%': { transform: 'translateX(-100%) rotate(45deg)' },
+                    '100%': { transform: 'translateX(100%) rotate(45deg)' },
+                  },
+                  transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  cursor: 'default',
+                }}
+              >
+                <Box
+                  component="img"
+                  src={src}
+                  alt={`Work ${i + 1}`}
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                    transform: isCenter ? 'scale(1.05)' : 'scale(1)',
                   }}
-                >
-                  <Box
-                    component="img"
-                    src={src}
-                    alt={`Work ${i + 1}`}
-                    sx={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
-                  />
-                  
+                />
+                
+                {isNearCenter && (
                   <Box
                     sx={{
                       position: 'absolute',
                       bottom: 0,
                       left: 0,
                       right: 0,
-                      padding: 3,
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)',
-                      opacity: hoveredIndex === i ? 1 : 0,
-                      transform: hoveredIndex === i ? 'translateY(0)' : 'translateY(20px)',
-                      transition: 'all 0.5s cubic-bezier(.22,1,.36,1)',
+                      padding: { xs: 3, md: 4 },
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)',
+                      opacity: isCenter ? 1 : 0.8,
+                      transform: isCenter ? 'translateY(0)' : 'translateY(10px)',
+                      transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                      pointerEvents: 'none',
                     }}
                   >
-                    <Typography sx={{ color: COLORS.gold, fontFamily: 'sans-serif', fontSize: 16, fontWeight: 700 }}>
+                    <Typography sx={{ 
+                      color: COLORS.gold, 
+                      fontFamily: 'sans-serif', 
+                      fontSize: { xs: 18, md: 24 },
+                      fontWeight: 700,
+                      mb: 0.5,
+                    }}>
                       {imageTexts[i % imageTexts.length].title}
                     </Typography>
-                    <Typography sx={{ color: COLORS.cream, fontFamily: 'sans-serif', fontSize: 13, opacity: 0.8 }}>
+                    <Typography sx={{ 
+                      color: COLORS.cream, 
+                      fontFamily: 'sans-serif', 
+                      fontSize: { xs: 14, md: 17 },
+                      opacity: 0.8,
+                    }}>
                       {imageTexts[i % imageTexts.length].subtitle}
                     </Typography>
+                    <Box
+                      sx={{
+                        mt: 1.5,
+                        width: 50,
+                        height: 3,
+                        bgcolor: COLORS.gold,
+                        borderRadius: 1,
+                        opacity: isCenter ? 1 : 0.5,
+                      }}
+                    />
                   </Box>
-                </Box>
-              );
-            })}
-          </Box>
+                )}
+              </Box>
+            );
+          })}
         </Box>
 
-        {/* Navigation dots */}
+        {/* Navigation dots - لون أفتح للخلفية الغامقة */}
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, mt: 4 }}>
-          {images.map((_, i) => (
+          {allImages.map((_, i) => (
             <Box
               key={i}
-              onClick={() => {
-                const targetAngle = (i / totalImages) * -360;
-                setRotation(targetAngle);
-              }}
+              onClick={() => handleDotClick(i)}
               sx={{
-                width: 12,
-                height: 12,
-                borderRadius: '50%',
-                bgcolor: Math.round(rotation / -angleStep) % totalImages === i 
-                  ? COLORS.burgundy 
-                  : COLORS.burgundy + '40',
-                transition: 'all 0.3s ease',
+                width: i === currentIndex ? 40 : 14,
+                height: 14,
+                borderRadius: 7,
+                bgcolor: i === currentIndex ? COLORS.gold : COLORS.gold + '40',
+                transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                 cursor: 'pointer',
                 '&:hover': {
-                  bgcolor: COLORS.burgundy,
-                  transform: 'scale(1.3)',
+                  bgcolor: COLORS.gold,
+                  transform: 'scale(1.2)',
                 },
               }}
             />
           ))}
         </Box>
 
-        <Typography sx={{ textAlign: 'center', color: COLORS.deepGreenLight, fontFamily: 'sans-serif', fontSize: 14, mt: 3, opacity: 0.6 }}>
-          Drag to rotate • Hover to preview
-        </Typography>
+        {/* Navigation arrows - لون أفتح للخلفية الغامقة */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            position: 'absolute',
+            left: { xs: 10, md: 40 },
+            right: { xs: 10, md: 40 },
+            top: '50%',
+            transform: 'translateY(-50%)',
+            pointerEvents: 'none',
+            zIndex: 10,
+          }}
+        >
+          <IconButton
+            onClick={goToPrevious}
+            disabled={isTransitioning}
+            sx={{
+              pointerEvents: 'auto',
+              bgcolor: 'rgba(255,255,255,0.15)',
+              color: COLORS.gold,
+              backdropFilter: 'blur(10px)',
+              border: `1px solid ${COLORS.gold}30`,
+              transition: 'all 0.3s ease',
+              width: { xs: 56, md: 64 },
+              height: { xs: 56, md: 64 },
+              '&:hover': {
+                bgcolor: COLORS.gold,
+                color: COLORS.deepGreen,
+                transform: 'scale(1.1)',
+              },
+              '&.Mui-disabled': {
+                opacity: 0.3,
+                cursor: 'not-allowed',
+              },
+            }}
+          >
+            <ChevronLeftRoundedIcon sx={{ fontSize: { xs: 32, md: 36 } }} />
+          </IconButton>
+          <IconButton
+            onClick={goToNext}
+            disabled={isTransitioning}
+            sx={{
+              pointerEvents: 'auto',
+              bgcolor: 'rgba(255,255,255,0.15)',
+              color: COLORS.gold,
+              backdropFilter: 'blur(10px)',
+              border: `1px solid ${COLORS.gold}30`,
+              transition: 'all 0.3s ease',
+              width: { xs: 56, md: 64 },
+              height: { xs: 56, md: 64 },
+              '&:hover': {
+                bgcolor: COLORS.gold,
+                color: COLORS.deepGreen,
+                transform: 'scale(1.1)',
+              },
+              '&.Mui-disabled': {
+                opacity: 0.3,
+                cursor: 'not-allowed',
+              },
+            }}
+          >
+            <ChevronRightRoundedIcon sx={{ fontSize: { xs: 32, md: 36 } }} />
+          </IconButton>
+        </Box>
+
+     
       </Container>
     </Box>
   );
 }
-
 /* ============================================================
    SECTION 5 — VIDEO GALLERY SECOND
    ============================================================ */
@@ -1191,19 +1310,43 @@ function ImageGalleryThird({ images }) {
     </Box>
   );
 }
-
 /* ============================================================
    SECTION 8 — IMAGE GALLERY FOURTH (Flipping Cards)
+   تم التعديل: 
+   - بطاقات قلب (Flip Cards)
+   - نصوص أكبر
+   - خط أكثر أناقة
+   - تحسين التنسيق
    ============================================================ */
 function ImageGalleryFourth({ images }) {
   const [flippedIndex, setFlippedIndex] = useState(null);
 
   const imageTexts = [
-    { title: "Luxury", subtitle: "Redefining elegance", desc: "Where every detail speaks of sophistication." },
-    { title: "Prestige", subtitle: "The art of celebration", desc: "Creating moments that define excellence." },
-    { title: "Excellence", subtitle: "Perfecting every detail", desc: "Crafting perfection in every element." },
-    { title: "Elegance", subtitle: "Timeless beauty", desc: "Where grace meets grandeur." },
-    { title: "Grandeur", subtitle: "Creating unforgettable moments", desc: "Celebrating life's greatest achievements." },
+    { 
+      title: "Luxury", 
+      subtitle: "Redefining elegance", 
+      desc: "Where every detail speaks of sophistication and timeless beauty." 
+    },
+    { 
+      title: "Prestige", 
+      subtitle: "The art of celebration", 
+      desc: "Creating moments that define excellence and inspire greatness." 
+    },
+    { 
+      title: "Excellence", 
+      subtitle: "Perfecting every detail", 
+      desc: "Crafting perfection in every element with passion and precision." 
+    },
+    { 
+      title: "Elegance", 
+      subtitle: "Timeless beauty", 
+      desc: "Where grace meets grandeur in perfect harmony." 
+    },
+    { 
+      title: "Grandeur", 
+      subtitle: "Creating unforgettable moments", 
+      desc: "Celebrating life's greatest achievements with style and grace." 
+    },
   ];
 
   return (
@@ -1211,7 +1354,7 @@ function ImageGalleryFourth({ images }) {
       sx={{
         px: { xs: 2, md: 6 },
         py: { xs: 8, md: 14 },
-        background: `linear-gradient(180deg, ${COLORS.bg} 0%, ${COLORS.bgLight} 100%)`,
+        background: `linear-gradient(180deg, ${COLORS.surfaceDark} 0%, ${COLORS.bg} 100%)`,
       }}
     >
       <Container maxWidth="xl">
@@ -1258,6 +1401,7 @@ function ImageGalleryFourth({ images }) {
                       transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
                     }}
                   >
+                    {/* Front of card - Image */}
                     <Box
                       sx={{
                         position: 'absolute',
@@ -1267,6 +1411,7 @@ function ImageGalleryFourth({ images }) {
                         borderRadius: 3,
                         overflow: 'hidden',
                         border: `2px solid ${COLORS.goldSoft}`,
+                        boxShadow: '0 8px 30px rgba(0,0,0,0.1)',
                       }}
                     >
                       <Box
@@ -1281,6 +1426,7 @@ function ImageGalleryFourth({ images }) {
                       />
                     </Box>
 
+                    {/* Back of card - Information */}
                     <Box
                       sx={{
                         position: 'absolute',
@@ -1289,25 +1435,70 @@ function ImageGalleryFourth({ images }) {
                         backfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)',
                         borderRadius: 3,
-                        background: `linear-gradient(135deg, ${COLORS.surfaceDark} 0%, ${COLORS.deepGreen} 100%)`,
+                        background: `linear-gradient(145deg, ${COLORS.burgundyDark} 0%, ${COLORS.deepGreen} 50%, ${COLORS.burgundy} 100%)`,
                         border: `2px solid ${COLORS.gold}`,
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        padding: 2,
+                        padding: { xs: 2, md: 3 },
                         textAlign: 'center',
+                        boxShadow: '0 8px 30px rgba(0,0,0,0.2)',
                       }}
                     >
-                      <Typography sx={{ color: COLORS.gold, fontSize: { xs: 14, md: 18 }, fontWeight: 700, mb: 1 }}>
+                      <Typography 
+                        sx={{ 
+                          color: COLORS.gold, 
+                          fontSize: { xs: 22, md: 32 }, 
+                          fontWeight: 700, 
+                          mb: 1,
+                          fontFamily: "'Cormorant Garamond', serif",
+                          letterSpacing: 1,
+                          textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                        }}
+                      >
                         {imageTexts[i % imageTexts.length].title}
                       </Typography>
-                      <Typography sx={{ color: COLORS.goldLight, fontSize: { xs: 12, md: 14 }, mb: 1, opacity: 0.8 }}>
+                      
+                      <Box 
+                        sx={{ 
+                          width: 50, 
+                          height: 2, 
+                          bgcolor: COLORS.gold, 
+                          borderRadius: 1,
+                          mb: 1.5,
+                          opacity: 0.6,
+                        }} 
+                      />
+                      
+                      <Typography 
+                        sx={{ 
+                          color: COLORS.goldLight, 
+                          fontSize: { xs: 16, md: 22 }, 
+                          mb: 1.5,
+                          opacity: 0.9,
+                          fontFamily: "'Cormorant Garamond', serif",
+                          fontWeight: 600,
+                          letterSpacing: 0.5,
+                        }}
+                      >
                         {imageTexts[i % imageTexts.length].subtitle}
                       </Typography>
-                      <Typography sx={{ color: COLORS.cream, fontSize: { xs: 11, md: 13 }, opacity: 0.7, lineHeight: 1.5 }}>
+                      
+                      <Typography 
+                        sx={{ 
+                          color: COLORS.cream, 
+                          fontSize: { xs: 13, md: 17 }, 
+                          opacity: 0.85,
+                          lineHeight: 1.6,
+                          fontFamily: "'Cormorant Garamond', serif",
+                          maxWidth: '90%',
+                          fontWeight: 400,
+                        }}
+                      >
                         {imageTexts[i % imageTexts.length].desc}
                       </Typography>
+                      
                       <Box
                         sx={{
                           mt: 2,
@@ -1315,6 +1506,7 @@ function ImageGalleryFourth({ images }) {
                           height: 2,
                           bgcolor: COLORS.gold,
                           borderRadius: 1,
+                          opacity: 0.4,
                         }}
                       />
                     </Box>
@@ -1324,6 +1516,24 @@ function ImageGalleryFourth({ images }) {
             );
           })}
         </Box>
+        
+        <ScrollReveal delay={0.2}>
+          <Typography 
+            sx={{ 
+              textAlign: 'center', 
+              color: COLORS.deepGreenLight, 
+              fontFamily: "'Cormorant Garamond', serif", 
+              fontSize: { xs: 18, md: 24 }, 
+              mt: 6, 
+              opacity: 0.8, 
+              fontStyle: 'italic',
+              fontWeight: 500,
+              letterSpacing: 0.5,
+            }}
+          >
+            "Hover over each card to discover the story behind the luxury"
+          </Typography>
+        </ScrollReveal>
       </Container>
     </Box>
   );

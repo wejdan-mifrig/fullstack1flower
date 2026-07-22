@@ -4,6 +4,8 @@ import cors from "cors";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import authRoutes from "./src/routes/auth.Routes.js";
 import userRoutes from "./src/routes/user.Routes.js";
@@ -16,8 +18,16 @@ dotenv.config();
 
 const app = express();
 
+// ✅ إعداد المسارات المباشرة للمجلدات في ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.use(helmet());
+// ✅ ضبط helmet حتى يسمح للـ React (5173) يعرض الصور المرفوعة
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
 
 app.use(
   cors({
@@ -29,6 +39,10 @@ app.use(
 
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// ✅ تمكين الوصول للصور المرفوعة عبر http://localhost:3000/uploads/
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
