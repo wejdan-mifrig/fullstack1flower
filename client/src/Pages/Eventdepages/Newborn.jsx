@@ -29,6 +29,8 @@ import heroImage from '../../assets/Images/designer3.jpg';
 
 // Videos
 import video3 from '../../assets/video/nnb1.mp4';
+import nbn18 from '../../assets/video/nbn18.mp4';
+import nbnnn from '../../assets/video/nbnnn.mp4';
 
 // Images nb1 to nb16
 import nb1 from '../../assets/Images/nb1.jpg';
@@ -49,19 +51,10 @@ import nb15 from '../../assets/Images/nb15.jpg';
 import nb16 from '../../assets/Images/nb16.jpg';
 
 // Images for baby shower (nb2, nb3)
+import nb22 from '../../assets/Images/nb22.jpg';
+import nb33 from '../../assets/Images/nb33.jpg';
 import nb2_babyshower from '../../assets/Images/nb2.jpg';
 import nb3_babyshower from '../../assets/Images/nb3.jpg';
-
-// Distribution cards from nb2 to nb10
-import card1 from '../../assets/Images/nbv2.jpg';
-import card2 from '../../assets/Images/nbv3.jpg';
-import card3 from '../../assets/Images/nbv4.jpg';
-import card4 from '../../assets/Images/nbv5.jpg';
-import card5 from '../../assets/Images/nbv6.jpg';
-import card6 from '../../assets/Images/nbv7.jpg';
-import card7 from '../../assets/Images/nbv8.jpg';
-import card8 from '../../assets/Images/nbv9.jpg';
-import card9 from '../../assets/Images/nbv10.jpg';
 
 const allImages = [nb1, nb2, nb3, nb4, nb5, nb6, nb7, nb8, nb9, nb10, nb11, nb12, nb13, nb14, nb15, nb16];
 
@@ -190,9 +183,17 @@ export default function Newborn({ designer }) {
       <Hero d={d} />
       <IntroWithVideo video={video3} />
       <GirlsGallery images={girlsImages} />
+      <FullWidthVideo />
       <BoysGallery images={boysImages} />
+      
+      {/* NEW: Story Section Between Boys Gallery and Baby Shower */}
+      <StorySectionBetween />
+      
       <BabyShowerSection />
-      <DistributionCards />
+      
+      {/* NEW: Reflection Section After Baby Shower with Video */}
+      <ReflectionSectionAfter />
+      
       <CalendarSection onSelectDate={(date) => openBooking(date)} />
       <BookingDialog
         open={dialogOpen}
@@ -711,6 +712,47 @@ function GirlsGallery({ images }) {
 }
 
 /* ============================================================
+   SECTION 2.5 — FULL-WIDTH VIDEO (nbn18)
+   ============================================================ */
+function FullWidthVideo() {
+  return (
+    <Box
+      sx={{
+        width: '100%',
+        height: { xs: '60vh', md: '80vh' },
+        position: 'relative',
+        overflow: 'hidden',
+        background: COLORS.navy,
+      }}
+    >
+      <Box
+        component="video"
+        src={nbn18}
+        autoPlay
+        muted
+        loop
+        playsInline
+        sx={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+        }}
+      />
+      
+      {/* Optional subtle overlay */}
+      <Box
+        sx={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, rgba(26,42,74,0.1) 0%, rgba(26,42,74,0.3) 100%)',
+          pointerEvents: 'none',
+        }}
+      />
+    </Box>
+  );
+}
+
+/* ============================================================
    SECTION 3 — BOYS GALLERY (Prince Collection) - WITH BUBBLES
    ============================================================ */
 function BoysGallery({ images }) {
@@ -891,43 +933,172 @@ function AnimatedCard({ children, delay = 0 }) {
 }
 
 /* ============================================================
-   SECTION 4 — BABY SHOWER SECTION (No Bubbles - Clean Background)
+   NEW SECTION: STORY SECTION BETWEEN BOYS GALLERY AND BABY SHOWER
+   ============================================================ */
+function StorySectionBetween() {
+  return (
+    <Box
+      sx={{
+        px: { xs: 4, md: 12 },
+        py: { xs: 8, md: 14 },
+        background: `linear-gradient(180deg, ${COLORS.bgLight} 0%, ${COLORS.surface} 50%, ${COLORS.bgLight} 100%)`,
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      <WhiteBubblesBackground count={25} />
+      
+      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
+        <ScrollReveal>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography
+              sx={{
+                color: COLORS.navy,
+                letterSpacing: 6,
+                fontFamily: 'sans-serif',
+                fontSize: { xs: 12, md: 14 },
+                fontWeight: 700,
+                mb: 2,
+                opacity: 0.5,
+              }}
+            >
+              FROM THE HEART
+            </Typography>
+            
+            <Box
+              sx={{
+                width: 60,
+                height: 2,
+                bgcolor: COLORS.navy,
+                mx: 'auto',
+                mb: 4,
+                opacity: 0.3,
+              }}
+            />
+
+            <Typography
+              sx={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: '1.6rem', md: '2.8rem' },
+                lineHeight: 1.6,
+                color: COLORS.navy,
+                fontWeight: 400,
+                letterSpacing: 0.5,
+                mb: 4,
+              }}
+            >
+              "ᴱᵛᵉʳʸ ⁿᵉʷᵇᵒʳⁿ ᵃʳʳᶦᵛᵉˢ ʷʳᵃᵖᵖᵉᵈ ᶦⁿ ᵃ ˢᵗᵒʳʸ ᵒᶠ ˡᵒᵛᵉ—ᵃ ˢᵗᵒʳʸ ᵗʰᵃᵗ ᵇᵉᵍᶦⁿˢ ˡᵒⁿᵍ ᵇᵉᶠᵒʳᵉ ᵗʰᵉ ᶠᶦʳˢᵗ ᵖʰᵒᵗᵒᵍʳᵃᵖʰ ᶦˢ ᵗᵃᵏᵉⁿ ᵃⁿᵈ ᶜᵒⁿᵗᶦⁿᵘᵉˢ ᵗᵒ ᵘⁿᶠᵒˡᵈ ʷᶦᵗʰ ᵉᵃᶜʰ ᵖᵃˢˢᶦⁿᵍ ᵈᵃʸ." </Typography>
+
+           
+          </Box>
+        </ScrollReveal>
+      </Container>
+    </Box>
+  );
+}
+
+/* ============================================================
+   SECTION 4 — BABY SHOWER SECTION (Horizontal Slider with 4 Images)
    ============================================================ */
 function BabyShowerSection() {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const babyShowerCards = [
+  const babyShowerData = [
     {
       id: 1,
-      image: nb2_babyshower,
+      image: nb22,
       title: "Celebrating New Life",
-      desc: "Baby showers are a beautiful tradition that celebrates the arrival of a new life. Every detail is designed to create lasting memories."
+      subtitle: "A beautiful tradition of love",
+      desc: "Baby showers are a beautiful tradition that celebrates the arrival of a new life. Every detail is designed to create lasting memories filled with love and joy. From the moment guests arrive, they are enveloped in an atmosphere of warmth and anticipation, where every decoration, every game, and every shared smile contributes to a tapestry of cherished moments that will be remembered for years to come.",
+      details: "The beauty of a baby shower lies not just in the gifts, but in the gathering of loved ones who come together to honor the miracle of new life. It's a time for sharing wisdom, offering support, and celebrating the journey ahead with open hearts and joyful spirits."
     },
     {
       id: 2,
-      image: nb3_babyshower,
+      image: nb33,
       title: "Creating Magical Moments",
-      desc: "The joy of a baby shower lies in the little details - the soft pastels, the delicate decorations, and the warmth of family and friends."
+      subtitle: "Soft pastels & elegant touches",
+      desc: "The joy of a baby shower lies in the little details - the soft pastels, the delicate decorations, and the warmth of family and friends gathering together. Every element is carefully curated to create an atmosphere of love and anticipation, where each moment feels like a beautiful dream come true. The gentle colors, the sweet fragrances, and the gentle laughter of loved ones create an unforgettable experience.",
+      details: "From the carefully chosen floral arrangements to the handcrafted party favors, every detail tells a story of love and thoughtfulness. These magical moments become treasured memories that parents-to-be will carry in their hearts long after the celebration has ended."
+    },
+    {
+      id: 3,
+      image: nb2_babyshower,
+      title: "Cherished Memories",
+      subtitle: "A celebration of togetherness",
+      desc: "Baby showers are more than just parties - they're a celebration of the beautiful journey ahead. Each moment captured becomes a cherished memory that families will treasure forever. The laughter, the tears of joy, the warm embraces, and the heartfelt wishes all weave together to create a beautiful tapestry of love that surrounds the growing family with warmth and support.",
+      details: "From games that bring out the child in everyone to the tender moments of sharing advice and wisdom, every activity is designed to bring people closer together. These celebrations remind us that welcoming a new life is not just about the baby, but about the entire community of love that will nurture and support them."
+    },
+    {
+      id: 4,
+      image: nb3_babyshower,
+      title: "A New Chapter",
+      subtitle: "Welcoming tomorrow's promise",
+      desc: "The arrival of a new baby is a magical time filled with hope, dreams, and endless possibilities. Celebrate this special chapter with those who matter most, creating an environment where love flows freely and memories are made. The anticipation of meeting the newest family member fills every moment with excitement and wonder, making each shared experience feel precious and significant.",
+      details: "Creating an environment where love flows freely and memories are made is at the heart of every baby shower. It's about building a foundation of support, sharing in the joy of new beginnings, and celebrating the beautiful journey of parenthood that lies ahead for the growing family."
     },
   ];
+
+  // Auto-slide every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % babyShowerData.length);
+        setIsTransitioning(false);
+      }, 300);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentData = babyShowerData[currentIndex];
+
+  // Manual navigation
+  const goToSlide = (index) => {
+    if (isTransitioning || index === currentIndex) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex(index);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const nextSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % babyShowerData.length);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
+  const prevSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev - 1 + babyShowerData.length) % babyShowerData.length);
+      setIsTransitioning(false);
+    }, 300);
+  };
 
   return (
     <Box
       sx={{
-        px: { xs: 2, md: 4 },
+        px: { xs: 2, md: 6 },
         py: { xs: 4, md: 6 },
         background: `linear-gradient(180deg, ${COLORS.surface} 0%, ${COLORS.bgLight} 100%)`,
         position: 'relative',
         overflow: 'hidden',
-        minHeight: '80vh',
+        minHeight: '90vh',
         display: 'flex',
         alignItems: 'center',
       }}
     >
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-        {/* Header - Navy Text */}
+      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
+        {/* Header */}
         <ScrollReveal>
-          <Box sx={{ textAlign: 'center', mb: { xs: 3, md: 4 } }}>
+          <Box sx={{ textAlign: 'center', mb: { xs: 3, md: 5 } }}>
             <Typography 
               sx={{ 
                 color: COLORS.navy, 
@@ -944,7 +1115,7 @@ function BabyShowerSection() {
             <Typography 
               variant="h2" 
               sx={{ 
-                fontSize: { xs: '1.6rem', md: '2.2rem' }, 
+                fontSize: { xs: '1.6rem', md: '2.6rem' }, 
                 color: COLORS.navy, 
                 fontWeight: 600,
                 fontFamily: "'Cormorant Garamond', serif",
@@ -957,123 +1128,210 @@ function BabyShowerSection() {
           </Box>
         </ScrollReveal>
 
-        {/* 2 Cards Side by Side - Taller */}
+        {/* Main Content - Image Left, Text Right */}
         <Box
           sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-            gap: { xs: 2, md: 3 },
-            alignItems: 'stretch',
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            gap: { xs: 3, md: 6 },
+            alignItems: 'center',
+            maxWidth: 1200,
+            mx: 'auto',
           }}
         >
-          {babyShowerCards.map((card, i) => (
-            <BabyShowerFloatingCard key={i} delay={i * 0.1}>
+          {/* Image - Left Side */}
+          <Box
+            sx={{
+              flex: 1,
+              order: { xs: 1, md: 1 },
+              width: '100%',
+              maxWidth: { xs: '100%', md: 550 },
+              position: 'relative',
+              opacity: isTransitioning ? 0 : 1,
+              transform: isTransitioning ? 'translateX(-20px)' : 'translateX(0)',
+              transition: 'all 0.3s ease',
+            }}
+          >
+            <Box
+              sx={{
+                width: '100%',
+                aspectRatio: '4 / 5',
+                borderRadius: 3,
+                overflow: 'hidden',
+                boxShadow: '0 8px 40px rgba(26,42,74,0.08)',
+                border: '1px solid rgba(26,42,74,0.06)',
+                position: 'relative',
+              }}
+            >
               <Box
-                onMouseEnter={() => setHoveredIndex(i)}
-                onMouseLeave={() => setHoveredIndex(null)}
+                component="img"
+                src={currentData.image}
+                alt={currentData.title}
                 sx={{
-                  borderRadius: 3,
-                  overflow: 'hidden',
-                  background: 'rgba(255,255,255,0.2)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255,255,255,0.25)',
-                  transition: 'all 0.5s cubic-bezier(.22,1,.36,1)',
-                  transform: hoveredIndex === i ? 'translateY(-6px) scale(1.02)' : 'translateY(0) scale(1)',
-                  cursor: 'pointer',
+                  width: '100%',
                   height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  boxShadow: hoveredIndex === i 
-                    ? '0 16px 48px rgba(0,0,0,0.1)' 
-                    : '0 4px 20px rgba(0,0,0,0.04)',
+                  objectFit: 'cover',
+                  transition: 'transform 0.6s cubic-bezier(.22,1,.36,1)',
+                  '&:hover': {
+                    transform: 'scale(1.03)',
+                  },
+                }}
+              />
+            </Box>
+
+            {/* Image counter badge */}
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 16,
+                right: 16,
+                bgcolor: 'rgba(255,255,255,0.9)',
+                backdropFilter: 'blur(10px)',
+                px: 2,
+                py: 0.75,
+                borderRadius: 20,
+                fontFamily: 'sans-serif',
+                fontSize: 12,
+                color: COLORS.navy,
+                fontWeight: 600,
+                border: '1px solid rgba(26,42,74,0.08)',
+              }}
+            >
+              {currentIndex + 1} / {babyShowerData.length}
+            </Box>
+          </Box>
+
+          {/* Text Content - Right Side */}
+          <Box
+            sx={{
+              flex: 1,
+              order: { xs: 2, md: 2 },
+              width: '100%',
+              opacity: isTransitioning ? 0 : 1,
+              transform: isTransitioning ? 'translateX(20px)' : 'translateX(0)',
+              transition: 'all 0.3s ease',
+              pl: { md: 2 },
+            }}
+          >
+            <Typography
+              sx={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: 28, md: 42 },
+                fontWeight: 700,
+                color: COLORS.navy,
+                mb: 0.5,
+                letterSpacing: 1,
+              }}
+            >
+              {currentData.title}
+            </Typography>
+            
+            <Typography
+              sx={{
+                fontFamily: 'sans-serif',
+                fontSize: { xs: 14, md: 18 },
+                color: COLORS.navyLight,
+                fontWeight: 500,
+                letterSpacing: 3,
+                mb: 2.5,
+                opacity: 0.7,
+              }}
+            >
+              {currentData.subtitle}
+            </Typography>
+
+            <Typography
+              sx={{
+                fontFamily: 'sans-serif',
+                fontSize: { xs: 15, md: 17 },
+                lineHeight: 2,
+                color: COLORS.navyLight,
+                mb: 2.5,
+                maxWidth: 550,
+              }}
+            >
+              {currentData.desc}
+            </Typography>
+
+            <Typography
+              sx={{
+                fontFamily: 'sans-serif',
+                fontSize: { xs: 14, md: 16 },
+                lineHeight: 1.9,
+                color: COLORS.mediumGreen,
+                mb: 3.5,
+                maxWidth: 500,
+                opacity: 0.8,
+                fontStyle: 'italic',
+                borderLeft: `3px solid ${COLORS.navy}20`,
+                pl: 2.5,
+              }}
+            >
+              {currentData.details}
+            </Typography>
+
+            {/* Navigation Dots */}
+            <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', mb: 2 }}>
+              {babyShowerData.map((_, idx) => (
+                <Box
+                  key={idx}
+                  onClick={() => goToSlide(idx)}
+                  sx={{
+                    width: currentIndex === idx ? 32 : 10,
+                    height: 10,
+                    borderRadius: 5,
+                    bgcolor: currentIndex === idx ? COLORS.navy : 'rgba(26,42,74,0.2)',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      bgcolor: currentIndex === idx ? COLORS.navy : 'rgba(26,42,74,0.4)',
+                    },
+                  }}
+                />
+              ))}
+            </Box>
+
+            {/* Navigation Arrows */}
+            <Box sx={{ display: 'flex', gap: 1.5 }}>
+              <IconButton
+                onClick={prevSlide}
+                sx={{
+                  bgcolor: COLORS.navy + '08',
+                  border: `1px solid ${COLORS.navy}20`,
+                  color: COLORS.navy,
+                  width: 40,
+                  height: 40,
+                  '&:hover': {
+                    bgcolor: COLORS.navy + '15',
+                    transform: 'scale(1.05)',
+                  },
                 }}
               >
-                {/* Image - Taller */}
-                <Box
-                  sx={{
-                    width: '100%',
-                    aspectRatio: '4 / 5',
-                    overflow: 'hidden',
-                    position: 'relative',
-                    flexShrink: 0,
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src={card.image}
-                    alt={card.title}
-                    sx={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      transition: 'transform 0.8s cubic-bezier(.22,1,.36,1)',
-                      transform: hoveredIndex === i ? 'scale(1.08)' : 'scale(1)',
-                    }}
-                  />
-                  {/* Gradient overlay at bottom for text */}
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      height: '55%',
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%)',
-                      zIndex: 1,
-                    }}
-                  />
-                </Box>
-
-                {/* Text - On the image from bottom */}
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    p: { xs: 2, md: 3 },
-                    zIndex: 2,
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      color: '#FFFFFF',
-                      fontFamily: "'Cormorant Garamond', serif",
-                      fontSize: { xs: 16, md: 22 },
-                      fontWeight: 700,
-                      letterSpacing: 0.5,
-                      lineHeight: 1.2,
-                      mb: 0.5,
-                      textShadow: '0 2px 15px rgba(0,0,0,0.3)',
-                    }}
-                  >
-                    {card.title}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: 'rgba(255,255,255,0.85)',
-                      fontFamily: 'sans-serif',
-                      fontSize: { xs: 10, md: 12 },
-                      lineHeight: 1.6,
-                      opacity: 0.85,
-                      textShadow: '0 2px 10px rgba(0,0,0,0.2)',
-                      display: '-webkit-box',
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {card.desc}
-                  </Typography>
-                </Box>
-              </Box>
-            </BabyShowerFloatingCard>
-          ))}
+                <ChevronLeftRoundedIcon />
+              </IconButton>
+              <IconButton
+                onClick={nextSlide}
+                sx={{
+                  bgcolor: COLORS.navy + '08',
+                  border: `1px solid ${COLORS.navy}20`,
+                  color: COLORS.navy,
+                  width: 40,
+                  height: 40,
+                  '&:hover': {
+                    bgcolor: COLORS.navy + '15',
+                    transform: 'scale(1.05)',
+                  },
+                }}
+              >
+                <ChevronRightRoundedIcon />
+              </IconButton>
+            </Box>
+          </Box>
         </Box>
 
-        {/* Baby Shower Text Under Cards */}
+        {/* Bottom text */}
         <ScrollReveal delay={0.2}>
-          <Box sx={{ textAlign: 'center', mt: 3 }}>
+          <Box sx={{ textAlign: 'center', mt: 5 }}>
             <Typography
               sx={{
                 color: COLORS.navy,
@@ -1085,7 +1343,7 @@ function BabyShowerSection() {
                 opacity: 0.35,
               }}
             >
-               Celebrating New Beginnings 
+              Celebrating New Beginnings
             </Typography>
           </Box>
         </ScrollReveal>
@@ -1095,314 +1353,119 @@ function BabyShowerSection() {
 }
 
 /* ============================================================
-   BABY SHOWER FLOATING CARD — Smooth floating animation
+   NEW SECTION: REFLECTION SECTION AFTER BABY SHOWER WITH VIDEO
    ============================================================ */
-function BabyShowerFloatingCard({ children, delay = 0 }) {
+function ReflectionSectionAfter() {
   return (
     <Box
       sx={{
-        animation: `babyShowerCardFloat 7s ease-in-out ${delay}s infinite`,
-        '@keyframes babyShowerCardFloat': {
-          '0%, 100%': { 
-            transform: 'translateY(0px)' 
-          },
-          '50%': { 
-            transform: 'translateY(-8px)' 
-          },
-        },
-      }}
-    >
-      {children}
-    </Box>
-  );
-}
-/* ============================================================
-   SECTION 5 — DISTRIBUTION CARDS (Taller Cards - Full Image + Text Overlay)
-   ============================================================ */
-function DistributionCards() {
-  const [currentPage, setCurrentPage] = useState(0);
-  
-  const cards = [
-    { id: 1, image: card1, title: "Elegant Invitation", subtitle: "Set the tone for your celebration" },
-    { id: 2, image: card2, title: "Thank You Cards", subtitle: "Express your gratitude" },
-    { id: 3, image: card3, title: "Place Cards", subtitle: "Seating with style" },
-    { id: 4, image: card4, title: "Menu Cards", subtitle: "Dining in elegance" },
-    { id: 5, image: card5, title: "Programs", subtitle: "Guide your guests" },
-    { id: 6, image: card6, title: "Table Numbers", subtitle: "Navigate with ease" },
-    { id: 7, image: card7, title: "Placemats", subtitle: "Set the scene" },
-    { id: 8, image: card8, title: "Napkins", subtitle: "Details that matter" },
-    { id: 9, image: card9, title: "Gift Tags", subtitle: "Personalize your presents" },
-  ];
-
-  const cardsPerPage = 3;
-  const totalPages = Math.ceil(cards.length / cardsPerPage);
-  const currentCards = cards.slice(currentPage * cardsPerPage, (currentPage + 1) * cardsPerPage);
-
-  const nextPage = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  return (
-    <Box
-      sx={{
-        px: { xs: 2, md: 6 },
-        py: { xs: 6, md: 10 },
-        background: `linear-gradient(180deg, ${COLORS.surface} 0%, ${COLORS.bgLight} 100%)`,
+        px: { xs: 4, md: 12 },
+        py: { xs: 8, md: 14 },
+        background: `linear-gradient(180deg, ${COLORS.bgLight} 0%, ${COLORS.surfaceDark} 50%, ${COLORS.bg} 100%)`,
         position: 'relative',
         overflow: 'hidden',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
       }}
     >
-      <WhiteBubblesBackground count={30} />
+      <WhiteBubblesBackground count={20} />
       
-      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1 }}>
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <ScrollReveal>
-          <Box sx={{ textAlign: 'center', mb: 5 }}>
-            <Typography sx={{ color: COLORS.navy, letterSpacing: 8, fontFamily: 'sans-serif', fontSize: 14, fontWeight: 700, mb: 0.5 }}>
-              COLLECTION
-            </Typography>
-            <Typography variant="h2" sx={{ fontSize: { xs: '1.6rem', md: '2.2rem' }, color: COLORS.navy, fontWeight: 600, fontFamily: "'Cormorant Garamond', serif" }}>
-              Distribution Cards
-            </Typography>
-            <Box sx={{ width: 50, height: 2, bgcolor: COLORS.navy, mx: 'auto', mt: 1 }} />
-            <Typography sx={{ color: COLORS.navyLight, fontFamily: 'sans-serif', fontSize: 14, mt: 1.5, opacity: 0.7 }}>
-              Premium quality cards for your special moments
-            </Typography>
-          </Box>
-        </ScrollReveal>
-
-        {/* Cards Container - White Book Background */}
-        <Box
-          sx={{
-            maxWidth: 1100,
-            mx: 'auto',
-            bgcolor: '#FFFFFF',
-            borderRadius: 4,
-            boxShadow: '0 8px 60px rgba(26,42,74,0.06), 0 2px 20px rgba(26,42,74,0.03)',
-            overflow: 'hidden',
-            border: '1px solid rgba(26,42,74,0.04)',
-            position: 'relative',
-          }}
-        >
-          <Box sx={{ p: { xs: 2, md: 4 } }}>
-            {/* Cards Grid */}
-            <Box
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography
               sx={{
-                display: 'grid',
-                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-                gap: { xs: 2, md: 3 },
+                color: COLORS.navy,
+                letterSpacing: 6,
+                fontFamily: 'sans-serif',
+                fontSize: { xs: 11, md: 13 },
+                fontWeight: 700,
+                mb: 2,
+                opacity: 0.5,
               }}
             >
-              {currentCards.map((card, index) => (
-                <TallCardItem key={card.id} card={card} delay={index * 0.1} />
-              ))}
-            </Box>
+              FOREVER IN OUR HEARTS
+            </Typography>
 
-            {/* Page Navigation */}
-            <Box
+            <Typography
               sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                mt: 4,
-                pt: 3,
-                borderTop: '1px solid rgba(26,42,74,0.06)',
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: '2rem', md: '3.2rem' },
+                lineHeight: 1.4,
+                color: COLORS.navy,
+                fontWeight: 600,
+                mb: 3,
+                letterSpacing: 1,
               }}
             >
-              <Button
-                onClick={prevPage}
-                disabled={currentPage === 0}
-                sx={{
-                  fontFamily: 'sans-serif',
-                  color: COLORS.navy,
-                  opacity: currentPage === 0 ? 0.3 : 0.7,
-                  '&:hover': {
-                    opacity: 1,
-                    bgcolor: 'rgba(26,42,74,0.05)',
-                  },
-                }}
-              >
-                <ChevronLeftRoundedIcon /> Previous
-              </Button>
-              
-              <Typography
-                sx={{
-                  fontFamily: 'sans-serif',
-                  fontSize: 13,
-                  color: COLORS.navyLight,
-                  opacity: 0.6,
-                }}
-              >
-                Page {currentPage + 1} of {totalPages}
-              </Typography>
-              
-              <Button
-                onClick={nextPage}
-                disabled={currentPage === totalPages - 1}
-                sx={{
-                  fontFamily: 'sans-serif',
-                  color: COLORS.navy,
-                  opacity: currentPage === totalPages - 1 ? 0.3 : 0.7,
-                  '&:hover': {
-                    opacity: 1,
-                    bgcolor: 'rgba(26,42,74,0.05)',
-                  },
-                }}
-              >
-                Next <ChevronRightRoundedIcon />
-              </Button>
-            </Box>
-          </Box>
-        </Box>
+              Capturing the Beauty of New Beginnings
+            </Typography>
 
-        {/* Page dots */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 3 }}>
-          {[...Array(totalPages)].map((_, i) => (
             <Box
-              key={i}
-              onClick={() => { setCurrentPage(i); }}
               sx={{
-                width: 8,
-                height: 8,
-                borderRadius: '50%',
-                bgcolor: currentPage === i ? COLORS.navy : 'rgba(26,42,74,0.15)',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  bgcolor: currentPage === i ? COLORS.navy : 'rgba(26,42,74,0.3)',
-                },
+                width: 80,
+                height: 2,
+                bgcolor: COLORS.navy,
+                mx: 'auto',
+                mb: 4,
+                opacity: 0.3,
               }}
             />
-          ))}
-        </Box>
+
+            {/* Video */}
+            <Box
+              sx={{
+                position: 'relative',
+                width: '100%',
+                maxWidth: 900,
+                mx: 'auto',
+                aspectRatio: '16 / 9',
+                overflow: 'hidden',
+                borderRadius: 4,
+                boxShadow: '0 20px 60px rgba(26,42,74,0.15)',
+                mb: 4,
+              }}
+            >
+              <Box
+                component="video"
+                src={nbnnn}
+                autoPlay
+                muted
+                loop
+                playsInline
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
+              />
+            </Box>
+
+            <Typography
+              sx={{
+                fontFamily: 'sans-serif',
+                fontSize: { xs: '1rem', md: '1.2rem' },
+                lineHeight: 2.2,
+                color: COLORS.navyLight,
+                fontWeight: 300,
+                maxWidth: 750,
+                mx: 'auto',
+                opacity: 0.85,
+              }}
+            >
+              Every tiny yawn, every gentle stretch, every peaceful sigh—these are the moments that make up the 
+              beautiful tapestry of new life. Our mission is to preserve these precious memories with artistry 
+              and heart, creating heirlooms that will be treasured for a lifetime. Because the first chapter of 
+              your baby's story is one that deserves to be told with elegance, warmth, and timeless beauty.
+            </Typography>
+
+         
+            </Box>
+     
+        </ScrollReveal>
       </Container>
     </Box>
   );
 }
 
-/* ============================================================
-   TALL CARD ITEM — Taller card with full image and text overlay
-   ============================================================ */
-function TallCardItem({ card, delay = 0 }) {
-  return (
-    <Box
-      sx={{
-        borderRadius: 3,
-        overflow: 'hidden',
-        bgcolor: '#FFFFFF',
-        border: '1px solid rgba(26,42,74,0.06)',
-        boxShadow: '0 4px 20px rgba(26,42,74,0.04)',
-        transition: 'all 0.4s cubic-bezier(.22,1,.36,1)',
-        animation: `cardFadeUp 0.8s ease-out ${delay}s both`,
-        '@keyframes cardFadeUp': {
-          '0%': { opacity: 0, transform: 'translateY(30px)' },
-          '100%': { opacity: 1, transform: 'translateY(0)' },
-        },
-        '&:hover': {
-          transform: 'translateY(-6px)',
-          boxShadow: '0 12px 40px rgba(26,42,74,0.1)',
-          borderColor: 'rgba(26,42,74,0.15)',
-        },
-      }}
-    >
-      {/* Taller Image */}
-      <Box
-        sx={{
-          width: '100%',
-          aspectRatio: '3 / 4',
-          overflow: 'hidden',
-          position: 'relative',
-        }}
-      >
-        <Box
-          component="img"
-          src={card.image}
-          alt={card.title}
-          sx={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transition: 'transform 0.6s cubic-bezier(.22,1,.36,1)',
-            '&:hover': {
-              transform: 'scale(1.05)',
-            },
-          }}
-        />
-        
-        {/* Gradient overlay at bottom for text */}
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '50%',
-            background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 50%, transparent 100%)',
-            zIndex: 1,
-          }}
-        />
-        
-        {/* Text Content - Overlay on image from bottom */}
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            p: { xs: 2, md: 3 },
-            zIndex: 2,
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: { xs: 18, md: 24 },
-              fontWeight: 700,
-              color: '#FFFFFF',
-              mb: 0.25,
-              textShadow: '0 2px 15px rgba(0,0,0,0.3)',
-            }}
-          >
-            {card.title}
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: 'sans-serif',
-              fontSize: { xs: 11, md: 14 },
-              color: 'rgba(255,255,255,0.85)',
-              fontWeight: 400,
-              letterSpacing: 0.5,
-              textShadow: '0 2px 10px rgba(0,0,0,0.2)',
-            }}
-          >
-            {card.subtitle}
-          </Typography>
-          
-          {/* Decorative line */}
-          <Box
-            sx={{
-              width: 30,
-              height: 2,
-              bgcolor: 'rgba(255,255,255,0.4)',
-              mt: 1.5,
-              transition: 'all 0.4s ease',
-            }}
-          />
-        </Box>
-      </Box>
-    </Box>
-  );
-}
 /* ============================================================
    SECTION 6 — CALENDAR
    ============================================================ */
