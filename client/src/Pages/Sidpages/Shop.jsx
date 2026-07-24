@@ -8,6 +8,8 @@ import {
   Dialog,
   DialogContent,
   IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { keyframes } from "@emotion/react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -121,7 +123,6 @@ import roseBouquetVideo from "../../assets/video/admin.mp4";
 import weddingVideo from "../../assets/video/wedding.mp4";
 import birthdayVideo from "../../assets/video/birthday.mp4";
 import giftBoxVideo from "../../assets/video/gift.mp4";
-
 
 const placeholder =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%233e4a3a'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='20' fill='%23f4f1ea' text-anchor='middle' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E";
@@ -668,6 +669,7 @@ const Shop = () => {
 
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
   const navigate = useNavigate();
 
@@ -678,6 +680,35 @@ const Shop = () => {
     };
     fetchData();
   }, []);
+
+  // ============================================================
+  // 🛒 دالة إضافة المنتج إلى السلة
+  // ============================================================
+  const addToCart = (product) => {
+    // جلب السلة الحالية من localStorage
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    
+    // التحقق إذا كان المنتج موجوداً بالفعل
+    const existingIndex = existingCart.findIndex(item => item.id === product.id);
+    
+    if (existingIndex !== -1) {
+      // زيادة الكمية إذا كان موجوداً
+      existingCart[existingIndex].quantity = (existingCart[existingIndex].quantity || 1) + 1;
+    } else {
+      // إضافة منتج جديد مع كمية 1
+      existingCart.push({ ...product, quantity: 1 });
+    }
+    
+    // حفظ في localStorage
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+    
+    // إظهار رسالة تأكيد - باللغة الإنجليزية بدون رموز
+    setSnackbar({
+      open: true,
+      message: `"${product.name}" has been added to your cart!`,
+      severity: "success"
+    });
+  };
 
   const getImage = (imageName) => {
     if (!imageName || imageName === "" || imageName === "null" || imageName === "undefined") {
@@ -702,15 +733,15 @@ const Shop = () => {
   const getVideo = (category) => {
     const name = (category?.name || "").toLowerCase();
     const matchKey = Object.keys(videosMap).find((key) => name.includes(key));
-    return matchKey ? videosMap[matchKey] : defaultVideo;
+    return matchKey ? videosMap[matchKey] : whiteVideo;
   };
 
   const offers = [
-    "🌸 20% OFF on Rose Bouquets",
-    "🌿 Free Delivery on Orders Over $50",
-    "✨ Buy 2 Get 1 Free on Mixed Flowers",
-    "🎁 Special Gift Box with Every Purchase",
-    "💐 Seasonal Collection - Up to 30% OFF",
+    "20% OFF on Rose Bouquets",
+    "Free Delivery on Orders Over $50",
+    "Buy 2 Get 1 Free on Mixed Flowers",
+    "Special Gift Box with Every Purchase",
+    "Seasonal Collection - Up to 30% OFF",
   ];
 
   // صور للتداول (ضعف الكمية عشان التكرار)
@@ -1070,15 +1101,7 @@ const Shop = () => {
                     animation: `${shimmer} 1.6s linear infinite`,
                   },
                 }}
-                onClick={() => {
-                  const token = localStorage.getItem("token");
-
-                  if (!token) {
-                    navigate("/login");
-                  } else {
-                    console.log("added to cart", selectedProduct);
-                  }
-                }}
+                onClick={() => addToCart(selectedProduct)}
               >
                 Add to Cart
               </Button>
@@ -1086,6 +1109,27 @@ const Shop = () => {
           </Box>
         )}
       </Dialog>
+
+      {/* Snackbar for notifications */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          severity={snackbar.severity}
+          sx={{
+            width: "100%",
+            borderRadius: "12px",
+            fontWeight: "bold",
+            fontSize: "1rem",
+          }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
 
       <Footer />
     </Box>
