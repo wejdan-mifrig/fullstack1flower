@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Typography, TextField, Button, Slide, IconButton, Chip, Divider, Container, Fade, Zoom } from "@mui/material";
+import { Box, Typography, TextField, Button, Slide, IconButton, Chip, Divider, Container, Fade, Zoom, Paper } from "@mui/material";
 import toast from "react-hot-toast";
 import api from "../../api.js";
 
 import Navbar from "../../Components/Navhero/Nav.jsx";
+import contactVideo from "../../assets/video/cont.mp4";
 
 // Icons
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
@@ -16,6 +17,22 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
+
+// New Color Scheme
+const colors = {
+  primary: "#3e4a3a", // Dark green
+  primaryLight: "#f4f1ea", // Cream/beige
+  secondary: "#f4f1ea",
+  accent: "#c9a84c", // Gold
+  accentLight: "#e8d48a",
+  textPrimary: "#3e4a3a",
+  textSecondary: "rgba(62,74,58,0.8)",
+  textMuted: "rgba(62,74,58,0.5)",
+  gold: "#c9a84c",
+  green: "#3e4a3a",
+};
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -26,9 +43,13 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [fadeIn, setFadeIn] = useState(true);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     setFadeIn(true);
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
   }, []);
 
   const handleChange = (e) => {
@@ -73,7 +94,7 @@ export default function Contact() {
   ];
 
   return (
-    <Box sx={{ minHeight: "100vh", position: "relative", bgcolor: "#3e4a3a" }}>
+    <Box sx={{ minHeight: "100vh", bgcolor: colors.primaryLight }}>
       {/* Fixed Background */}
       <Box
         sx={{
@@ -82,228 +103,262 @@ export default function Contact() {
           left: 0,
           right: 0,
           bottom: 0,
-          bgcolor: "#3e4a3a",
+          bgcolor: colors.primaryLight,
           zIndex: 0,
         }}
       />
 
-      {/* Scrollable Content */}
-      <Box sx={{ position: "relative", zIndex: 2, minHeight: "100vh" }}>
-        <Box sx={{ position: "relative", zIndex: 3 }}>
+      {/* Video Background - First Section */}
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          height: "100vh",
+          overflow: "hidden",
+          zIndex: 1,
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "linear-gradient(180deg, rgba(62,74,58,0.15) 0%, rgba(62,74,58,0.05) 100%)",
+            zIndex: 2,
+          },
+        }}
+      >
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        >
+          <source src={contactVideo} type="video/mp4" />
+        </video>
+
+        {/* Content Overlay on Video - Only two words */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 3,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            px: { xs: 3, md: 6 },
+          }}
+        >
           <Navbar />
+          
+          <Box sx={{ mt: { xs: 10, md: 12 } }}>
+            {/* Simple elegant text - just two words */}
+            <Typography
+              sx={{
+                color: "#ffffff",
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: "1.8rem", md: "2.5rem" },
+                fontWeight: 300,
+                letterSpacing: 8,
+                textShadow: "0 2px 30px rgba(0,0,0,0.3)",
+                opacity: 0.9,
+              }}
+            >
+              WELCOME
+            </Typography>
+            
+            <Typography
+              sx={{
+                color: "#ffffff",
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: "1.2rem", md: "1.6rem" },
+                fontWeight: 300,
+                letterSpacing: 12,
+                textShadow: "0 2px 30px rgba(0,0,0,0.3)",
+                opacity: 0.7,
+                mt: 0.5,
+              }}
+            >
+              BLOOM
+            </Typography>
+          </Box>
         </Box>
+      </Box>
 
+      {/* Main Content - New Color Scheme */}
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          bgcolor: colors.primaryLight,
+          pt: { xs: 4, md: 6 },
+          pb: { xs: 6, md: 8 },
+        }}
+      >
         <Container maxWidth="lg">
-          <Box
-            sx={{
-              minHeight: "calc(100vh - 80px)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              px: { xs: 2, md: 4 },
-              pt: { xs: 14, md: 18 },
-              pb: { xs: 6, md: 8 },
-            }}
-          >
-            <Slide direction="up" in={fadeIn} timeout={600}>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: 900,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 4,
-                }}
-              >
-                {/* Contact Info - First (Centered) with Zoom Animation */}
-                <Zoom in={fadeIn} timeout={800} style={{ transitionDelay: "100ms" }}>
-                  <Box
-                    sx={{
-                      textAlign: "center",
-                      mb: 2,
-                    }}
-                  >
-                    <Chip
-                      label="GET IN TOUCH"
+          <Slide direction="up" in={fadeIn} timeout={600}>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                gap: 4,
+              }}
+            >
+              {/* Contact Info Cards */}
+              <Fade in={fadeIn} timeout={1000} style={{ transitionDelay: "200ms" }}>
+                <Box
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: { xs: "1fr 1fr", sm: "repeat(4, 1fr)" },
+                    gap: 2.5,
+                  }}
+                >
+                  {contactInfo.map((item, index) => (
+                    <Paper
+                      key={index}
+                      elevation={0}
                       sx={{
-                        color: "#c0a080",
-                        borderColor: "#c0a080",
-                        bgcolor: "rgba(192,160,128,0.1)",
-                        fontFamily: "sans-serif",
-                        fontWeight: 700,
-                        letterSpacing: 2,
-                        mb: 2,
-                        fontSize: "0.7rem",
-                        animation: "pulse 2s infinite",
-                        "@keyframes pulse": {
-                          "0%": { opacity: 0.6, transform: "scale(1)" },
-                          "50%": { opacity: 1, transform: "scale(1.05)" },
-                          "100%": { opacity: 0.6, transform: "scale(1)" },
-                        },
-                      }}
-                      variant="outlined"
-                    />
-                    <Typography
-                      sx={{
-                        color: "#f4f1ea",
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: { xs: "2rem", md: "3.2rem" },
-                        fontWeight: 600,
-                        lineHeight: 1.2,
-                        mb: 2,
-                        animation: "fadeInUp 1s ease-out",
-                        "@keyframes fadeInUp": {
-                          "0%": { opacity: 0, transform: "translateY(30px)" },
-                          "100%": { opacity: 1, transform: "translateY(0)" },
+                        bgcolor: colors.primary,
+                        borderRadius: 3,
+                        p: 2.5,
+                        border: "1px solid rgba(201,168,76,0.2)",
+                        transition: "all 0.3s ease",
+                        textAlign: "center",
+                        "&:hover": {
+                          bgcolor: "#4a5a45",
+                          borderColor: colors.gold,
+                          transform: "translateY(-3px)",
+                          boxShadow: "0 10px 30px rgba(62,74,58,0.2)",
                         },
                       }}
                     >
-                      Let's Create Something
-                      <br />
-                      <span style={{ color: "#c0a080" }}>Extraordinary Together</span>
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "rgba(244,241,234,0.7)",
-                        fontFamily: "sans-serif",
-                        fontSize: "0.95rem",
-                        lineHeight: 1.7,
-                        maxWidth: 600,
-                        mx: "auto",
-                        animation: "fadeInUp 1.2s ease-out",
-                        "@keyframes fadeInUp": {
-                          "0%": { opacity: 0, transform: "translateY(30px)" },
-                          "100%": { opacity: 1, transform: "translateY(0)" },
-                        },
-                      }}
-                    >
-                      Whether you're planning a grand celebration or an intimate gathering,
-                      we're here to bring your vision to life. Reach out and let's start
-                      crafting your perfect event.
-                    </Typography>
-                  </Box>
-                </Zoom>
-
-                {/* Contact Info Cards - Grid with Fade Animation */}
-                <Fade in={fadeIn} timeout={1000} style={{ transitionDelay: "200ms" }}>
-                  <Box
-                    sx={{
-                      display: "grid",
-                      gridTemplateColumns: { xs: "1fr 1fr", sm: "repeat(4, 1fr)" },
-                      gap: 2,
-                      mb: 2,
-                    }}
-                  >
-                    {contactInfo.map((item, index) => (
                       <Box
-                        key={index}
                         sx={{
-                          bgcolor: "rgba(255,255,255,0.06)",
-                          borderRadius: 2.5,
-                          p: 2.5,
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          transition: "all 0.3s ease",
-                          textAlign: "center",
-                          animation: `slideIn 0.6s ease-out ${index * 0.1}s both`,
-                          "@keyframes slideIn": {
-                            "0%": { opacity: 0, transform: "translateY(30px) scale(0.9)" },
-                            "100%": { opacity: 1, transform: "translateY(0) scale(1)" },
-                          },
-                          "&:hover": {
-                            bgcolor: "rgba(192,160,128,0.08)",
-                            borderColor: "rgba(192,160,128,0.3)",
-                            transform: "translateY(-5px) scale(1.02)",
-                            boxShadow: "0 8px 25px rgba(0,0,0,0.2)",
-                          },
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: 0.5,
                         }}
                       >
                         <Box
                           sx={{
+                            color: colors.gold,
                             display: "flex",
-                            flexDirection: "column",
                             alignItems: "center",
-                            gap: 1,
+                            fontSize: "1.6rem",
+                            mb: 0.5,
                           }}
                         >
-                          <Box
-                            sx={{
-                              color: "#c0a080",
-                              display: "flex",
-                              alignItems: "center",
-                              fontSize: "1.5rem",
-                              transition: "transform 0.3s ease",
-                              "&:hover": {
-                                transform: "rotate(10deg) scale(1.1)",
-                              },
-                            }}
-                          >
-                            {item.icon}
-                          </Box>
-                          <Typography
-                            sx={{
-                              color: "rgba(244,241,234,0.5)",
-                              fontFamily: "sans-serif",
-                              fontSize: "0.6rem",
-                              textTransform: "uppercase",
-                              letterSpacing: 1,
-                            }}
-                          >
-                            {item.label}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#f4f1ea",
-                              fontFamily: "sans-serif",
-                              fontSize: "0.8rem",
-                              fontWeight: 500,
-                            }}
-                          >
-                            {item.value}
-                          </Typography>
+                          {item.icon}
                         </Box>
+                        <Typography
+                          sx={{
+                            color: "rgba(244,241,234,0.5)",
+                            fontFamily: "sans-serif",
+                            fontSize: "0.55rem",
+                            textTransform: "uppercase",
+                            letterSpacing: 1.5,
+                            fontWeight: 600,
+                          }}
+                        >
+                          {item.label}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: colors.secondary,
+                            fontFamily: "sans-serif",
+                            fontSize: "0.75rem",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {item.value}
+                        </Typography>
                       </Box>
-                    ))}
-                  </Box>
-                </Fade>
+                    </Paper>
+                  ))}
+                </Box>
+              </Fade>
 
-                {/* Social Links - Centered with Bounce Animation */}
-                <Fade in={fadeIn} timeout={1000} style={{ transitionDelay: "400ms" }}>
-                  <Box sx={{ textAlign: "center", mb: 3 }}>
-                    <Typography
-                      sx={{
-                        color: "rgba(244,241,234,0.5)",
-                        fontFamily: "sans-serif",
-                        fontSize: "0.7rem",
-                        textTransform: "uppercase",
-                        letterSpacing: 2,
-                        mb: 1.5,
-                      }}
-                    >
-                      Follow Us
-                    </Typography>
-                    <Box sx={{ display: "flex", gap: 1.5, justifyContent: "center" }}>
+              {/* Social Links & Form Row */}
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+                  gap: 4,
+                  alignItems: "start",
+                }}
+              >
+                {/* Social Links - Left Side */}
+                <Fade in={fadeIn} timeout={1000} style={{ transitionDelay: "300ms" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 3,
+                      pt: { xs: 2, md: 4 },
+                    }}
+                  >
+                    <Box>
+                      <Typography
+                        sx={{
+                          color: colors.primary,
+                          fontFamily: "'Cormorant Garamond', serif",
+                          fontSize: "1.6rem",
+                          fontWeight: 600,
+                          mb: 0.5,
+                        }}
+                      >
+                        Connect With Us
+                      </Typography>
+                      <Box
+                        sx={{
+                          width: 35,
+                          height: 2,
+                          bgcolor: colors.gold,
+                          mb: 2,
+                          borderRadius: 1,
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          color: colors.textSecondary,
+                          fontFamily: "sans-serif",
+                          fontSize: "0.8rem",
+                          mb: 2.5,
+                        }}
+                      >
+                        Follow us on social media for inspiration, updates, and behind-the-scenes content.
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
                       {socialLinks.map((social, index) => (
                         <IconButton
                           key={index}
                           sx={{
-                            bgcolor: "rgba(255,255,255,0.06)",
-                            color: "#f4f1ea",
-                            border: "1px solid rgba(255,255,255,0.08)",
+                            bgcolor: colors.primary,
+                            color: colors.secondary,
+                            border: "1px solid rgba(201,168,76,0.2)",
                             transition: "all 0.3s ease",
-                            padding: "10px",
-                            animation: `bounceIn 0.8s ease-out ${index * 0.1}s both`,
-                            "@keyframes bounceIn": {
-                              "0%": { opacity: 0, transform: "scale(0.3)" },
-                              "50%": { opacity: 1, transform: "scale(1.1)" },
-                              "70%": { transform: "scale(0.9)" },
-                              "100%": { transform: "scale(1)" },
-                            },
+                            padding: "12px",
                             "&:hover": {
-                              bgcolor: social.color + "30",
-                              borderColor: social.color,
-                              transform: "translateY(-3px) scale(1.05) rotate(5deg)",
-                              boxShadow: `0 8px 25px ${social.color}40`,
+                              bgcolor: colors.gold,
+                              color: colors.primary,
+                              borderColor: colors.gold,
+                              transform: "translateY(-3px)",
+                              boxShadow: `0 8px 25px rgba(201,168,76,0.3)`,
                             },
                           }}
                         >
@@ -311,37 +366,77 @@ export default function Contact() {
                         </IconButton>
                       ))}
                     </Box>
+
+                    {/* Trust Badges */}
+                    <Box
+                      sx={{
+                        mt: 1.5,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1,
+                      }}
+                    >
+                      {["100% Confidential", "Response in 24h", "Free Consultation"].map((badge, index) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1.5,
+                          }}
+                        >
+                          <CheckCircleRoundedIcon
+                            sx={{
+                              fontSize: "0.9rem",
+                              color: colors.gold,
+                            }}
+                          />
+                          <Typography
+                            sx={{
+                              color: colors.textSecondary,
+                              fontFamily: "sans-serif",
+                              fontSize: "0.75rem",
+                              letterSpacing: 0.3,
+                            }}
+                          >
+                            {badge}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Box>
                   </Box>
                 </Fade>
 
-                {/* Form Box - Below Contact Info with Slide Animation */}
-                <Slide direction="up" in={fadeIn} timeout={800} style={{ transitionDelay: "300ms" }}>
-                  <Box
+                {/* Form Box - Right Side */}
+                <Slide direction="up" in={fadeIn} timeout={800} style={{ transitionDelay: "400ms" }}>
+                  <Paper
+                    elevation={0}
                     sx={{
-                      bgcolor: "rgba(255,255,255,0.05)",
-                      backdropFilter: "blur(10px)",
+                      bgcolor: colors.primary,
                       borderRadius: "20px",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+                      border: "1px solid rgba(201,168,76,0.2)",
+                      boxShadow: "0 15px 50px rgba(62,74,58,0.15)",
                       p: { xs: 3, md: 4 },
-                      maxWidth: 700,
-                      mx: "auto",
                       width: "100%",
-                      animation: "float 3s ease-in-out infinite",
-                      "@keyframes float": {
-                        "0%": { transform: "translateY(0px)" },
-                        "50%": { transform: "translateY(-5px)" },
-                        "100%": { transform: "translateY(0px)" },
+                      position: "relative",
+                      overflow: "hidden",
+                      "&::before": {
+                        content: '""',
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: "3px",
+                        background: `linear-gradient(90deg, transparent, ${colors.gold}, transparent)`,
                       },
                     }}
                   >
-                    {/* Form Header */}
-                    <Box sx={{ mb: 3, textAlign: "center" }}>
+                    <Box sx={{ mb: 2.5, textAlign: "center" }}>
                       <Typography
                         sx={{
-                          color: "#f4f1ea",
+                          color: colors.secondary,
                           fontFamily: "'Cormorant Garamond', serif",
-                          fontSize: { xs: "1.6rem", md: "2.2rem" },
+                          fontSize: { xs: "1.6rem", md: "2rem" },
                           fontWeight: 600,
                           mb: 0.5,
                         }}
@@ -350,25 +445,21 @@ export default function Contact() {
                       </Typography>
                       <Typography
                         sx={{
-                          color: "rgba(244,241,234,0.5)",
+                          color: "rgba(244,241,234,0.6)",
                           fontFamily: "sans-serif",
-                          fontSize: "0.8rem",
+                          fontSize: "0.75rem",
                         }}
                       >
                         We'll get back to you within 24 hours
                       </Typography>
-                      <Divider
+                      <Box
                         sx={{
-                          mt: 1.5,
-                          borderColor: "rgba(192,160,128,0.2)",
-                          width: 50,
+                          width: 40,
+                          height: 2,
+                          bgcolor: colors.gold,
                           mx: "auto",
-                          animation: "expandWidth 2s ease-in-out infinite",
-                          "@keyframes expandWidth": {
-                            "0%": { width: 50 },
-                            "50%": { width: 100 },
-                            "100%": { width: 50 },
-                          },
+                          mt: 1.5,
+                          borderRadius: 1,
                         }}
                       />
                     </Box>
@@ -380,43 +471,40 @@ export default function Contact() {
                         width: "100%",
                         display: "flex",
                         flexDirection: "column",
-                        gap: 2.5,
+                        gap: 2,
                       }}
                     >
                       <TextField
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="Your Name"
+                        placeholder="Your Full Name"
                         fullWidth
                         disabled={loading}
                         sx={{
                           "& .MuiInputBase-root": {
-                            bgcolor: "rgba(255,255,255,0.08)",
-                            color: "#f4f1ea",
+                            bgcolor: "rgba(244,241,234,0.08)",
+                            color: colors.secondary,
                             borderRadius: 2,
-                            fontSize: "0.9rem",
+                            fontSize: "0.85rem",
                             transition: "all 0.3s ease",
                             "& fieldset": { 
-                              borderColor: "#c0a080",
-                              borderWidth: "2px",
+                              borderColor: "rgba(201,168,76,0.2)",
+                              borderWidth: "1.5px",
                             },
                             "&:hover fieldset": { 
-                              borderColor: "#d4a050",
-                              borderWidth: "2px",
+                              borderColor: colors.gold,
                             },
                             "&.Mui-focused fieldset": { 
-                              borderColor: "#c0a080",
-                              borderWidth: "2px",
-                              boxShadow: "0 0 20px rgba(192,160,128,0.2)",
+                              borderColor: colors.gold,
+                              boxShadow: "0 0 20px rgba(201,168,76,0.08)",
                             },
                             "&:hover": {
-                              transform: "scale(1.02)",
-                              bgcolor: "rgba(255,255,255,0.12)",
+                              bgcolor: "rgba(244,241,234,0.12)",
                             },
                           },
                           "& .MuiInputBase-input::placeholder": {
-                            color: "rgba(244,241,234,0.5)",
+                            color: "rgba(244,241,234,0.4)",
                           },
                         }}
                       />
@@ -425,37 +513,34 @@ export default function Contact() {
                         name="email"
                         value={form.email}
                         onChange={handleChange}
-                        placeholder="Your Email"
+                        placeholder="Your Email Address"
                         type="email"
                         fullWidth
                         disabled={loading}
                         sx={{
                           "& .MuiInputBase-root": {
-                            bgcolor: "rgba(255,255,255,0.08)",
-                            color: "#f4f1ea",
+                            bgcolor: "rgba(244,241,234,0.08)",
+                            color: colors.secondary,
                             borderRadius: 2,
-                            fontSize: "0.9rem",
+                            fontSize: "0.85rem",
                             transition: "all 0.3s ease",
                             "& fieldset": { 
-                              borderColor: "#c0a080",
-                              borderWidth: "2px",
+                              borderColor: "rgba(201,168,76,0.2)",
+                              borderWidth: "1.5px",
                             },
                             "&:hover fieldset": { 
-                              borderColor: "#d4a050",
-                              borderWidth: "2px",
+                              borderColor: colors.gold,
                             },
                             "&.Mui-focused fieldset": { 
-                              borderColor: "#c0a080",
-                              borderWidth: "2px",
-                              boxShadow: "0 0 20px rgba(192,160,128,0.2)",
+                              borderColor: colors.gold,
+                              boxShadow: "0 0 20px rgba(201,168,76,0.08)",
                             },
                             "&:hover": {
-                              transform: "scale(1.02)",
-                              bgcolor: "rgba(255,255,255,0.12)",
+                              bgcolor: "rgba(244,241,234,0.12)",
                             },
                           },
                           "& .MuiInputBase-input::placeholder": {
-                            color: "rgba(244,241,234,0.5)",
+                            color: "rgba(244,241,234,0.4)",
                           },
                         }}
                       />
@@ -471,31 +556,28 @@ export default function Contact() {
                         disabled={loading}
                         sx={{
                           "& .MuiInputBase-root": {
-                            bgcolor: "rgba(255,255,255,0.08)",
-                            color: "#f4f1ea",
+                            bgcolor: "rgba(244,241,234,0.08)",
+                            color: colors.secondary,
                             borderRadius: 2,
-                            fontSize: "0.9rem",
+                            fontSize: "0.85rem",
                             transition: "all 0.3s ease",
                             "& fieldset": { 
-                              borderColor: "#c0a080",
-                              borderWidth: "2px",
+                              borderColor: "rgba(201,168,76,0.2)",
+                              borderWidth: "1.5px",
                             },
                             "&:hover fieldset": { 
-                              borderColor: "#d4a050",
-                              borderWidth: "2px",
+                              borderColor: colors.gold,
                             },
                             "&.Mui-focused fieldset": { 
-                              borderColor: "#c0a080",
-                              borderWidth: "2px",
-                              boxShadow: "0 0 20px rgba(192,160,128,0.2)",
+                              borderColor: colors.gold,
+                              boxShadow: "0 0 20px rgba(201,168,76,0.08)",
                             },
                             "&:hover": {
-                              transform: "scale(1.02)",
-                              bgcolor: "rgba(255,255,255,0.12)",
+                              bgcolor: "rgba(244,241,234,0.12)",
                             },
                           },
                           "& .MuiInputBase-input::placeholder": {
-                            color: "rgba(244,241,234,0.5)",
+                            color: "rgba(244,241,234,0.4)",
                           },
                         }}
                       />
@@ -504,45 +586,30 @@ export default function Contact() {
                         type="submit"
                         disabled={loading}
                         sx={{
-                          mt: 1,
-                          bgcolor: "#c0a080",
-                          color: "#fff",
-                          py: 1.5,
-                          borderRadius: 3,
+                          mt: 0.5,
+                          bgcolor: colors.gold,
+                          color: colors.primary,
+                          py: 1.6,
+                          borderRadius: 2.5,
                           fontWeight: 700,
                           textTransform: "none",
                           fontSize: "0.95rem",
-                          letterSpacing: 1,
-                          position: "relative",
-                          overflow: "hidden",
+                          letterSpacing: 0.5,
                           transition: "all 0.3s ease",
-                          border: "2px solid #c0a080",
+                          border: "2px solid transparent",
                           "&:hover": {
-                            bgcolor: "#d4a050",
-                            transform: "translateY(-3px) scale(1.02)",
-                            boxShadow: "0 10px 40px rgba(192,160,128,0.4)",
-                            border: "2px solid #d4a050",
+                            bgcolor: colors.secondary,
+                            color: colors.primary,
+                            transform: "translateY(-2px)",
+                            boxShadow: "0 12px 35px rgba(201,168,76,0.3)",
+                            borderColor: colors.gold,
                           },
                           "&:active": {
                             transform: "scale(0.98)",
                           },
-                          "&::before": {
-                            content: '""',
-                            position: "absolute",
-                            top: 0,
-                            left: "-100%",
-                            width: "100%",
-                            height: "100%",
-                            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-                            transition: "all 0.6s ease",
-                          },
-                          "&:hover::before": {
-                            left: "100%",
-                          },
-                          "& .MuiButton-label": {
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
+                          "&.Mui-disabled": {
+                            bgcolor: "rgba(244,241,234,0.1)",
+                            color: "rgba(244,241,234,0.3)",
                           },
                         }}
                       >
@@ -556,69 +623,17 @@ export default function Contact() {
                         ) : (
                           <>
                             Send Message
-                            <SendRoundedIcon sx={{ ml: 1, fontSize: "1.1rem" }} />
+                            <ArrowForwardRoundedIcon sx={{ ml: 1, fontSize: "1rem" }} />
                           </>
                         )}
                       </Button>
                     </Box>
-
-                    {/* Trust Badge */}
-                    <Box
-                      sx={{
-                        mt: 3,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 3,
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      {["100% Confidential", "Response in 24h", "Free Consultation"].map((badge, index) => (
-                        <Box
-                          key={index}
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 0.5,
-                            animation: `fadeInScale 0.6s ease-out ${index * 0.2}s both`,
-                            "@keyframes fadeInScale": {
-                              "0%": { opacity: 0, transform: "scale(0.8)" },
-                              "100%": { opacity: 1, transform: "scale(1)" },
-                            },
-                          }}
-                        >
-                          <CheckCircleRoundedIcon
-                            sx={{
-                              fontSize: "0.7rem",
-                              color: "#c0a080",
-                              animation: "spin 10s linear infinite",
-                              "@keyframes spin": {
-                                "0%": { transform: "rotate(0deg)" },
-                                "100%": { transform: "rotate(360deg)" },
-                              },
-                            }}
-                          />
-                          <Typography
-                            sx={{
-                              color: "rgba(244,241,234,0.4)",
-                              fontFamily: "sans-serif",
-                              fontSize: "0.65rem",
-                              letterSpacing: 0.5,
-                            }}
-                          >
-                            {badge}
-                          </Typography>
-                        </Box>
-                      ))}
-                    </Box>
-                  </Box>
+                  </Paper>
                 </Slide>
               </Box>
-            </Slide>
-          </Box>
+            </Box>
+          </Slide>
         </Container>
-
-        {/* Footer Removed */}
       </Box>
     </Box>
   );

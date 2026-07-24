@@ -23,7 +23,7 @@ const AdminNavbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   const menuItems = [

@@ -1,10 +1,15 @@
+// ============================================================
+// 📄 src/App.js
+// ============================================================
+
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Hero from "./Pages/Hero/Hero.jsx";
 import Contact from "./Pages/Sidpages/Contact.jsx";
 import About from "./Pages/Sidpages/About.jsx";
-import Customerre from "./Pages/Sidpages/Customerre.jsx";
+// ✅ تم تصحيح الاستيراد (بحرف كبير C)
+import Carts from "./Pages/Sidpages/Carts.jsx";
 import Event from "./Pages/Sidpages/Eventde.jsx";
 import Shop from "./Pages/Sidpages/Shop.jsx";
 
@@ -44,32 +49,33 @@ import EditUser from "./Pages/Admin/Adminpages/EditUser.jsx";
 function App() {
   return (
     <>
-     
       <Toaster position="top-center" />
 
       <Routes>
-     
+        {/* الصفحة الرئيسية */}
         <Route path="/" element={<Hero />} />
 
-    
+        {/* الصفحات العامة */}
         <Route path="/event-decoration" element={<Event />} />
         <Route path="/book-event" element={<Event />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/reviews" element={<Customerre />} />
+        
+        {/* ✅ تم تصحيح استخدام المكون (بحرف كبير C) */}
+        <Route path="/carts" element={<Carts />} />
 
-        {/* EVENT TYPES */}
+        {/* أنواع الفعاليات */}
         <Route path="/events/wedding" element={<Wedding />} />
         <Route path="/events/birthday" element={<Birthday />} />
         <Route path="/events/graduation" element={<Graduation />} />
         <Route path="/events/newborn" element={<Newborn />} />
 
-        {/* AUTH */}
+        {/* صفحات المصادقة */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
-        {/* USER PAGES */}
+        {/* صفحات المستخدم */}
         <Route path="/user" element={<User />} />
         <Route path="/myprofile" element={<Myprofile />} />
         <Route path="/mybooking" element={<Mybooking />} />
@@ -85,16 +91,14 @@ function App() {
         <Route path="/graduationuser" element={<Graduationuser />} />
         <Route path="/newbornuser" element={<Newbornuser />} />
 
-        {/* ADMIN PAGES */}
-       
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/admin/categories" element={<AdminCat />} />
-              <Route path="/admin/messages" element={<AdminMass />} />
-              <Route path="/admin/products" element={<AdminPro />} />
-              <Route path="/admin/users" element={<AdminUser />} />
-              <Route path="/admin/add/:type" element={<AddForm />} />
-              <Route path="edit/user/:id" element={<EditUser />} />
-   
+        {/* صفحات الأدمن */}
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/categories" element={<AdminCat />} />
+        <Route path="/admin/messages" element={<AdminMass />} />
+        <Route path="/admin/products" element={<AdminPro />} />
+        <Route path="/admin/users" element={<AdminUser />} />
+        <Route path="/admin/add/:type" element={<AddForm />} />
+        <Route path="/edit/user/:id" element={<EditUser />} />
       </Routes>
     </>
   );

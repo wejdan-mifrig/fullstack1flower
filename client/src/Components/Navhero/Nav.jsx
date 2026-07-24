@@ -1,3 +1,7 @@
+// ============================================================
+// 📄 src/Components/Navhero/Nav.jsx
+// ============================================================
+
 import React, { useState } from 'react';
 import {
   AppBar,
@@ -23,7 +27,7 @@ const navItems = [
   { label: 'SHOP', path: '/shop' },
   { label: 'ABOUT', path: '/about' },
   { label: 'CONTACT US', path: '/contact' },
-  { label: 'CUSTOMER REVIEWS', path: '/reviews' },
+  { label: 'CART', path: '/carts' }, // ✅ المسار صحيح
 ];
 
 const eventTypes = [
@@ -249,6 +253,3 @@ export default function Navbar() {
     </>
   );
 }
-
-
-
