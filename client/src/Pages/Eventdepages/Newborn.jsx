@@ -549,7 +549,6 @@ function WhiteBubblesBackground({ count = 30 }) {
     </Box>
   );
 }
-
 /* ============================================================
    SECTION 2 — GIRLS GALLERY (Princess Collection) - WITH BUBBLES
    ============================================================ */
@@ -629,13 +628,13 @@ function GirlsGallery({ images }) {
                   aspectRatio: '3 / 4',
                   borderRadius: 3,
                   overflow: 'hidden',
-                  border: `2px solid ${COLORS.goldSoft}`,
+                  border: `2px solid ${hoveredIndex === i ? '#FFB6C1' : COLORS.goldSoft}`,
                   position: 'relative',
                   cursor: 'pointer',
                   transform: hoveredIndex === i ? 'scale(1.06) rotate(1deg)' : 'scale(1) rotate(0deg)',
                   transition: 'all 0.6s cubic-bezier(.22,1,.36,1)',
-                  boxShadow: hoveredIndex === i ? '0 20px 60px rgba(26,42,74,0.15)' : 'none',
-                  '&:hover': { borderColor: COLORS.navy },
+                  boxShadow: hoveredIndex === i ? '0 20px 60px rgba(255,182,193,0.3)' : 'none',
+                  '&:hover': { borderColor: '#FFB6C1' },
                 }}
               >
                 <Box
@@ -651,11 +650,12 @@ function GirlsGallery({ images }) {
                   }}
                 />
 
+                {/* ===== OVERLAY - بيبي بينك ===== */}
                 <Box
                   sx={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to top, rgba(26,42,74,0.85) 0%, rgba(26,42,74,0.1) 40%, transparent 100%)',
+                    background: 'linear-gradient(to top, rgba(255,182,193,0.92) 0%, rgba(255,182,193,0.1) 40%, transparent 100%)',
                     opacity: hoveredIndex === i ? 1 : 0,
                     transition: 'opacity 0.5s ease',
                     display: 'flex',
@@ -666,7 +666,7 @@ function GirlsGallery({ images }) {
                 >
                   <Typography
                     sx={{
-                      color: COLORS.gold,
+                      color: COLORS.navy,
                       fontFamily: 'sans-serif',
                       fontSize: { xs: 14, md: 20 },
                       fontWeight: 700,
@@ -678,7 +678,7 @@ function GirlsGallery({ images }) {
                   </Typography>
                   <Typography
                     sx={{
-                      color: COLORS.goldLight,
+                      color: COLORS.navy,
                       fontFamily: 'sans-serif',
                       fontSize: { xs: 12, md: 14 },
                       opacity: 0.8,
@@ -690,7 +690,7 @@ function GirlsGallery({ images }) {
                   </Typography>
                   <Typography
                     sx={{
-                      color: COLORS.cream,
+                      color: COLORS.navy,
                       fontFamily: 'sans-serif',
                       fontSize: { xs: 11, md: 13 },
                       opacity: 0.7,

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Box, Typography, TextField, Button, Slide, IconButton, Chip, Divider, Container, Fade, Zoom, Paper } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, TextField, Button, Slide, IconButton, Container, Fade, Paper } from "@mui/material";
 import toast from "react-hot-toast";
 import api from "../../api.js";
 
 import Navbar from "../../Components/Navhero/Nav.jsx";
-import contactVideo from "../../assets/video/cont.mp4";
+import contactImage from "../../assets/images/cont.jpg";
 
 // Icons
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
@@ -18,20 +18,21 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
-import StarRoundedIcon from '@mui/icons-material/StarRounded';
 
-// New Color Scheme
+// Color Scheme
 const colors = {
-  primary: "#3e4a3a", // Dark green
-  primaryLight: "#f4f1ea", // Cream/beige
-  secondary: "#f4f1ea",
+  primary: "#8B0000", // Dark Red
+  primaryLight: "#ffffff", // White
+  secondary: "#ffffff", // White
   accent: "#c9a84c", // Gold
   accentLight: "#e8d48a",
-  textPrimary: "#3e4a3a",
-  textSecondary: "rgba(62,74,58,0.8)",
-  textMuted: "rgba(62,74,58,0.5)",
+  textPrimary: "#000000", // Black
+  textSecondary: "rgba(0,0,0,0.8)",
+  textMuted: "rgba(0,0,0,0.5)",
   gold: "#c9a84c",
-  green: "#3e4a3a",
+  red: "#8B0000",
+  darkRed: "#660000",
+  lightRed: "#a52a2a",
 };
 
 export default function Contact() {
@@ -43,13 +44,9 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [fadeIn, setFadeIn] = useState(true);
-  const videoRef = useRef(null);
 
   useEffect(() => {
     setFadeIn(true);
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
   }, []);
 
   const handleChange = (e) => {
@@ -88,14 +85,14 @@ export default function Contact() {
 
   const contactInfo = [
     { icon: <PhoneRoundedIcon />, label: "Phone", value: "+962 7 9000 0000" },
-    { icon: <EmailRoundedIcon />, label: "Email", value: "info@luxuryevents.com" },
+    { icon: <EmailRoundedIcon />, label: "Email", value: "info@flora.com" },
     { icon: <LocationOnRoundedIcon />, label: "Location", value: "Irbid, Jordan" },
     { icon: <AccessTimeRoundedIcon />, label: "Working Hours", value: "10:00 AM - 6:00 PM" },
   ];
 
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: colors.primaryLight }}>
-      {/* Fixed Background */}
+      {/* Fixed Background - White */}
       <Box
         sx={{
           position: "fixed",
@@ -108,7 +105,7 @@ export default function Contact() {
         }}
       />
 
-      {/* Video Background - First Section */}
+      {/* Image Background - First Section with subtle black overlay */}
       <Box
         sx={{
           position: "relative",
@@ -123,27 +120,22 @@ export default function Contact() {
             left: 0,
             right: 0,
             bottom: 0,
-            background: "linear-gradient(180deg, rgba(62,74,58,0.15) 0%, rgba(62,74,58,0.05) 100%)",
+            background: "rgba(0,0,0,0.3)", // Subtle black overlay
             zIndex: 2,
           },
         }}
       >
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src={contactImage}
+          alt="Luxury Events Contact"
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
           }}
-        >
-          <source src={contactVideo} type="video/mp4" />
-        </video>
+        />
 
-        {/* Content Overlay on Video - Only two words */}
+        {/* Content Overlay on Image */}
         <Box
           sx={{
             position: "absolute",
@@ -163,7 +155,6 @@ export default function Contact() {
           <Navbar />
           
           <Box sx={{ mt: { xs: 10, md: 12 } }}>
-            {/* Simple elegant text - just two words */}
             <Typography
               sx={{
                 color: "#ffffff",
@@ -171,8 +162,8 @@ export default function Contact() {
                 fontSize: { xs: "1.8rem", md: "2.5rem" },
                 fontWeight: 300,
                 letterSpacing: 8,
-                textShadow: "0 2px 30px rgba(0,0,0,0.3)",
-                opacity: 0.9,
+                textShadow: "0 2px 30px rgba(0,0,0,0.5)",
+                opacity: 0.95,
               }}
             >
               WELCOME
@@ -185,23 +176,23 @@ export default function Contact() {
                 fontSize: { xs: "1.2rem", md: "1.6rem" },
                 fontWeight: 300,
                 letterSpacing: 12,
-                textShadow: "0 2px 30px rgba(0,0,0,0.3)",
-                opacity: 0.7,
+                textShadow: "0 2px 30px rgba(0,0,0,0.5)",
+                opacity: 0.8,
                 mt: 0.5,
               }}
             >
-              BLOOM
+              OUR CUSTOMER
             </Typography>
           </Box>
         </Box>
       </Box>
 
-      {/* Main Content - New Color Scheme */}
+      {/* Main Content - White Background */}
       <Box
         sx={{
           position: "relative",
           zIndex: 1,
-          bgcolor: colors.primaryLight,
+          bgcolor: "#ffffff",
           pt: { xs: 4, md: 6 },
           pb: { xs: 6, md: 8 },
         }}
@@ -216,7 +207,7 @@ export default function Contact() {
                 gap: 4,
               }}
             >
-              {/* Contact Info Cards */}
+              {/* Contact Info Cards - Red Background */}
               <Fade in={fadeIn} timeout={1000} style={{ transitionDelay: "200ms" }}>
                 <Box
                   sx={{
@@ -233,14 +224,14 @@ export default function Contact() {
                         bgcolor: colors.primary,
                         borderRadius: 3,
                         p: 2.5,
-                        border: "1px solid rgba(201,168,76,0.2)",
+                        border: "1px solid rgba(201,168,76,0.3)",
                         transition: "all 0.3s ease",
                         textAlign: "center",
                         "&:hover": {
-                          bgcolor: "#4a5a45",
+                          bgcolor: colors.darkRed,
                           borderColor: colors.gold,
                           transform: "translateY(-3px)",
-                          boxShadow: "0 10px 30px rgba(62,74,58,0.2)",
+                          boxShadow: "0 10px 30px rgba(139,0,0,0.3)",
                         },
                       }}
                     >
@@ -265,7 +256,7 @@ export default function Contact() {
                         </Box>
                         <Typography
                           sx={{
-                            color: "rgba(244,241,234,0.5)",
+                            color: "rgba(255,255,255,0.6)",
                             fontFamily: "sans-serif",
                             fontSize: "0.55rem",
                             textTransform: "uppercase",
@@ -277,7 +268,7 @@ export default function Contact() {
                         </Typography>
                         <Typography
                           sx={{
-                            color: colors.secondary,
+                            color: "#ffffff",
                             fontFamily: "sans-serif",
                             fontSize: "0.75rem",
                             fontWeight: 500,
@@ -313,7 +304,7 @@ export default function Contact() {
                     <Box>
                       <Typography
                         sx={{
-                          color: colors.primary,
+                          color: "#000000",
                           fontFamily: "'Cormorant Garamond', serif",
                           fontSize: "1.6rem",
                           fontWeight: 600,
@@ -333,7 +324,7 @@ export default function Contact() {
                       />
                       <Typography
                         sx={{
-                          color: colors.textSecondary,
+                          color: "rgba(0,0,0,0.7)",
                           fontFamily: "sans-serif",
                           fontSize: "0.8rem",
                           mb: 2.5,
@@ -349,13 +340,13 @@ export default function Contact() {
                           key={index}
                           sx={{
                             bgcolor: colors.primary,
-                            color: colors.secondary,
-                            border: "1px solid rgba(201,168,76,0.2)",
+                            color: "#ffffff",
+                            border: "1px solid rgba(201,168,76,0.3)",
                             transition: "all 0.3s ease",
                             padding: "12px",
                             "&:hover": {
                               bgcolor: colors.gold,
-                              color: colors.primary,
+                              color: "#000000",
                               borderColor: colors.gold,
                               transform: "translateY(-3px)",
                               boxShadow: `0 8px 25px rgba(201,168,76,0.3)`,
@@ -393,7 +384,7 @@ export default function Contact() {
                           />
                           <Typography
                             sx={{
-                              color: colors.textSecondary,
+                              color: "rgba(0,0,0,0.8)",
                               fontFamily: "sans-serif",
                               fontSize: "0.75rem",
                               letterSpacing: 0.3,
@@ -407,15 +398,15 @@ export default function Contact() {
                   </Box>
                 </Fade>
 
-                {/* Form Box - Right Side */}
+                {/* Form Box - Right Side with Red Background */}
                 <Slide direction="up" in={fadeIn} timeout={800} style={{ transitionDelay: "400ms" }}>
                   <Paper
                     elevation={0}
                     sx={{
                       bgcolor: colors.primary,
                       borderRadius: "20px",
-                      border: "1px solid rgba(201,168,76,0.2)",
-                      boxShadow: "0 15px 50px rgba(62,74,58,0.15)",
+                      border: "1px solid rgba(201,168,76,0.3)",
+                      boxShadow: "0 15px 50px rgba(139,0,0,0.2)",
                       p: { xs: 3, md: 4 },
                       width: "100%",
                       position: "relative",
@@ -434,7 +425,7 @@ export default function Contact() {
                     <Box sx={{ mb: 2.5, textAlign: "center" }}>
                       <Typography
                         sx={{
-                          color: colors.secondary,
+                          color: "#ffffff",
                           fontFamily: "'Cormorant Garamond', serif",
                           fontSize: { xs: "1.6rem", md: "2rem" },
                           fontWeight: 600,
@@ -445,7 +436,7 @@ export default function Contact() {
                       </Typography>
                       <Typography
                         sx={{
-                          color: "rgba(244,241,234,0.6)",
+                          color: "rgba(255,255,255,0.7)",
                           fontFamily: "sans-serif",
                           fontSize: "0.75rem",
                         }}
@@ -483,13 +474,13 @@ export default function Contact() {
                         disabled={loading}
                         sx={{
                           "& .MuiInputBase-root": {
-                            bgcolor: "rgba(244,241,234,0.08)",
-                            color: colors.secondary,
+                            bgcolor: "#ffffff", // White background
+                            color: "#000000", // Black text
                             borderRadius: 2,
                             fontSize: "0.85rem",
                             transition: "all 0.3s ease",
                             "& fieldset": { 
-                              borderColor: "rgba(201,168,76,0.2)",
+                              borderColor: "rgba(201,168,76,0.4)",
                               borderWidth: "1.5px",
                             },
                             "&:hover fieldset": { 
@@ -497,14 +488,17 @@ export default function Contact() {
                             },
                             "&.Mui-focused fieldset": { 
                               borderColor: colors.gold,
-                              boxShadow: "0 0 20px rgba(201,168,76,0.08)",
+                              boxShadow: "0 0 20px rgba(201,168,76,0.1)",
                             },
                             "&:hover": {
-                              bgcolor: "rgba(244,241,234,0.12)",
+                              bgcolor: "#f5f5f5",
                             },
                           },
+                          "& .MuiInputBase-input": {
+                            color: "#000000", // Black text
+                          },
                           "& .MuiInputBase-input::placeholder": {
-                            color: "rgba(244,241,234,0.4)",
+                            color: "rgba(0,0,0,0.4)", // Black placeholder
                           },
                         }}
                       />
@@ -519,13 +513,13 @@ export default function Contact() {
                         disabled={loading}
                         sx={{
                           "& .MuiInputBase-root": {
-                            bgcolor: "rgba(244,241,234,0.08)",
-                            color: colors.secondary,
+                            bgcolor: "#ffffff", // White background
+                            color: "#000000", // Black text
                             borderRadius: 2,
                             fontSize: "0.85rem",
                             transition: "all 0.3s ease",
                             "& fieldset": { 
-                              borderColor: "rgba(201,168,76,0.2)",
+                              borderColor: "rgba(201,168,76,0.4)",
                               borderWidth: "1.5px",
                             },
                             "&:hover fieldset": { 
@@ -533,14 +527,17 @@ export default function Contact() {
                             },
                             "&.Mui-focused fieldset": { 
                               borderColor: colors.gold,
-                              boxShadow: "0 0 20px rgba(201,168,76,0.08)",
+                              boxShadow: "0 0 20px rgba(201,168,76,0.1)",
                             },
                             "&:hover": {
-                              bgcolor: "rgba(244,241,234,0.12)",
+                              bgcolor: "#f5f5f5",
                             },
                           },
+                          "& .MuiInputBase-input": {
+                            color: "#000000", // Black text
+                          },
                           "& .MuiInputBase-input::placeholder": {
-                            color: "rgba(244,241,234,0.4)",
+                            color: "rgba(0,0,0,0.4)", // Black placeholder
                           },
                         }}
                       />
@@ -556,13 +553,13 @@ export default function Contact() {
                         disabled={loading}
                         sx={{
                           "& .MuiInputBase-root": {
-                            bgcolor: "rgba(244,241,234,0.08)",
-                            color: colors.secondary,
+                            bgcolor: "#ffffff", // White background
+                            color: "#000000", // Black text
                             borderRadius: 2,
                             fontSize: "0.85rem",
                             transition: "all 0.3s ease",
                             "& fieldset": { 
-                              borderColor: "rgba(201,168,76,0.2)",
+                              borderColor: "rgba(201,168,76,0.4)",
                               borderWidth: "1.5px",
                             },
                             "&:hover fieldset": { 
@@ -570,14 +567,17 @@ export default function Contact() {
                             },
                             "&.Mui-focused fieldset": { 
                               borderColor: colors.gold,
-                              boxShadow: "0 0 20px rgba(201,168,76,0.08)",
+                              boxShadow: "0 0 20px rgba(201,168,76,0.1)",
                             },
                             "&:hover": {
-                              bgcolor: "rgba(244,241,234,0.12)",
+                              bgcolor: "#f5f5f5",
                             },
                           },
+                          "& .MuiInputBase-input": {
+                            color: "#000000", // Black text
+                          },
                           "& .MuiInputBase-input::placeholder": {
-                            color: "rgba(244,241,234,0.4)",
+                            color: "rgba(0,0,0,0.4)", // Black placeholder
                           },
                         }}
                       />
@@ -588,7 +588,7 @@ export default function Contact() {
                         sx={{
                           mt: 0.5,
                           bgcolor: colors.gold,
-                          color: colors.primary,
+                          color: "#000000",
                           py: 1.6,
                           borderRadius: 2.5,
                           fontWeight: 700,
@@ -598,8 +598,8 @@ export default function Contact() {
                           transition: "all 0.3s ease",
                           border: "2px solid transparent",
                           "&:hover": {
-                            bgcolor: colors.secondary,
-                            color: colors.primary,
+                            bgcolor: "#d4b85c",
+                            color: "#000000",
                             transform: "translateY(-2px)",
                             boxShadow: "0 12px 35px rgba(201,168,76,0.3)",
                             borderColor: colors.gold,
@@ -608,8 +608,8 @@ export default function Contact() {
                             transform: "scale(0.98)",
                           },
                           "&.Mui-disabled": {
-                            bgcolor: "rgba(244,241,234,0.1)",
-                            color: "rgba(244,241,234,0.3)",
+                            bgcolor: "rgba(255,255,255,0.1)",
+                            color: "rgba(255,255,255,0.3)",
                           },
                         }}
                       >
