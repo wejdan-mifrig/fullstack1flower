@@ -111,17 +111,17 @@ import roseSquare6 from "../../assets/images/nbb3.jpg";
 // ============================================================
 // 🎥 فيديوهات الأقسام
 // ============================================================
-import whiteVideo from "../../assets/video/vv11.mp4";
-import redVideo from "../../assets/video/vv22.mp4";
-import pinkVideo from "../../assets/video/vv33.mp4";
-import yellowVideo from "../../assets/video/vv44.mp4";
-import purpleVideo from "../../assets/video/vv11.mp4";
-import mixedVideo from "../../assets/video/vv22.mp4";
-import roseBouquetVideo from "../../assets/video/vv33.mp4";
-import weddingVideo from "../../assets/video/vv44.mp4";
-import birthdayVideo from "../../assets/video/vv11.mp4";
-import giftBoxVideo from "../../assets/video/vv33.mp4";
-import defaultVideo from "../../assets/video/vv11.mp4";
+import whiteVideo from "../../assets/video/white.mp4";
+import redVideo from "../../assets/video/Hero4.mp4";
+import pinkVideo from "../../assets/video/pink.mp4";
+import yellowVideo from "../../assets/video/yellow.mp4";
+import purpleVideo from "../../assets/video/purp.mp4";
+import mixedVideo from "../../assets/video/mix.mp4";
+import roseBouquetVideo from "../../assets/video/admin.mp4";
+import weddingVideo from "../../assets/video/wedding.mp4";
+import birthdayVideo from "../../assets/video/birthday.mp4";
+import giftBoxVideo from "../../assets/video/gift.mp4";
+
 
 const placeholder =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%233e4a3a'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='20' fill='%23f4f1ea' text-anchor='middle' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E";
