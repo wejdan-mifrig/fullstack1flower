@@ -720,7 +720,7 @@ export default function Birthday() {
         </Container>
       </Box>
 
-      {/* ===== SECTION 2 - FULL SCREEN IMAGES ===== */}
+      {/* ===== SECTION 2 - FULL SCREEN IMAGES (Moments of Pure Joy) ===== */}
       <Box
         sx={{
           bgcolor: colors.cream,
@@ -1158,7 +1158,7 @@ function MarqueeSlideshow({ images, direction = "left" }) {
   );
 }
 
-// ===== FULL IMAGE GALLERY =====
+// ===== FULL IMAGE GALLERY (Moments of Pure Joy - Updated to show original height) =====
 function FullImageGallery({ images }) {
   return (
     <Box
@@ -1184,7 +1184,7 @@ function FullImageGallery({ images }) {
               overflow: "hidden",
               boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
               border: "1px solid rgba(139,58,42,0.06)",
-              height: { xs: 350, md: 420 },
+              // Removed fixed height to allow images to show at original height
               transition: "all 0.4s ease",
               "&:hover": {
                 boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
@@ -1197,8 +1197,8 @@ function FullImageGallery({ images }) {
               alt={item.title}
               sx={{
                 width: "100%",
-                height: "100%",
-                objectFit: "cover",
+                height: "auto", // Shows image at original height
+                display: "block", // Ensures proper rendering
                 transition: "transform 0.6s ease",
               }}
             />
