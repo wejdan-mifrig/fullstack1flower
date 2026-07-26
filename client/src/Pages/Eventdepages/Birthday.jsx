@@ -22,6 +22,8 @@ import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 
 // Assets
 import heroImage from "../../assets/images/designer2.jpg";
@@ -42,6 +44,14 @@ import bt11 from "../../assets/images/bt11.jpg";
 import bt12 from "../../assets/images/bt12.jpg";
 import bt13 from "../../assets/images/bt13.jpg";
 import bt14 from "../../assets/images/bt14.jpg";
+
+// ===== Banner Images (bd95 to bd100) =====
+import bd95 from "../../assets/images/bd95.jpg";
+import bd96 from "../../assets/images/bd96.jpg";
+import bd97 from "../../assets/images/bd97.jpg";
+import bd98 from "../../assets/images/bd98.jpg";
+import bd99 from "../../assets/images/bd99.jpg";
+import bd100 from "../../assets/images/bd100.jpg";
 
 const colors = {
   deepOrange: "#8B3A2A",
@@ -91,6 +101,40 @@ const rotatingPhrases = [
   "Crafting experiences that last a lifetime.",
   "Your special day deserves something truly magical.",
   "From concept to creation, we bring your vision to life.",
+];
+
+// ===== Banner Images Data with full descriptions =====
+const bannerData = [
+  { 
+    src: bd95, 
+    title: "Elegance in Bloom", 
+    description: "This stunning floral arrangement captures the essence of natural beauty and sophisticated design. Each petal and leaf has been carefully selected and positioned to create a harmonious composition that speaks of timeless elegance. Perfect for weddings, anniversaries, and special celebrations where beauty and grace are paramount. The delicate balance of colors and textures creates a visual masterpiece that will be remembered long after the event has passed." 
+  },
+  { 
+    src: bd96, 
+    title: "Golden Moments", 
+    description: "A celebration of life's most precious milestones, captured in a moment of pure golden radiance. The warm, luminous tones evoke feelings of joy, success, and the beauty of achievement. This image represents the culmination of hard work, dedication, and the support of loved ones who have been there every step of the way. A testament to the power of celebration and the importance of marking life's significant moments with grandeur and style." 
+  },
+  { 
+    src: bd97, 
+    title: "Luxury Essence", 
+    description: "Step into a world of refined living where every detail exudes exclusivity and class. This image embodies the pinnacle of luxury design, where sophistication meets comfort in perfect harmony. The careful curation of elements creates an atmosphere of quiet opulence that speaks to those who appreciate the finer things in life. A celebration of elegance that transcends trends and stands as a timeless testament to exceptional taste." 
+  },
+  { 
+    src: bd98, 
+    title: "Timeless Beauty", 
+    description: "Some moments are destined to be remembered forever, and this image captures one such moment with breathtaking clarity. The composition speaks of enduring love, grace, and the beauty that exists in the spaces between time. Whether it's a wedding, an anniversary, or a milestone celebration, this scene reminds us that true beauty never fades—it only grows more profound with each passing year." 
+  },
+  { 
+    src: bd99, 
+    title: "Prestige Collection", 
+    description: "A curated collection of life's most elegant moments, each one a masterpiece of design and emotion. This image showcases the art of refined celebration, where every element has been thoughtfully considered to create an atmosphere of unparalleled sophistication. From the lighting to the composition, every detail works in harmony to tell a story of achievement, success, and the joy of living life to its fullest." 
+  },
+  { 
+    src: bd100, 
+    title: "Grand Celebration", 
+    description: "Where grandeur meets sophistication, this image captures the essence of life's most spectacular moments. The celebration is elevated to an art form, where every detail—from the majestic setting to the smallest decorative element—creates an immersive experience of pure luxury. This is the pinnacle of event design, where dreams become reality and memories are forged that will last a lifetime." 
+  },
 ];
 
 const textVariant = {
@@ -234,7 +278,7 @@ export default function Birthday() {
     <Box sx={{ overflowX: "hidden", bgcolor: colors.cream }}>
       <Navbar />
 
-      {/* ===== HERO SECTION - Salem Profile (First) ===== */}
+      {/* ===== HERO SECTION - Salem Profile ===== */}
       <Box
         ref={heroRef}
         sx={{
@@ -341,7 +385,7 @@ export default function Birthday() {
           />
         </Box>
 
-        {/* Text - Right side - Smaller, White & Silver */}
+        {/* Text - Right side */}
         <Box
           sx={{
             maxWidth: 520,
@@ -383,7 +427,7 @@ export default function Birthday() {
         </Box>
       </Box>
 
-      {/* ===== WHERE DREAMS TAKE SHAPE SECTION (Before Video) ===== */}
+      {/* ===== WHERE DREAMS TAKE SHAPE SECTION ===== */}
       <Box
         sx={{
           bgcolor: colors.cream,
@@ -411,7 +455,6 @@ export default function Birthday() {
               Where Dreams Take Shape
             </Typography>
 
-            {/* First Paragraph */}
             <Typography
               sx={{
                 color: colors.muted,
@@ -429,7 +472,6 @@ export default function Birthday() {
               person being celebrated.
             </Typography>
 
-            {/* Second Paragraph - New */}
             <Divider
               sx={{
                 width: 40,
@@ -452,9 +494,7 @@ export default function Birthday() {
             >
               Our creative journey begins with understanding your unique vision,
               then transforming it into a stunning celebration that reflects your
-              personality and style. We believe that the most memorable moments
-              are born from a deep connection between the designer and the dreamer,
-              working together to bring something truly magical to life.
+              personality and style.
             </Typography>
           </motion.div>
         </Container>
@@ -586,7 +626,7 @@ export default function Birthday() {
         </Container>
       </Box>
 
-      {/* ===== SECTION 1 - MARQUEE IMAGE STRIP (8 images) ===== */}
+      {/* ===== SECTION 1 - MARQUEE IMAGE STRIP ===== */}
       <Box
         sx={{
           bgcolor: colors.cream,
@@ -680,7 +720,7 @@ export default function Birthday() {
         </Container>
       </Box>
 
-      {/* ===== SECTION 2 - FULL SCREEN IMAGES WITH TEXT OVERLAY ===== */}
+      {/* ===== SECTION 2 - FULL SCREEN IMAGES (Moments of Pure Joy) ===== */}
       <Box
         sx={{
           bgcolor: colors.cream,
@@ -725,10 +765,55 @@ export default function Birthday() {
         </Container>
       </Box>
 
-      {/* ===== CONTENT SECTION 2 ===== */}
+      {/* ===== NEW: BANNER WITH TEXT (Image Left | Text Right) - بالطول الأصلي ===== */}
       <Box
         sx={{
           bgcolor: colors.warmBeige,
+          py: { xs: 6, md: 10 },
+        }}
+      >
+        <Container maxWidth="lg">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={textVariant}
+          >
+            <Typography
+              sx={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: "1.8rem", md: "2.8rem" },
+                color: colors.deepOrange,
+                textAlign: "center",
+                mb: 1,
+                fontWeight: 400,
+              }}
+            >
+               Stories Behind the Art 
+            </Typography>
+            <Typography
+              sx={{
+                color: colors.muted,
+                textAlign: "center",
+                fontFamily: "sans-serif",
+                fontSize: "0.8rem",
+                letterSpacing: 3,
+                mb: 4,
+              }}
+            >
+              — Each Image Tells a Unique Story —
+            </Typography>
+            <Divider sx={{ width: 60, mx: "auto", borderColor: colors.orange, borderWidth: 2, mb: 5 }} />
+          </motion.div>
+
+          <BannerWithText images={bannerData} />
+        </Container>
+      </Box>
+
+      {/* ===== CONTENT SECTION 2 (Before Booking) ===== */}
+      <Box
+        sx={{
+          bgcolor: colors.cream,
           py: { xs: 6, md: 10 },
         }}
       >
@@ -796,7 +881,7 @@ export default function Birthday() {
         </Container>
       </Box>
 
-      {/* ===== BOOKING DIALOG with Calendar ===== */}
+      {/* ===== BOOKING DIALOG ===== */}
       <Dialog
         open={dialogOpen}
         onClose={closeBooking}
@@ -979,7 +1064,7 @@ export default function Birthday() {
   );
 }
 
-// ===== MARQUEE IMAGE STRIP (8 images) =====
+// ===== MARQUEE IMAGE STRIP =====
 function MarqueeSlideshow({ images, direction = "left" }) {
   const doubled = [...images, ...images];
   const animName = direction === "left" ? "marqueeLeft" : "marqueeRight";
@@ -1073,7 +1158,7 @@ function MarqueeSlideshow({ images, direction = "left" }) {
   );
 }
 
-// ===== FULL IMAGE GALLERY (Full image with text overlay) =====
+// ===== FULL IMAGE GALLERY (Moments of Pure Joy - Updated to show original height) =====
 function FullImageGallery({ images }) {
   return (
     <Box
@@ -1099,7 +1184,7 @@ function FullImageGallery({ images }) {
               overflow: "hidden",
               boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
               border: "1px solid rgba(139,58,42,0.06)",
-              height: { xs: 350, md: 420 },
+              // Removed fixed height to allow images to show at original height
               transition: "all 0.4s ease",
               "&:hover": {
                 boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
@@ -1112,8 +1197,8 @@ function FullImageGallery({ images }) {
               alt={item.title}
               sx={{
                 width: "100%",
-                height: "100%",
-                objectFit: "cover",
+                height: "auto", // Shows image at original height
+                display: "block", // Ensures proper rendering
                 transition: "transform 0.6s ease",
               }}
             />
@@ -1207,6 +1292,242 @@ function FullImageGallery({ images }) {
           </Box>
         </motion.div>
       ))}
+    </Box>
+  );
+}
+
+// ===== BANNER WITH TEXT (Image Left | Text Right) - بالطول الأصلي =====
+function BannerWithText({ images }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [direction, setDirection] = useState('next');
+
+  const totalImages = images.length;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      goToNext();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
+  const goToNext = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setDirection('next');
+    setCurrentIndex((prev) => (prev + 1) % totalImages);
+    setTimeout(() => setIsTransitioning(false), 800);
+  };
+
+  const goToPrevious = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setDirection('prev');
+    setCurrentIndex((prev) => (prev - 1 + totalImages) % totalImages);
+    setTimeout(() => setIsTransitioning(false), 800);
+  };
+
+  const handleDotClick = (index) => {
+    if (isTransitioning || index === currentIndex) return;
+    setIsTransitioning(true);
+    setDirection(index > currentIndex ? 'next' : 'prev');
+    setCurrentIndex(index);
+    setTimeout(() => setIsTransitioning(false), 800);
+  };
+
+  const currentItem = images[currentIndex];
+
+  return (
+    <Box sx={{ position: 'relative' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          gap: { xs: 3, md: 5 },
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: { xs: 400, md: 420 },
+          bgcolor: colors.cream,
+          borderRadius: 4,
+          p: { xs: 3, md: 4 },
+          border: `1px solid ${colors.goldSoft}`,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+        }}
+      >
+        {/* Image - Left side - بالطول الأصلي */}
+        <Box
+          sx={{
+            flexShrink: 0,
+            width: { xs: '100%', md: 400 },
+            maxWidth: { xs: '100%', md: 400 },
+            borderRadius: 3,
+            overflow: 'hidden',
+            border: `2px solid ${colors.gold}`,
+            boxShadow: '0 8px 30px rgba(0,0,0,0.08)',
+            transition: 'all 0.5s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            bgcolor: colors.cream,
+          }}
+        >
+          <Box
+            component="img"
+            src={currentItem.src}
+            alt={currentItem.title}
+            sx={{
+              width: '100%',
+              height: 'auto',
+              objectFit: 'contain',
+              display: 'block',
+              transition: 'transform 0.6s ease',
+              '&:hover': {
+                transform: 'scale(1.03)',
+              },
+            }}
+          />
+        </Box>
+
+        {/* Text - Right side */}
+        <Box
+          sx={{
+            flex: 1,
+            textAlign: { xs: 'center', md: 'left' },
+            px: { xs: 0, md: 2 },
+          }}
+        >
+          <Typography
+            sx={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: { xs: '1.4rem', md: '1.8rem' },
+              color: colors.deepOrange,
+              fontWeight: 600,
+              mb: 1,
+            }}
+          >
+            {currentItem.title}
+          </Typography>
+
+          <Divider
+            sx={{
+              width: { xs: 60, md: 40 },
+              mx: { xs: 'auto', md: 0 },
+              borderColor: colors.gold,
+              borderWidth: 2,
+              mb: 1.5,
+            }}
+          />
+
+          <Typography
+            sx={{
+              color: colors.muted,
+              fontSize: { xs: '0.8rem', md: '0.85rem' },
+              lineHeight: 1.8,
+              fontFamily: 'sans-serif',
+              fontWeight: 300,
+              textAlign: { xs: 'center', md: 'left' },
+            }}
+          >
+            {currentItem.description}
+          </Typography>
+
+          {/* Image counter */}
+          <Box sx={{ mt: 1.5 }}>
+            <Chip
+              label={`${currentIndex + 1} / ${totalImages}`}
+              sx={{
+                bgcolor: colors.deepOrange + '10',
+                color: colors.deepOrange,
+                fontFamily: 'sans-serif',
+                fontWeight: 600,
+                fontSize: '0.7rem',
+                border: `1px solid ${colors.goldSoft}`,
+              }}
+            />
+          </Box>
+        </Box>
+      </Box>
+
+      {/* Navigation Controls */}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 2,
+          mt: 3,
+        }}
+      >
+        <IconButton
+          onClick={goToPrevious}
+          disabled={isTransitioning}
+          sx={{
+            bgcolor: 'rgba(139,58,42,0.08)',
+            color: colors.deepOrange,
+            border: `1px solid ${colors.goldSoft}`,
+            transition: 'all 0.3s ease',
+            width: 40,
+            height: 40,
+            '&:hover': {
+              bgcolor: colors.deepOrange,
+              color: colors.white,
+              transform: 'scale(1.1)',
+              boxShadow: `0 4px 20px ${colors.deepOrange}30`,
+            },
+            '&.Mui-disabled': {
+              opacity: 0.3,
+            },
+          }}
+        >
+          <ChevronLeftRoundedIcon />
+        </IconButton>
+
+        {/* Dots */}
+        <Box sx={{ display: 'flex', gap: 1.5 }}>
+          {images.map((_, i) => (
+            <Box
+              key={i}
+              onClick={() => handleDotClick(i)}
+              sx={{
+                width: i === currentIndex ? 32 : 10,
+                height: 10,
+                borderRadius: 5,
+                bgcolor: i === currentIndex ? colors.deepOrange : colors.deepOrange + '30',
+                transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                cursor: 'pointer',
+                '&:hover': {
+                  bgcolor: colors.deepOrange,
+                  transform: 'scale(1.2)',
+                },
+              }}
+            />
+          ))}
+        </Box>
+
+        <IconButton
+          onClick={goToNext}
+          disabled={isTransitioning}
+          sx={{
+            bgcolor: 'rgba(139,58,42,0.08)',
+            color: colors.deepOrange,
+            border: `1px solid ${colors.goldSoft}`,
+            transition: 'all 0.3s ease',
+            width: 40,
+            height: 40,
+            '&:hover': {
+              bgcolor: colors.deepOrange,
+              color: colors.white,
+              transform: 'scale(1.1)',
+              boxShadow: `0 4px 20px ${colors.deepOrange}30`,
+            },
+            '&.Mui-disabled': {
+              opacity: 0.3,
+            },
+          }}
+        >
+          <ChevronRightRoundedIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 }

@@ -119,21 +119,35 @@ import birthdayBox from "../../assets/images/birthday-box.jpg";
 import specialBox from "../../assets/images/special-box.jpg";
 
 const placeholder =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%233e4a3a'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='20' fill='%23f4f1ea' text-anchor='middle' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='20' fill='%23999999' text-anchor='middle' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E";
 
+// ============================================================
+// 🎨 الألوان - خلفية حمراء، منتجات وديالوجات بيضاء
+// ============================================================
 const colors = {
-  primaryGreen: "#3e4a3a",
-  primaryGreenLight: "#5c7052",
-  primaryGreenDark: "#232b20",
-  background: "#f4f1ea",
-  textPrimary: "#f4f1ea",
-  textDark: "#1c1b18",
-  textSecondary: "#d6d1c4",
-  gold: "#d4a843",
-  goldHover: "#c49a2f",
-  goldSoft: "rgba(212, 168, 67, 0.35)",
-  beige: "#f5f0e8",
+  // ألوان الخلفية الحمراء
+  bgPrimary: "#8B0000",
+  bgDark: "#660000",
+  
+  // ألوان المنتجات والبطاقات البيضاء
+  cardBg: "#ffffff",
+  cardBorder: "rgba(139,0,0,0.12)",
+  
+  // ألوان النصوص
+  textPrimary: "#000000",
+  textSecondary: "rgba(0,0,0,0.75)",
+  textMuted: "rgba(0,0,0,0.5)",
+  textWhite: "#ffffff",
+  textWhiteMuted: "rgba(255,255,255,0.7)",
+  
+  // ألوان العناصر
+  gold: "#c9a84c",
+  goldHover: "#b8943a",
+  goldSoft: "rgba(201,168,76,0.15)",
+  red: "#8B0000",
+  darkRed: "#660000",
   success: "#4caf50",
+  error: "#d32f2f",
 };
 
 const API_BASE_URL = "http://localhost:3000";
@@ -226,7 +240,9 @@ const successPulse = keyframes`
   100% { transform: scale(1); }
 `;
 
-// Success Dialog with vertical layout
+// ============================================================
+// ✅ Success Dialog - خلفية بيضاء
+// ============================================================
 const SuccessDialog = ({ open, onClose, orderData }) => {
   if (!orderData) return null;
 
@@ -235,30 +251,30 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
       open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="md"
+      maxWidth="sm"
       PaperProps={{
         sx: {
-          borderRadius: "20px",
+          borderRadius: "16px",
           overflow: "hidden",
-          animation: `${scaleIn} 0.5s ease`,
-          bgcolor: colors.primaryGreen,
-          maxHeight: "90vh",
+          animation: `${scaleIn} 0.4s ease`,
+          bgcolor: "#ffffff",
+          maxHeight: "80vh",
           overflowY: "auto",
-          my: 4,
+          my: 2,
         },
       }}
     >
-      <Box sx={{ bgcolor: colors.primaryGreen, p: { xs: 3, md: 4 } }}>
+      <Box sx={{ bgcolor: "#ffffff", p: { xs: 2, md: 3 } }}>
         {/* Success Header */}
-        <Box sx={{ textAlign: "center", mb: 4 }}>
+        <Box sx={{ textAlign: "center", mb: 3 }}>
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 0.5, type: "spring" }}
+            transition={{ duration: 0.4, type: "spring" }}
           >
             <CheckCircleIcon
               sx={{
-                fontSize: 80,
+                fontSize: 56,
                 color: colors.success,
                 animation: `${successPulse} 1.5s ease-in-out infinite`,
               }}
@@ -267,10 +283,10 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
 
           <Typography
             sx={{
-              fontSize: "2rem",
+              fontSize: "1.3rem",
               fontWeight: 700,
               color: colors.textPrimary,
-              mt: 2,
+              mt: 1.5,
             }}
           >
             Order Placed Successfully!
@@ -279,71 +295,63 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
           <Typography
             sx={{
               color: colors.textSecondary,
-              fontSize: "1rem",
-              mt: 1,
+              fontSize: "0.85rem",
+              mt: 0.5,
             }}
           >
-            Thank you for your purchase. Your order has been confirmed.
+            Thank you for your purchase.
           </Typography>
         </Box>
 
-        <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", mb: 3 }} />
+        <Divider sx={{ borderColor: "rgba(0,0,0,0.08)", mb: 2 }} />
 
         <Typography
           sx={{
-            fontSize: "1.2rem",
+            fontSize: "0.9rem",
             fontWeight: 600,
             color: colors.gold,
-            mb: 3,
+            mb: 2,
           }}
         >
           Order Details
         </Typography>
 
-        {/* All sections stacked vertically */}
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
           {/* Order Information */}
           <Paper
             sx={{
-              p: 2,
-              bgcolor: "rgba(255,255,255,0.05)",
-              borderRadius: "12px",
-              border: "1px solid rgba(255,255,255,0.1)",
+              p: 1.5,
+              bgcolor: "rgba(139,0,0,0.03)",
+              borderRadius: "10px",
+              border: "1px solid rgba(139,0,0,0.08)",
             }}
           >
-            <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem", mb: 2 }}>
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}>
               ORDER INFORMATION
             </Typography>
             
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-              <Box>
-                <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem" }}>
-                  Order Number
-                </Typography>
-                <Typography sx={{ color: colors.textPrimary, fontWeight: 600, fontSize: "0.95rem" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.8 }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem" }}>Order Number</Typography>
+                <Typography sx={{ color: colors.textPrimary, fontWeight: 600, fontSize: "0.8rem" }}>
                   #{Date.now().toString().slice(-8)}
                 </Typography>
               </Box>
 
-              <Box>
-                <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem" }}>
-                  Date
-                </Typography>
-                <Typography sx={{ color: colors.textPrimary, fontWeight: 500, fontSize: "0.9rem" }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem" }}>Date</Typography>
+                <Typography sx={{ color: colors.textPrimary, fontWeight: 500, fontSize: "0.75rem" }}>
                   {new Date().toLocaleDateString("en-US", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
+                    month: "short",
                     day: "numeric",
+                    year: "numeric",
                   })}
                 </Typography>
               </Box>
 
-              <Box>
-                <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem" }}>
-                  Payment Method
-                </Typography>
-                <Typography sx={{ color: colors.textPrimary, fontWeight: 500, textTransform: "capitalize", fontSize: "0.9rem" }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem" }}>Payment</Typography>
+                <Typography sx={{ color: colors.textPrimary, fontWeight: 500, textTransform: "capitalize", fontSize: "0.75rem" }}>
                   {orderData.paymentMethod === "cash" ? "Cash on Delivery" : "Visa / Credit Card"}
                 </Typography>
               </Box>
@@ -353,150 +361,129 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
           {/* Customer Information */}
           <Paper
             sx={{
-              p: 2,
-              bgcolor: "rgba(255,255,255,0.05)",
-              borderRadius: "12px",
-              border: "1px solid rgba(255,255,255,0.1)",
+              p: 1.5,
+              bgcolor: "rgba(139,0,0,0.03)",
+              borderRadius: "10px",
+              border: "1px solid rgba(139,0,0,0.08)",
             }}
           >
-            <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem", mb: 2 }}>
-              CUSTOMER INFORMATION
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}>
+              CUSTOMER
             </Typography>
             
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-              <Box>
-                <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem" }}>
-                  Full Name
-                </Typography>
-                <Typography sx={{ color: colors.textPrimary, fontWeight: 600, fontSize: "0.95rem" }}>
-                  {orderData.fullName}
-                </Typography>
-              </Box>
-
-              <Box>
-                <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem" }}>
-                  Email
-                </Typography>
-                <Typography sx={{ color: colors.textPrimary, fontSize: "0.9rem" }}>
-                  {orderData.email}
-                </Typography>
-              </Box>
-
-              <Box>
-                <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem" }}>
-                  Phone
-                </Typography>
-                <Typography sx={{ color: colors.textPrimary, fontSize: "0.9rem" }}>
-                  {orderData.phone}
-                </Typography>
-              </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+              <Typography sx={{ color: colors.textPrimary, fontWeight: 600, fontSize: "0.8rem" }}>
+                {orderData.fullName}
+              </Typography>
+              <Typography sx={{ color: colors.textSecondary, fontSize: "0.7rem" }}>
+                {orderData.email}
+              </Typography>
+              <Typography sx={{ color: colors.textSecondary, fontSize: "0.7rem" }}>
+                {orderData.phone}
+              </Typography>
             </Box>
           </Paper>
 
           {/* Delivery Address */}
           <Paper
             sx={{
-              p: 2,
-              bgcolor: "rgba(255,255,255,0.05)",
-              borderRadius: "12px",
-              border: "1px solid rgba(255,255,255,0.1)",
+              p: 1.5,
+              bgcolor: "rgba(139,0,0,0.03)",
+              borderRadius: "10px",
+              border: "1px solid rgba(139,0,0,0.08)",
             }}
           >
-            <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem", mb: 2 }}>
-              DELIVERY ADDRESS
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 0.5 }}>
+              DELIVERY
             </Typography>
-            <Typography sx={{ color: colors.textPrimary, fontWeight: 500, fontSize: "0.95rem" }}>
+            <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
               {orderData.address}
             </Typography>
-
             {orderData.notes && (
-              <Box sx={{ mt: 2 }}>
-                <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem" }}>
-                  Order Notes
-                </Typography>
-                <Typography sx={{ color: colors.textPrimary, fontSize: "0.9rem", fontStyle: "italic" }}>
-                  {orderData.notes}
-                </Typography>
-              </Box>
+              <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem", fontStyle: "italic", mt: 0.5 }}>
+                Note: {orderData.notes}
+              </Typography>
             )}
           </Paper>
 
           {/* Order Items */}
           <Paper
             sx={{
-              p: 2,
-              bgcolor: "rgba(255,255,255,0.05)",
-              borderRadius: "12px",
-              border: "1px solid rgba(255,255,255,0.1)",
+              p: 1.5,
+              bgcolor: "rgba(139,0,0,0.03)",
+              borderRadius: "10px",
+              border: "1px solid rgba(139,0,0,0.08)",
             }}
           >
-            <Typography sx={{ color: colors.textSecondary, fontSize: "0.75rem", mb: 2 }}>
-              ORDER ITEMS ({orderData.items.length})
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}>
+              ITEMS ({orderData.items.length})
             </Typography>
             
-            {orderData.items.map((item, index) => (
+            {orderData.items.slice(0, 3).map((item, index) => (
               <Box
                 key={index}
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  py: 1.5,
-                  borderBottom: index < orderData.items.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                  py: 0.8,
+                  borderBottom: index < Math.min(orderData.items.length, 3) - 1 ? "1px solid rgba(0,0,0,0.05)" : "none",
                 }}
               >
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                   <Box
                     component="img"
                     src={item.image ? imagesMap[item.image] || placeholder : placeholder}
                     alt={item.name}
                     sx={{
-                      width: 50,
-                      height: 50,
+                      width: 36,
+                      height: 36,
                       objectFit: "cover",
-                      borderRadius: "8px",
+                      borderRadius: "6px",
                     }}
                   />
                   <Box>
-                    <Typography sx={{ color: colors.textPrimary, fontWeight: 500, fontSize: "0.95rem" }}>
+                    <Typography sx={{ color: colors.textPrimary, fontWeight: 500, fontSize: "0.8rem" }}>
                       {item.name}
                     </Typography>
-                    <Typography sx={{ color: colors.textSecondary, fontSize: "0.8rem" }}>
-                      Quantity: {item.quantity || 1}
+                    <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem" }}>
+                      Qty: {item.quantity || 1}
                     </Typography>
                   </Box>
                 </Box>
-                <Typography sx={{ color: colors.gold, fontWeight: 600, fontSize: "0.95rem" }}>
+                <Typography sx={{ color: colors.gold, fontWeight: 600, fontSize: "0.8rem" }}>
                   ${(parseFloat(item.price || 0) * (item.quantity || 1)).toFixed(2)}
                 </Typography>
               </Box>
             ))}
 
-            <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", my: 2 }} />
+            {orderData.items.length > 3 && (
+              <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem", textAlign: "center", mt: 0.5 }}>
+                +{orderData.items.length - 3} more items
+              </Typography>
+            )}
 
-            {/* Order Summary */}
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography sx={{ color: colors.textSecondary, fontSize: "0.9rem" }}>Subtotal</Typography>
-                <Typography sx={{ color: colors.textPrimary, fontSize: "0.95rem" }}>
+            <Divider sx={{ borderColor: "rgba(0,0,0,0.05)", my: 1 }} />
+
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>Subtotal</Typography>
+                <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
                   ${orderData.subtotal.toFixed(2)}
                 </Typography>
               </Box>
-              
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography sx={{ color: colors.textSecondary, fontSize: "0.9rem" }}>Delivery Fee</Typography>
-                <Typography sx={{ color: colors.textPrimary, fontSize: "0.95rem" }}>
-                  {orderData.subtotal > 50 ? "$0.00 (Free)" : "$5.00"}
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>Delivery</Typography>
+                <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
+                  {orderData.subtotal > 50 ? "Free" : "$5.00"}
                 </Typography>
               </Box>
-              
-              <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", my: 1 }} />
-              
+              <Divider sx={{ borderColor: "rgba(0,0,0,0.05)", my: 0.5 }} />
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography sx={{ fontSize: "1.1rem", fontWeight: 700, color: colors.textPrimary }}>
-                  Total Amount
+                <Typography sx={{ fontSize: "0.9rem", fontWeight: 700, color: colors.textPrimary }}>
+                  Total
                 </Typography>
-                <Typography sx={{ fontSize: "1.5rem", fontWeight: 800, color: colors.gold }}>
+                <Typography sx={{ fontSize: "1.2rem", fontWeight: 800, color: colors.gold }}>
                   ${orderData.total.toFixed(2)}
                 </Typography>
               </Box>
@@ -507,23 +494,23 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
           <Paper
             sx={{
               display: "flex",
-              gap: 2,
+              gap: 1.5,
               alignItems: "center",
-              p: 2,
-              bgcolor: "rgba(76, 175, 80, 0.1)",
-              borderRadius: "12px",
-              border: "1px solid rgba(76, 175, 80, 0.3)",
+              p: 1.5,
+              bgcolor: "rgba(76, 175, 80, 0.06)",
+              borderRadius: "10px",
+              border: "1px solid rgba(76, 175, 80, 0.15)",
             }}
           >
-            <LocalShippingIcon sx={{ color: colors.success }} />
+            <LocalShippingIcon sx={{ color: colors.success, fontSize: "1.2rem" }} />
             <Box>
-              <Typography sx={{ color: colors.textPrimary, fontWeight: 600 }}>
+              <Typography sx={{ color: colors.textPrimary, fontWeight: 600, fontSize: "0.8rem" }}>
                 Estimated Delivery
               </Typography>
-              <Typography sx={{ color: colors.textSecondary, fontSize: "0.9rem" }}>
+              <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem" }}>
                 {new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", {
-                  weekday: "long",
-                  month: "long",
+                  weekday: "short",
+                  month: "short",
                   day: "numeric",
                 })}
               </Typography>
@@ -536,17 +523,16 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
           variant="contained"
           onClick={onClose}
           sx={{
-            mt: 3,
-            backgroundColor: colors.gold,
-            color: "#fff",
-            fontWeight: 700,
-            padding: "14px",
-            borderRadius: "30px",
-            fontSize: "1.1rem",
+            mt: 2,
+            backgroundColor: colors.red,
+            color: "#ffffff",
+            fontWeight: 600,
+            padding: "10px",
+            borderRadius: "25px",
+            fontSize: "0.9rem",
             textTransform: "none",
             "&:hover": {
-              backgroundColor: colors.goldHover,
-              transform: "scale(1.02)",
+              backgroundColor: colors.darkRed,
             },
             transition: "all 0.3s ease",
           }}
@@ -558,7 +544,9 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
   );
 };
 
-// Checkout Dialog
+// ============================================================
+// 💳 Checkout Dialog - خلفية بيضاء
+// ============================================================
 const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -687,44 +675,45 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
       open={open}
       onClose={!isSubmitting ? onClose : undefined}
       fullWidth
-      maxWidth="md"
+      maxWidth="sm"
       PaperProps={{
         sx: {
-          borderRadius: "20px",
+          borderRadius: "16px",
           overflow: "hidden",
-          animation: `${scaleIn} 0.35s ease`,
-          bgcolor: colors.primaryGreen,
-          maxHeight: "90vh",
+          animation: `${scaleIn} 0.3s ease`,
+          bgcolor: "#ffffff",
+          maxHeight: "85vh",
           overflowY: "auto",
+          my: 2,
         },
       }}
     >
-      <Box sx={{ bgcolor: colors.primaryGreen, p: { xs: 2, md: 3 } }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+      <Box sx={{ bgcolor: "#ffffff", p: { xs: 2, md: 2.5 } }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={1.5}>
           <Typography
             sx={{
-              fontSize: "1.5rem",
+              fontSize: "1.2rem",
               fontWeight: 700,
-              color: colors.textPrimary,
+              color: colors.red,
             }}
           >
             Checkout
           </Typography>
-          <IconButton onClick={!isSubmitting ? onClose : undefined} sx={{ color: colors.beige }}>
-            <CloseIcon />
+          <IconButton onClick={!isSubmitting ? onClose : undefined} sx={{ color: colors.textMuted }}>
+            <CloseIcon fontSize="small" />
           </IconButton>
         </Box>
 
-        <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", mb: 3 }} />
+        <Divider sx={{ borderColor: "rgba(139,0,0,0.08)", mb: 2 }} />
 
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={7}>
             <Typography
               sx={{
-                fontSize: "1rem",
+                fontSize: "0.8rem",
                 fontWeight: 600,
                 color: colors.gold,
-                mb: 2,
+                mb: 1.5,
               }}
             >
               Personal Information
@@ -733,17 +722,19 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
             <TextField
               fullWidth
               label="Full Name"
+              size="small"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               error={!!errors.fullName}
               helperText={errors.fullName}
               disabled={isSubmitting}
               sx={{
-                mb: 2,
-                "& .MuiInputLabel-root": { color: colors.textSecondary },
+                mb: 1.5,
+                "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
                 "& .MuiOutlinedInput-root": {
                   color: colors.textPrimary,
-                  "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                  fontSize: "0.85rem",
+                  "& fieldset": { borderColor: "rgba(139,0,0,0.15)" },
                   "&:hover fieldset": { borderColor: colors.gold },
                   "&.Mui-focused fieldset": { borderColor: colors.gold },
                 },
@@ -754,17 +745,19 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
               fullWidth
               label="Email"
               type="email"
+              size="small"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               error={!!errors.email}
               helperText={errors.email}
               disabled={isSubmitting}
               sx={{
-                mb: 2,
-                "& .MuiInputLabel-root": { color: colors.textSecondary },
+                mb: 1.5,
+                "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
                 "& .MuiOutlinedInput-root": {
                   color: colors.textPrimary,
-                  "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                  fontSize: "0.85rem",
+                  "& fieldset": { borderColor: "rgba(139,0,0,0.15)" },
                   "&:hover fieldset": { borderColor: colors.gold },
                   "&.Mui-focused fieldset": { borderColor: colors.gold },
                 },
@@ -774,35 +767,38 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
             <TextField
               fullWidth
               label="Delivery Address"
+              size="small"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               error={!!errors.address}
               helperText={errors.address}
               disabled={isSubmitting}
               sx={{
-                mb: 2,
-                "& .MuiInputLabel-root": { color: colors.textSecondary },
+                mb: 1.5,
+                "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
                 "& .MuiOutlinedInput-root": {
                   color: colors.textPrimary,
-                  "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                  fontSize: "0.85rem",
+                  "& fieldset": { borderColor: "rgba(139,0,0,0.15)" },
                   "&:hover fieldset": { borderColor: colors.gold },
                   "&.Mui-focused fieldset": { borderColor: colors.gold },
                 },
               }}
             />
 
-            <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-              <FormControl sx={{ minWidth: 120 }}>
-                <InputLabel sx={{ color: colors.textSecondary }}>Country Code</InputLabel>
+            <Box sx={{ display: "flex", gap: 1, mb: 1.5 }}>
+              <FormControl sx={{ minWidth: 100 }} size="small">
+                <InputLabel sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>Code</InputLabel>
                 <Select
                   value={countryCode}
                   onChange={(e) => setCountryCode(e.target.value)}
-                  label="Country Code"
+                  label="Code"
                   disabled={isSubmitting}
                   sx={{
                     color: colors.textPrimary,
+                    fontSize: "0.85rem",
                     "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "rgba(255,255,255,0.2)",
+                      borderColor: "rgba(139,0,0,0.15)",
                     },
                     "&:hover .MuiOutlinedInput-notchedOutline": {
                       borderColor: colors.gold,
@@ -810,12 +806,12 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                       borderColor: colors.gold,
                     },
-                    "& .MuiSvgIcon-root": { color: colors.textSecondary },
+                    "& .MuiSvgIcon-root": { color: colors.textMuted },
                   }}
                 >
                   {countryCodes.map((item) => (
-                    <MenuItem key={item.code} value={item.code}>
-                      {item.code} ({item.country})
+                    <MenuItem key={item.code} value={item.code} sx={{ fontSize: "0.8rem" }}>
+                      {item.code}
                     </MenuItem>
                   ))}
                 </Select>
@@ -823,7 +819,8 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
 
               <TextField
                 fullWidth
-                label="Phone Number"
+                label="Phone"
+                size="small"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value.replace(/[^0-9]/g, ""))}
                 error={!!errors.phoneNumber}
@@ -831,16 +828,17 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                 disabled={isSubmitting}
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start" sx={{ color: colors.textSecondary }}>
+                    <InputAdornment position="start" sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>
                       {countryCode}
                     </InputAdornment>
                   ),
                 }}
                 sx={{
-                  "& .MuiInputLabel-root": { color: colors.textSecondary },
+                  "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
                   "& .MuiOutlinedInput-root": {
                     color: colors.textPrimary,
-                    "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                    fontSize: "0.85rem",
+                    "& fieldset": { borderColor: "rgba(139,0,0,0.15)" },
                     "&:hover fieldset": { borderColor: colors.gold },
                     "&.Mui-focused fieldset": { borderColor: colors.gold },
                   },
@@ -851,17 +849,19 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
             <TextField
               fullWidth
               label="Order Notes (Optional)"
+              size="small"
               multiline
-              rows={3}
+              rows={2}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               disabled={isSubmitting}
               sx={{
-                mb: 2,
-                "& .MuiInputLabel-root": { color: colors.textSecondary },
+                mb: 1.5,
+                "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
                 "& .MuiOutlinedInput-root": {
                   color: colors.textPrimary,
-                  "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                  fontSize: "0.85rem",
+                  "& fieldset": { borderColor: "rgba(139,0,0,0.15)" },
                   "&:hover fieldset": { borderColor: colors.gold },
                   "&.Mui-focused fieldset": { borderColor: colors.gold },
                 },
@@ -872,10 +872,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
           <Grid item xs={12} md={5}>
             <Typography
               sx={{
-                fontSize: "1rem",
+                fontSize: "0.8rem",
                 fontWeight: 600,
                 color: colors.gold,
-                mb: 2,
+                mb: 1.5,
               }}
             >
               Payment Method
@@ -883,31 +883,33 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
 
             <Paper
               sx={{
-                p: 2,
-                bgcolor: "rgba(255,255,255,0.05)",
-                borderRadius: "12px",
-                border: "1px solid rgba(255,255,255,0.1)",
-                mb: 2,
+                p: 1.5,
+                bgcolor: "rgba(139,0,0,0.02)",
+                borderRadius: "10px",
+                border: "1px solid rgba(139,0,0,0.08)",
+                mb: 1.5,
               }}
             >
               <RadioGroup
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
+                sx={{ gap: 0.5 }}
               >
                 <FormControlLabel
                   value="cash"
                   control={
                     <Radio
+                      size="small"
                       sx={{
-                        color: colors.textSecondary,
+                        color: colors.textMuted,
                         "&.Mui-checked": { color: colors.gold },
                       }}
                     />
                   }
                   label={
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                      <PaymentsIcon sx={{ color: colors.textSecondary }} />
-                      <Typography sx={{ color: colors.textPrimary }}>Cash on Delivery</Typography>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                      <PaymentsIcon sx={{ color: colors.textMuted, fontSize: "1rem" }} />
+                      <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>Cash on Delivery</Typography>
                     </Box>
                   }
                   disabled={isSubmitting}
@@ -916,16 +918,17 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                   value="visa"
                   control={
                     <Radio
+                      size="small"
                       sx={{
-                        color: colors.textSecondary,
+                        color: colors.textMuted,
                         "&.Mui-checked": { color: colors.gold },
                       }}
                     />
                   }
                   label={
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                      <CreditCardIcon sx={{ color: colors.textSecondary }} />
-                      <Typography sx={{ color: colors.textPrimary }}>Visa / Credit Card</Typography>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                      <CreditCardIcon sx={{ color: colors.textMuted, fontSize: "1rem" }} />
+                      <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>Visa / Credit Card</Typography>
                     </Box>
                   }
                   disabled={isSubmitting}
@@ -936,17 +939,17 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
             <Collapse in={paymentMethod === "visa"}>
               <Paper
                 sx={{
-                  p: 2,
-                  bgcolor: "rgba(255,255,255,0.05)",
-                  borderRadius: "12px",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  p: 1.5,
+                  bgcolor: "rgba(139,0,0,0.02)",
+                  borderRadius: "10px",
+                  border: "1px solid rgba(139,0,0,0.08)",
                 }}
               >
                 <Typography
                   sx={{
-                    fontSize: "0.85rem",
-                    color: colors.textSecondary,
-                    mb: 2,
+                    fontSize: "0.7rem",
+                    color: colors.textMuted,
+                    mb: 1,
                   }}
                 >
                   Card Details
@@ -956,17 +959,19 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                   fullWidth
                   label="Card Number"
                   placeholder="1234 5678 9012 3456"
+                  size="small"
                   value={cardNumber}
                   onChange={handleCardNumberChange}
                   error={!!errors.cardNumber}
                   helperText={errors.cardNumber}
                   disabled={isSubmitting}
                   sx={{
-                    mb: 2,
-                    "& .MuiInputLabel-root": { color: colors.textSecondary },
+                    mb: 1,
+                    "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
                     "& .MuiOutlinedInput-root": {
                       color: colors.textPrimary,
-                      "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                      fontSize: "0.85rem",
+                      "& fieldset": { borderColor: "rgba(139,0,0,0.15)" },
                       "&:hover fieldset": { borderColor: colors.gold },
                       "&.Mui-focused fieldset": { borderColor: colors.gold },
                     },
@@ -976,38 +981,42 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                 <TextField
                   fullWidth
                   label="Card Holder Name"
+                  size="small"
                   value={cardName}
                   onChange={(e) => setCardName(e.target.value)}
                   error={!!errors.cardName}
                   helperText={errors.cardName}
                   disabled={isSubmitting}
                   sx={{
-                    mb: 2,
-                    "& .MuiInputLabel-root": { color: colors.textSecondary },
+                    mb: 1,
+                    "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
                     "& .MuiOutlinedInput-root": {
                       color: colors.textPrimary,
-                      "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                      fontSize: "0.85rem",
+                      "& fieldset": { borderColor: "rgba(139,0,0,0.15)" },
                       "&:hover fieldset": { borderColor: colors.gold },
                       "&.Mui-focused fieldset": { borderColor: colors.gold },
                     },
                   }}
                 />
 
-                <Box sx={{ display: "flex", gap: 2 }}>
+                <Box sx={{ display: "flex", gap: 1 }}>
                   <TextField
                     fullWidth
-                    label="Expiry Date"
+                    label="Expiry"
                     placeholder="MM/YY"
+                    size="small"
                     value={cardExpiry}
                     onChange={handleCardExpiryChange}
                     error={!!errors.cardExpiry}
                     helperText={errors.cardExpiry}
                     disabled={isSubmitting}
                     sx={{
-                      "& .MuiInputLabel-root": { color: colors.textSecondary },
+                      "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
                       "& .MuiOutlinedInput-root": {
                         color: colors.textPrimary,
-                        "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                        fontSize: "0.85rem",
+                        "& fieldset": { borderColor: "rgba(139,0,0,0.15)" },
                         "&:hover fieldset": { borderColor: colors.gold },
                         "&.Mui-focused fieldset": { borderColor: colors.gold },
                       },
@@ -1018,16 +1027,18 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                     fullWidth
                     label="CVV"
                     placeholder="123"
+                    size="small"
                     value={cardCvv}
                     onChange={(e) => setCardCvv(e.target.value.replace(/[^0-9]/g, "").slice(0, 4))}
                     error={!!errors.cardCvv}
                     helperText={errors.cardCvv}
                     disabled={isSubmitting}
                     sx={{
-                      "& .MuiInputLabel-root": { color: colors.textSecondary },
+                      "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
                       "& .MuiOutlinedInput-root": {
                         color: colors.textPrimary,
-                        "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                        fontSize: "0.85rem",
+                        "& fieldset": { borderColor: "rgba(139,0,0,0.15)" },
                         "&:hover fieldset": { borderColor: colors.gold },
                         "&.Mui-focused fieldset": { borderColor: colors.gold },
                       },
@@ -1041,33 +1052,33 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
 
         <Box
           sx={{
-            mt: 3,
-            p: 2,
-            bgcolor: "rgba(255,255,255,0.05)",
-            borderRadius: "12px",
-            border: "1px solid rgba(255,255,255,0.1)",
+            mt: 2,
+            p: 1.5,
+            bgcolor: "rgba(139,0,0,0.02)",
+            borderRadius: "10px",
+            border: "1px solid rgba(139,0,0,0.08)",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-            <Typography sx={{ color: colors.textSecondary }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>
               Items ({cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0)})
             </Typography>
-            <Typography sx={{ color: colors.textPrimary }}>
+            <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
               ${cartItems.reduce((sum, item) => sum + (parseFloat(item.price || 0) * (item.quantity || 1)), 0).toFixed(2)}
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-            <Typography sx={{ color: colors.textSecondary }}>Delivery</Typography>
-            <Typography sx={{ color: colors.textPrimary }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>Delivery</Typography>
+            <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
               {total > 50 ? "FREE" : "$5.00"}
             </Typography>
           </Box>
-          <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", my: 1 }} />
+          <Divider sx={{ borderColor: "rgba(139,0,0,0.08)", my: 0.5 }} />
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography sx={{ fontSize: "1.1rem", fontWeight: 700, color: colors.textPrimary }}>
+            <Typography sx={{ fontSize: "0.9rem", fontWeight: 700, color: colors.textPrimary }}>
               Total
             </Typography>
-            <Typography sx={{ fontSize: "1.5rem", fontWeight: 800, color: colors.gold }}>
+            <Typography sx={{ fontSize: "1.2rem", fontWeight: 800, color: colors.gold }}>
               ${(total + (total > 50 ? 0 : 5)).toFixed(2)}
             </Typography>
           </Box>
@@ -1079,24 +1090,20 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
           onClick={handleSubmit}
           disabled={isSubmitting}
           sx={{
-            mt: 3,
-            backgroundColor: colors.gold,
-            color: "#fff",
-            fontWeight: 700,
-            padding: "14px",
-            borderRadius: "30px",
-            fontSize: "1.1rem",
+            mt: 2,
+            backgroundColor: colors.red,
+            color: "#ffffff",
+            fontWeight: 600,
+            padding: "10px",
+            borderRadius: "25px",
+            fontSize: "0.9rem",
             textTransform: "none",
-            backgroundImage: `linear-gradient(90deg, ${colors.gold} 0%, ${colors.goldHover} 25%, ${colors.gold} 50%, ${colors.goldHover} 75%, ${colors.gold} 100%)`,
-            backgroundSize: "200% 100%",
-            transition: "all 0.35s ease",
-            "&:hover": !isSubmitting && {
-              transform: "scale(1.02)",
-              animation: `${shimmer} 1.6s linear infinite`,
+            "&:hover": {
+              backgroundColor: colors.darkRed,
             },
             "&.Mui-disabled": {
-              backgroundColor: "rgba(255,255,255,0.1)",
-              color: colors.textSecondary,
+              backgroundColor: "rgba(139,0,0,0.3)",
+              color: "rgba(255,255,255,0.5)",
             },
           }}
         >
@@ -1169,7 +1176,7 @@ const Cart = () => {
     updateCart(updatedCart);
     setSnackbar({
       open: true,
-      message: `"${productName}" has been removed from your cart`,
+      message: `"${productName}" has been removed`,
       severity: "info"
     });
   };
@@ -1234,7 +1241,7 @@ const Cart = () => {
       <Box
         sx={{
           minHeight: "100vh",
-          bgcolor: colors.primaryGreen,
+          bgcolor: colors.bgPrimary,
           display: "flex",
           flexDirection: "column",
         }}
@@ -1250,8 +1257,8 @@ const Cart = () => {
             textAlign: "center",
             py: { xs: 4, md: 8 },
             px: 2,
-            mt:20,
-            mb:20
+            mt: 20,
+            mb: 20
           }}
         >
           <motion.div
@@ -1266,7 +1273,7 @@ const Cart = () => {
               sx={{
                 fontSize: 100,
                 color: colors.gold,
-                opacity: 0.3,
+                opacity: 0.5,
                 mb: 3,
               }}
             />
@@ -1284,7 +1291,7 @@ const Cart = () => {
               sx={{
                 fontSize: { xs: "2rem", md: "3rem" },
                 fontWeight: 700,
-                color: colors.textPrimary,
+                color: colors.textWhite,
                 mb: 2,
               }}
             >
@@ -1292,7 +1299,7 @@ const Cart = () => {
             </Typography>
             <Typography
               sx={{
-                color: colors.textSecondary,
+                color: colors.textWhiteMuted,
                 fontSize: "1.1rem",
                 mb: 4,
                 maxWidth: 400,
@@ -1306,7 +1313,7 @@ const Cart = () => {
               onClick={() => navigate("/shop")}
               sx={{
                 backgroundColor: colors.gold,
-                color: "#fff",
+                color: "#ffffff",
                 fontWeight: 600,
                 padding: "12px 40px",
                 borderRadius: "30px",
@@ -1332,10 +1339,9 @@ const Cart = () => {
     <Box 
       sx={{
         minHeight: "100vh",
-        bgcolor: colors.primaryGreen,
+        bgcolor: colors.bgPrimary,
         display: "flex",
         flexDirection: "column",
-        
       }}
     >
       <Navbar />
@@ -1351,10 +1357,8 @@ const Cart = () => {
           zIndex: 1,
           px: { xs: 2, md: 3 },
           py: { xs: 4, md: 6 },
-          mt: { xs: 8, md: 12 },
-          mt:15,
-          mb:15
-
+          mt: 15,
+          mb: 15
         }}
       >
         <motion.div
@@ -1384,7 +1388,7 @@ const Cart = () => {
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: { xs: "2rem", md: "3.2rem" },
               fontWeight: 600,
-              color: colors.textPrimary,
+              color: colors.textWhite,
               mb: 1,
             }}
           >
@@ -1416,14 +1420,15 @@ const Cart = () => {
             onClick={clearCart}
             startIcon={<DeleteIcon />}
             sx={{
-              color: colors.textSecondary,
+              color: colors.textWhiteMuted,
               borderColor: "rgba(255,255,255,0.2)",
               "&:hover": {
                 borderColor: "#ff6b6b",
                 color: "#ff6b6b",
-                backgroundColor: "rgba(255,107,107,0.1)",
+                backgroundColor: "rgba(255,107,107,0.08)",
               },
               textTransform: "none",
+              fontSize: "0.8rem",
             }}
           >
             Clear Cart
@@ -1456,19 +1461,19 @@ const Cart = () => {
             >
               <Paper
                 sx={{
-                  p: { xs: 2, md: 3 },
-                  bgcolor: "rgba(255,255,255,0.05)",
-                  backdropFilter: "blur(10px)",
+                  p: { xs: 2, md: 2.5 },
+                  bgcolor: "#ffffff",
                   borderRadius: "16px",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  border: "1px solid rgba(139,0,0,0.08)",
                   display: "flex",
                   flexDirection: { xs: "column", sm: "row" },
                   alignItems: "center",
                   gap: { xs: 2, sm: 3 },
                   transition: "all 0.3s ease",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
                   "&:hover": {
                     borderColor: colors.goldSoft,
-                    boxShadow: `0 8px 30px rgba(0,0,0,0.3)`,
+                    boxShadow: `0 8px 30px rgba(0,0,0,0.12)`,
                   },
                 }}
               >
@@ -1480,8 +1485,8 @@ const Cart = () => {
                     e.target.src = placeholder;
                   }}
                   sx={{
-                    width: { xs: 100, sm: 120 },
-                    height: { xs: 100, sm: 120 },
+                    width: { xs: 80, sm: 100 },
+                    height: { xs: 80, sm: 100 },
                     objectFit: "cover",
                     borderRadius: "12px",
                     flexShrink: 0,
@@ -1508,7 +1513,7 @@ const Cart = () => {
                   <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
                     <Typography
                       sx={{
-                        fontSize: "1.1rem",
+                        fontSize: "1rem",
                         fontWeight: 600,
                         color: colors.textPrimary,
                         cursor: "pointer",
@@ -1525,8 +1530,9 @@ const Cart = () => {
                       sx={{
                         mt: 0.5,
                         backgroundColor: colors.gold,
-                        color: "#fff",
+                        color: "#ffffff",
                         fontWeight: "bold",
+                        fontSize: "0.7rem",
                       }}
                     />
                   </Box>
@@ -1535,32 +1541,33 @@ const Cart = () => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      gap: 1,
-                      backgroundColor: "rgba(255,255,255,0.05)",
+                      gap: 0.5,
+                      backgroundColor: "rgba(139,0,0,0.04)",
                       borderRadius: "30px",
-                      padding: "4px",
+                      padding: "2px",
                     }}
                   >
                     <IconButton
                       size="small"
                       onClick={() => decreaseQuantity(item.id)}
                       sx={{
-                        color: colors.textSecondary,
+                        color: colors.textMuted,
                         "&:hover": {
-                          backgroundColor: "rgba(255,255,255,0.1)",
+                          backgroundColor: "rgba(139,0,0,0.06)",
                           color: colors.gold,
                         },
                       }}
                     >
-                      <RemoveIcon />
+                      <RemoveIcon fontSize="small" />
                     </IconButton>
 
                     <Typography
                       sx={{
                         color: colors.textPrimary,
                         fontWeight: 600,
-                        minWidth: 30,
+                        minWidth: 25,
                         textAlign: "center",
+                        fontSize: "0.9rem",
                       }}
                     >
                       {item.quantity || 1}
@@ -1570,14 +1577,14 @@ const Cart = () => {
                       size="small"
                       onClick={() => increaseQuantity(item.id)}
                       sx={{
-                        color: colors.textSecondary,
+                        color: colors.textMuted,
                         "&:hover": {
-                          backgroundColor: "rgba(255,255,255,0.1)",
+                          backgroundColor: "rgba(139,0,0,0.06)",
                           color: colors.gold,
                         },
                       }}
                     >
-                      <AddIcon />
+                      <AddIcon fontSize="small" />
                     </IconButton>
                   </Box>
 
@@ -1585,8 +1592,8 @@ const Cart = () => {
                     sx={{
                       color: colors.gold,
                       fontWeight: 700,
-                      fontSize: "1.1rem",
-                      minWidth: 80,
+                      fontSize: "1rem",
+                      minWidth: 70,
                       textAlign: "center",
                     }}
                   >
@@ -1596,14 +1603,14 @@ const Cart = () => {
                   <IconButton
                     onClick={() => removeItem(item.id, item.name)}
                     sx={{
-                      color: "rgba(255,255,255,0.3)",
+                      color: "rgba(139,0,0,0.2)",
                       "&:hover": {
                         color: "#ff6b6b",
-                        backgroundColor: "rgba(255,107,107,0.1)",
+                        backgroundColor: "rgba(255,107,107,0.06)",
                       },
                     }}
                   >
-                    <DeleteIcon />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Box>
               </Paper>
@@ -1616,36 +1623,36 @@ const Cart = () => {
             width: "100%",
             maxWidth: 1000,
             mt: 4,
-            p: { xs: 3, md: 4 },
-            bgcolor: "rgba(255,255,255,0.05)",
-            backdropFilter: "blur(10px)",
+            p: { xs: 3, md: 3.5 },
+            bgcolor: "#ffffff",
             borderRadius: "16px",
-            border: "1px solid rgba(255,255,255,0.1)",
+            border: "1px solid rgba(139,0,0,0.08)",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
           }}
         >
           <Typography
             sx={{
-              fontSize: "1.5rem",
+              fontSize: "1.2rem",
               fontWeight: 700,
               color: colors.textPrimary,
-              mb: 2,
+              mb: 1.5,
               textAlign: "left",
             }}
           >
             Order Summary
           </Typography>
 
-          <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", mb: 2 }} />
+          <Divider sx={{ borderColor: "rgba(139,0,0,0.08)", mb: 1.5 }} />
 
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              mb: 1,
+              mb: 0.5,
             }}
           >
-            <Typography sx={{ color: colors.textSecondary }}>
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.9rem" }}>
               Items ({getTotalItems()})
             </Typography>
             <Typography sx={{ color: colors.textPrimary }}>
@@ -1658,16 +1665,16 @@ const Cart = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              mb: 1,
+              mb: 0.5,
             }}
           >
-            <Typography sx={{ color: colors.textSecondary }}>Delivery</Typography>
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.9rem" }}>Delivery</Typography>
             <Typography sx={{ color: colors.textPrimary }}>
               {calculateTotal() > 50 ? "FREE" : "$5.00"}
             </Typography>
           </Box>
 
-          <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", my: 2 }} />
+          <Divider sx={{ borderColor: "rgba(139,0,0,0.08)", my: 1.5 }} />
 
           <Box
             sx={{
@@ -1678,7 +1685,7 @@ const Cart = () => {
           >
             <Typography
               sx={{
-                fontSize: "1.3rem",
+                fontSize: "1.1rem",
                 fontWeight: 700,
                 color: colors.textPrimary,
               }}
@@ -1687,7 +1694,7 @@ const Cart = () => {
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.8rem",
+                fontSize: "1.5rem",
                 fontWeight: 800,
                 color: colors.gold,
               }}
@@ -1701,20 +1708,17 @@ const Cart = () => {
             variant="contained"
             onClick={handleCheckout}
             sx={{
-              mt: 3,
-              backgroundColor: colors.gold,
-              color: "#fff",
+              mt: 2.5,
+              backgroundColor: colors.red,
+              color: "#ffffff",
               fontWeight: 700,
-              padding: "14px",
+              padding: "12px",
               borderRadius: "30px",
-              fontSize: "1.1rem",
+              fontSize: "1rem",
               textTransform: "none",
-              backgroundImage: `linear-gradient(90deg, ${colors.gold} 0%, ${colors.goldHover} 25%, ${colors.gold} 50%, ${colors.goldHover} 75%, ${colors.gold} 100%)`,
-              backgroundSize: "200% 100%",
-              transition: "all 0.35s ease",
               "&:hover": {
-                transform: "scale(1.02)",
-                animation: `${shimmer} 1.6s linear infinite`,
+                backgroundColor: colors.darkRed,
+                transform: "scale(1.01)",
               },
             }}
           >
@@ -1741,25 +1745,25 @@ const Cart = () => {
         open={Boolean(selectedProduct)}
         onClose={() => setSelectedProduct(null)}
         fullWidth
-        maxWidth="sm"
+        maxWidth="xs"
         PaperProps={{
           sx: {
-            borderRadius: "20px",
+            borderRadius: "16px",
             overflow: "hidden",
-            animation: `${scaleIn} 0.35s ease`,
-            bgcolor: colors.primaryGreen,
+            animation: `${scaleIn} 0.3s ease`,
+            bgcolor: "#ffffff",
           },
         }}
       >
         {selectedProduct && (
-          <Box sx={{ bgcolor: colors.primaryGreen }}>
-            <Box display="flex" justifyContent="flex-end" p={1}>
-              <IconButton onClick={() => setSelectedProduct(null)} sx={{ color: colors.beige }}>
-                <CloseIcon />
+          <Box sx={{ bgcolor: "#ffffff" }}>
+            <Box display="flex" justifyContent="flex-end" p={0.5}>
+              <IconButton onClick={() => setSelectedProduct(null)} sx={{ color: colors.textMuted }}>
+                <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
 
-            <DialogContent sx={{ textAlign: "center", pt: 0 }}>
+            <DialogContent sx={{ textAlign: "center", pt: 0, pb: 2 }}>
               <Box
                 component="img"
                 src={getImage(selectedProduct.image)}
@@ -1769,20 +1773,20 @@ const Cart = () => {
                 }}
                 sx={{
                   width: "100%",
-                  maxHeight: "400px",
+                  maxHeight: "250px",
                   objectFit: "cover",
-                  borderRadius: "16px",
-                  mb: 2,
-                  animation: `${fadeIn} 0.5s ease`,
+                  borderRadius: "12px",
+                  mb: 1.5,
+                  animation: `${fadeIn} 0.4s ease`,
                 }}
               />
 
               <Typography
                 sx={{
-                  fontSize: "1.8rem",
+                  fontSize: "1.2rem",
                   fontWeight: "bold",
-                  color: colors.beige,
-                  mb: 1,
+                  color: colors.red,
+                  mb: 0.5,
                 }}
               >
                 {selectedProduct.name}
@@ -1790,10 +1794,10 @@ const Cart = () => {
 
               <Typography
                 sx={{
-                  color: "rgba(245,240,232,0.7)",
-                  mb: 2,
-                  fontSize: "1rem",
-                  lineHeight: 1.6,
+                  color: colors.textSecondary,
+                  mb: 1.5,
+                  fontSize: "0.85rem",
+                  lineHeight: 1.5,
                 }}
               >
                 {selectedProduct.description || "No description available"}
@@ -1801,10 +1805,10 @@ const Cart = () => {
 
               <Typography
                 sx={{
-                  fontSize: "1.8rem",
+                  fontSize: "1.3rem",
                   fontWeight: "bold",
                   color: colors.gold,
-                  mb: 3,
+                  mb: 2,
                 }}
               >
                 ${selectedProduct.price ? Number(selectedProduct.price).toFixed(2) : "0.00"}
@@ -1814,15 +1818,15 @@ const Cart = () => {
                 fullWidth
                 variant="contained"
                 sx={{
-                  backgroundColor: colors.gold,
-                  color: "#fff",
-                  fontWeight: "bold",
-                  padding: "12px",
-                  borderRadius: "30px",
-                  fontSize: "1.1rem",
+                  backgroundColor: colors.red,
+                  color: "#ffffff",
+                  fontWeight: 600,
+                  padding: "10px",
+                  borderRadius: "25px",
+                  fontSize: "0.9rem",
                   textTransform: "none",
                   "&:hover": {
-                    backgroundColor: colors.goldHover,
+                    backgroundColor: colors.darkRed,
                   },
                 }}
                 onClick={() => {
@@ -1850,7 +1854,7 @@ const Cart = () => {
             width: "100%",
             borderRadius: "12px",
             fontWeight: "bold",
-            fontSize: "1rem",
+            fontSize: "0.9rem",
           }}
         >
           {snackbar.message}

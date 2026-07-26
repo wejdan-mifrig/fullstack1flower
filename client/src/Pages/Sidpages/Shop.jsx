@@ -100,15 +100,9 @@ import birthdayBox from "../../assets/images/birthday-box.jpg";
 import specialBox from "../../assets/images/special-box.jpg";
 
 // ============================================================
-// 🖼️ صور السكشن الأول (المتداولة)
+// 🖼️ فيديو الخلفية الرئيسية للسكشن الأول
 // ============================================================
-import roseSquare1 from "../../assets/images/nbb4.jpg";
-import roseSquare2 from "../../assets/images/nbb6.jpg";
-import roseSquare3 from "../../assets/images/nbb5.jpg";
-// صور إضافية للتداول
-import roseSquare4 from "../../assets/images/nbb1.jpg";
-import roseSquare5 from "../../assets/images/nbb2.jpg";
-import roseSquare6 from "../../assets/images/nbb3.jpg";
+import storeVideo from "../../assets/video/store22.mp4";
 
 // ============================================================
 // 🎥 فيديوهات الأقسام
@@ -258,16 +252,6 @@ const shimmer = keyframes`
 const underlineGrow = keyframes`
   from { width: 0; }
   to { width: 80px; }
-`;
-
-const scrollText = keyframes`
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-`;
-
-const scrollImages = keyframes`
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 `;
 
 // ============================================================
@@ -685,24 +669,18 @@ const Shop = () => {
   // 🛒 دالة إضافة المنتج إلى السلة
   // ============================================================
   const addToCart = (product) => {
-    // جلب السلة الحالية من localStorage
     const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
     
-    // التحقق إذا كان المنتج موجوداً بالفعل
     const existingIndex = existingCart.findIndex(item => item.id === product.id);
     
     if (existingIndex !== -1) {
-      // زيادة الكمية إذا كان موجوداً
       existingCart[existingIndex].quantity = (existingCart[existingIndex].quantity || 1) + 1;
     } else {
-      // إضافة منتج جديد مع كمية 1
       existingCart.push({ ...product, quantity: 1 });
     }
     
-    // حفظ في localStorage
     localStorage.setItem("cart", JSON.stringify(existingCart));
     
-    // إظهار رسالة تأكيد - باللغة الإنجليزية بدون رموز
     setSnackbar({
       open: true,
       message: `"${product.name}" has been added to your cart!`,
@@ -735,22 +713,6 @@ const Shop = () => {
     const matchKey = Object.keys(videosMap).find((key) => name.includes(key));
     return matchKey ? videosMap[matchKey] : whiteVideo;
   };
-
-  const offers = [
-    "20% OFF on Rose Bouquets",
-    "Free Delivery on Orders Over $50",
-    "Buy 2 Get 1 Free on Mixed Flowers",
-    "Special Gift Box with Every Purchase",
-    "Seasonal Collection - Up to 30% OFF",
-  ];
-
-  // صور للتداول (ضعف الكمية عشان التكرار)
-  const rotatingImages = [
-    roseSquare1, roseSquare2, roseSquare3,
-    roseSquare4, roseSquare5, roseSquare6,
-    roseSquare1, roseSquare2, roseSquare3,
-    roseSquare4, roseSquare5, roseSquare6,
-  ];
 
   if (loading) {
     return (
@@ -829,149 +791,86 @@ const Shop = () => {
       >
 
         {/* ============================================================
-            🏷️ القسم الأول: مع صور متداولة (مبعد عن النافبار)
+            🏷️ القسم الأول: فيديو خلفية store22.mp4 مع جملة صغيرة
             ============================================================ */}
         <Box
           sx={{
-            width: "100%",
-            pt: { xs: 12, md: 18 },
-            pb: { xs: 6, md: 8 },
-            mb: { xs: 2, md: 4 },
+            width: "100vw",
+            height: "100vh",
+            position: "relative",
+            overflow: "hidden",
+            marginLeft: "calc(-50vw + 50%)",
+            marginRight: "calc(-50vw + 50%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={textVariant}
-          >
-            <Typography
-              sx={{
-                fontSize: "0.8rem",
-                letterSpacing: "5px",
-                color: colors.gold,
-                textTransform: "uppercase",
-                fontWeight: 700,
-                mb: 1.5,
-              }}
-            >
-              Our Shop
-            </Typography>
-          </motion.div>
+          {/* الفيديو كخلفية - يظهر فوراً */}
+          <Box
+            component="video"
+            src={storeVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              zIndex: 0,
+            }}
+          />
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={textVariant}
+          {/* طبقة تعتيم خفيفة جداً */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: "rgba(0,0,0,0.08)",
+              zIndex: 1,
+            }}
+          />
+
+          {/* ✅ الجملة - أصغر حجماً */}
+          <Box
+            sx={{
+              position: "relative",
+              zIndex: 2,
+              textAlign: "center",
+              px: 3,
+            }}
           >
             <Typography
               sx={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: { xs: "2.4rem", md: "3.8rem" },
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.8rem" },
                 fontWeight: 600,
-                color: colors.textPrimary,
-                mb: 1,
-                lineHeight: 1.2,
+                color: "#fff",
+                textShadow: "0 2px 20px rgba(0,0,0,0.4)",
+                letterSpacing: "1px",
               }}
             >
-              Fresh Blooms,
-              <br />
-              <span style={{ color: colors.gold }}>Thoughtfully Arranged</span>
+              Blossoms &amp; Elegance
             </Typography>
-          </motion.div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={textVariant}
-            style={{ width: "100%", marginTop: "20px" }}
-          >
+            {/* خط ذهبي صغير تحت الجملة */}
             <Box
               sx={{
-                width: "100%",
-                overflow: "hidden",
-                bgcolor: "#ffffff",
-                py: 1.5,
-                borderRadius: "8px",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                width: 50,
+                height: "2px",
+                background: `linear-gradient(90deg, transparent, ${colors.gold}, transparent)`,
+                mx: "auto",
+                mt: 1.5,
               }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  animation: `${scrollText} 25s linear infinite`,
-                  whiteSpace: "nowrap",
-                  gap: 4,
-                }}
-              >
-                {[...offers, ...offers].map((offer, index) => (
-                  <Typography
-                    key={index}
-                    sx={{
-                      color: "#000000",
-                      fontWeight: 600,
-                      fontSize: { xs: "0.85rem", md: "1rem" },
-                      letterSpacing: "1px",
-                      px: 2,
-                    }}
-                  >
-                    {offer} ★
-                  </Typography>
-                ))}
-              </Box>
-            </Box>
-          </motion.div>
-
-          {/* صور متداولة بشكل لا نهائي */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={textVariant}
-            style={{ width: "100%", marginTop: "40px", overflow: "hidden" }}
-          >
-            <Box
-              sx={{
-                width: "100%",
-                overflow: "hidden",
-                position: "relative",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  animation: `${scrollImages} 30s linear infinite`,
-                  gap: 3,
-                  width: "max-content",
-                }}
-              >
-                {rotatingImages.map((img, index) => (
-                  <Box
-                    key={index}
-                    component="img"
-                    src={img}
-                    alt={`Rose ${index}`}
-                    sx={{
-                      width: 200,
-                      height: 200,
-                      objectFit: "cover",
-                      borderRadius: "16px",
-                      boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
-                      border: `2px solid ${colors.goldSoft}`,
-                      flexShrink: 0,
-                      transition: "transform 0.4s ease, border-color 0.4s ease",
-                      "&:hover": {
-                        transform: "scale(1.05)",
-                        borderColor: colors.gold,
-                      },
-                    }}
-                  />
-                ))}
-              </Box>
-            </Box>
-          </motion.div>
+            />
+          </Box>
         </Box>
 
         {/* ============================================================
@@ -1002,7 +901,6 @@ const Shop = () => {
           );
         })}
         
-        {/* مسافة أخيرة قبل الفوتر */}
         <Box sx={{ height: { xs: 60, md: 80 } }} />
       </Container>
 
@@ -1110,7 +1008,6 @@ const Shop = () => {
         )}
       </Dialog>
 
-      {/* Snackbar for notifications */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
