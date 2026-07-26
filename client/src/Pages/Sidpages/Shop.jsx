@@ -100,9 +100,9 @@ import birthdayBox from "../../assets/images/birthday-box.jpg";
 import specialBox from "../../assets/images/special-box.jpg";
 
 // ============================================================
-// 🖼️ صورة الخلفية الرئيسية للسكشن الأول
+// 🖼️ فيديو الخلفية الرئيسية للسكشن الأول
 // ============================================================
-import storeBackground from "../../assets/images/store.jpg";
+import storeVideo from "../../assets/video/store22.mp4";
 
 // ============================================================
 // 🎥 فيديوهات الأقسام
@@ -791,33 +791,87 @@ const Shop = () => {
       >
 
         {/* ============================================================
-            🏷️ القسم الأول: خلفية صورة store.jpg تمتد من اليمين لليسار
+            🏷️ القسم الأول: فيديو خلفية store22.mp4 مع جملة صغيرة
             ============================================================ */}
         <Box
           sx={{
             width: "100vw",
             height: "100vh",
-            backgroundImage: `url(${storeBackground})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
             position: "relative",
+            overflow: "hidden",
+            marginLeft: "calc(-50vw + 50%)",
+            marginRight: "calc(-50vw + 50%)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginLeft: "calc(-50vw + 50%)",
-            marginRight: "calc(-50vw + 50%)",
-            "&::before": {
-              content: '""',
+          }}
+        >
+          {/* الفيديو كخلفية - يظهر فوراً */}
+          <Box
+            component="video"
+            src={storeVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              zIndex: 0,
+            }}
+          />
+
+          {/* طبقة تعتيم خفيفة جداً */}
+          <Box
+            sx={{
               position: "absolute",
               top: 0,
               left: 0,
               right: 0,
               bottom: 0,
               background: "rgba(0,0,0,0.08)",
-            }
-          }}
-        />
+              zIndex: 1,
+            }}
+          />
+
+          {/* ✅ الجملة - أصغر حجماً */}
+          <Box
+            sx={{
+              position: "relative",
+              zIndex: 2,
+              textAlign: "center",
+              px: 3,
+            }}
+          >
+            <Typography
+              sx={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.8rem" },
+                fontWeight: 600,
+                color: "#fff",
+                textShadow: "0 2px 20px rgba(0,0,0,0.4)",
+                letterSpacing: "1px",
+              }}
+            >
+              Blossoms &amp; Elegance
+            </Typography>
+
+            {/* خط ذهبي صغير تحت الجملة */}
+            <Box
+              sx={{
+                width: 50,
+                height: "2px",
+                background: `linear-gradient(90deg, transparent, ${colors.gold}, transparent)`,
+                mx: "auto",
+                mt: 1.5,
+              }}
+            />
+          </Box>
+        </Box>
 
         {/* ============================================================
             🎨 الكولكشنات مع تقسيم الألوان
