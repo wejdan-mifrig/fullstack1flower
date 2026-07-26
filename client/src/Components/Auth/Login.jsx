@@ -1,4 +1,5 @@
-import React, { useState } from "react"; // تم إضافة useState هنا
+import React, { useState } from "react";
+
 import {
   Box,
   Paper,
@@ -6,28 +7,29 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 
-import {useAuth} from "../../Hooks/useAuth"; 
+import { useAuth } from "../../Hooks/useAuth";
 import videoBg from "../../assets/video/login.mp4";
 
 const mainColor = "#3e4a3a";
 
 export default function Login() {
-  const navigate = useNavigate();
   const { login } = useAuth();
-  
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
 
-  const handleLogin = () => {
-    login(userData);
+  const handleLogin = async () => {
+    await login(userData);
+
     setUserData({
       email: "",
       password: "",
@@ -59,7 +61,12 @@ export default function Login() {
           overflow: "hidden",
         }}
       >
-        <Box sx={{ flex: 1, position: "relative" }}>
+        <Box
+          sx={{
+            flex: 1,
+            position: "relative",
+          }}
+        >
           <video
             src={videoBg}
             autoPlay
@@ -98,11 +105,23 @@ export default function Login() {
             Welcome Back
           </Typography>
 
-          <Typography sx={{ fontSize: 13, mb: 1, color: "#666" }}>
+          <Typography
+            sx={{
+              fontSize: 13,
+              mb: 1,
+              color: "#666",
+            }}
+          >
             Sign in with
           </Typography>
 
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1.2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 1.2,
+            }}
+          >
             <Button
               startIcon={<FcGoogle size={22} />}
               fullWidth
@@ -130,26 +149,50 @@ export default function Login() {
             </Button>
           </Box>
 
-          <Typography sx={{ mt: 2, fontSize: 13, textAlign: "center", color: "#666" }}>
+          <Typography
+            sx={{
+              mt: 2,
+              fontSize: 13,
+              textAlign: "center",
+              color: "#666",
+            }}
+          >
             or create an account
           </Typography>
 
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 2 }}>
-            <TextField 
-              label="Email" 
-              fullWidth 
-              size="small" 
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 1.5,
+              mt: 2,
+            }}
+          >
+            <TextField
+              label="Email"
+              fullWidth
+              size="small"
               value={userData.email}
-              onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+              onChange={(e) =>
+                setUserData({
+                  ...userData,
+                  email: e.target.value,
+                })
+              }
             />
-            
-            <TextField 
-              label="Password" 
-              type="password" 
-              fullWidth 
-              size="small" 
+
+            <TextField
+              label="Password"
+              type="password"
+              fullWidth
+              size="small"
               value={userData.password}
-              onChange={(e) => setUserData({ ...userData, password: e.target.value })}
+              onChange={(e) =>
+                setUserData({
+                  ...userData,
+                  password: e.target.value,
+                })
+              }
             />
 
             <Button
@@ -158,15 +201,24 @@ export default function Login() {
               sx={{
                 mt: 1,
                 bgcolor: mainColor,
-                "&:hover": { bgcolor: "#2f3a2e" },
+                "&:hover": {
+                  bgcolor: "#2f3a2e",
+                },
                 py: 1,
               }}
             >
               Login
             </Button>
 
-            <Typography sx={{ mt: 1, textAlign: "center", fontSize: 13 }}>
+            <Typography
+              sx={{
+                mt: 1,
+                textAlign: "center",
+                fontSize: 13,
+              }}
+            >
               Don't have an account?{" "}
+
               <Link
                 to="/register"
                 style={{

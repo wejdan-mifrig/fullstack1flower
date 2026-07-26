@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom';
 const navItems = [
   { label: 'HOME', path: '/' },
   { label: 'EVENT DECORATION', path: '/event-decoration' },
-  { label: 'BOOK AN EVENT', path: '/book-event' },
+ 
   { label: 'SHOP', path: '/shop' },
   { label: 'ABOUT', path: '/about' },
   { label: 'CONTACT US', path: '/contact' },
