@@ -10,7 +10,6 @@ import Contact from "./Pages/Sidpages/Contact.jsx";
 import About from "./Pages/Sidpages/About.jsx";
 // ✅ تم تصحيح الاستيراد (بحرف كبير C)
 import Carts from "./Pages/Sidpages/Carts.jsx";
-import Event from "./Pages/Sidpages/Eventde.jsx";
 import Shop from "./Pages/Sidpages/Shop.jsx";
 
 import Wedding from "./Pages/Eventdepages/Wedding.jsx";
@@ -45,7 +44,8 @@ import AdminPro from "./Pages/Admin/Adminpages/Adminpro.jsx";
 import AdminUser from "./Pages/Admin/Adminpages/Adminuser.jsx";
 import AddForm from "./Pages/Admin/AdminComponants/AddForm.jsx";
 import EditUser from "./Pages/Admin/Adminpages/EditUser.jsx";
-
+import AdminOrders from "./Pages/Admin/Adminpages/Adminord.jsx"; 
+import AdminReviews from "./Pages/Admin/Adminpages/Reviewad.jsx";  // ✅ تم إضافة استيراد AdminReviews
 function App() {
   return (
     <>
@@ -57,7 +57,7 @@ function App() {
 
         {/* الصفحات العامة */}
         <Route path="/event-decoration" element={<Event />} />
-        <Route path="/book-event" element={<Event />} />
+    
         <Route path="/shop" element={<Shop />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
@@ -99,6 +99,11 @@ function App() {
         <Route path="/admin/users" element={<AdminUser />} />
         <Route path="/admin/add/:type" element={<AddForm />} />
         <Route path="/edit/user/:id" element={<EditUser />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />
+        <Route
+  path="/admin/reviews"
+  element={<AdminReviews />}
+/>
       </Routes>
     </>
   );

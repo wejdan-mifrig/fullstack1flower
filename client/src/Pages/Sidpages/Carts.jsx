@@ -1114,7 +1114,7 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
   );
 };
 
-const Cart = () => {
+const Carts = () => {
   const [cartItems, setCartItems] = useState([]);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -1866,4 +1866,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Carts;

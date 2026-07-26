@@ -13,7 +13,7 @@ import categoryRoutes from "./src/routes/categories.Routes.js";
 import menuRoutes from "./src/routes/menu.Routes.js";
 import messagesRoutes from "./src/routes/messages.Routes.js";
 import { errorHandler } from "./src/middleware/errorHandler.Middleware.js";
-
+import reviewRoutes from "./src/routes/review.routes.js";
 dotenv.config();
 
 const app = express();
@@ -49,7 +49,7 @@ app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", menuRoutes);
 app.use("/api/messages", messagesRoutes);
-
+app.use("/api", reviewRoutes);
 app.use(errorHandler);
 
 const port = process.env.PORT || 3000;

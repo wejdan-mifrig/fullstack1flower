@@ -8,15 +8,33 @@ const api = axios.create({
   },
 });
 
+// Access Token محفوظ في الذاكرة فقط
+let accessToken = null;
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+export const setAccessToken = (token) => {
+  accessToken = token;
+};
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+export const clearAccessToken = () => {
+  accessToken = null;
+};
+
+export const getAccessToken = () => {
+  return accessToken;
+};
+
+// إضافة Access Token لكل Request
+api.interceptors.request.use(
+  (config) => {
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-
-  return config;
-});
+);
 
 export default api;

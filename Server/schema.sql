@@ -43,3 +43,34 @@ CREATE TABLE public.messages (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS reviews (
+    id SERIAL PRIMARY KEY,
+
+    user_id INTEGER NOT NULL
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    rating INTEGER NOT NULL
+        CHECK (rating BETWEEN 1 AND 5),
+
+    comment TEXT NOT NULL
+        CHECK (length(trim(comment)) > 0),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS review_likes (
+    id SERIAL PRIMARY KEY,
+
+    review_id INTEGER NOT NULL
+        REFERENCES reviews(id)
+        ON DELETE CASCADE,
+
+    user_id INTEGER NOT NULL
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE (review_id, user_id)
+);

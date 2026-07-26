@@ -31,6 +31,8 @@ const AdminNavbar = () => {
     { title: "Manage Users", path: "/admin/users" },
     { title: "Manage Categories", path: "/admin/categories" },
     { title: "Manage Products", path: "/admin/products", highlight: true },
+    { title: "Orders", path: "/admin/orders", highlight: true },
+    { title: "Reviews", path: "/admin/reviews", highlight: true },  // ✅ تم إضافة Reviews هنا
     { title: "Messages", path: "/admin/messages", highlight: true },
   ];
 
