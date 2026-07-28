@@ -22,6 +22,7 @@ import {
   DialogActions,
   Chip,
   Divider,
+  Stack,
 } from "@mui/material";
 
 import {
@@ -35,6 +36,9 @@ import {
   Feedback as FeedbackIcon,
   EmojiEmotions as EmojiEmotionsIcon,
   ExpandMore as ExpandMoreIcon,
+  ThumbUp as ThumbUpIcon,
+  ThumbUpOffAlt as ThumbUpOffAltIcon,
+  Comment as CommentIcon,
 } from "@mui/icons-material";
 
 import { keyframes } from "@emotion/react";
@@ -45,9 +49,8 @@ import Footer from "../../Components/Footer/Footer.jsx";
 import api from "../../api.js";
 import { useAuth } from "../../Hooks/useAuth.js";
 
-// ✅ استيراد الفيديو
+// استيراد الفيديو
 import reviewVideo from "../../assets/video/rev11.mp4";
-
 
 // =====================================================
 // ANIMATION
@@ -58,247 +61,131 @@ const fadeInUp = keyframes`
     opacity: 0;
     transform: translateY(25px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 `;
 
-
 // =====================================================
-// COLORS - مثل صفحة Contact
+// COLORS - أحمر دافئ، بيج، ذهبي
 // =====================================================
 
 const colors = {
-  primary: "#8B0000", // Dark Red - الخلفية الرئيسية
-  primaryDark: "#660000",
+  primary: "#8B0000",
   primaryLight: "#a52a2a",
-  secondary: "#ffffff", // White
-  accent: "#c9a84c", // Gold
+  primaryDark: "#660000",
+  secondary: "#f5f0e8",
+  secondaryDark: "#e8ddd0",
+  accent: "#c9a84c",
   accentLight: "#e8d48a",
-  textPrimary: "#000000", // Black
-  textSecondary: "rgba(0,0,0,0.8)",
-  textMuted: "rgba(0,0,0,0.5)",
+  accentHover: "#b8943a",
+  white: "#ffffff",
+  lightBg: "#faf6f0",
+  gray: "#8a7a6a",
+  lightGray: "#f0ebe3",
+  textPrimary: "#3d2a1a",
+  textSecondary: "#8a7a6a",
   textWhite: "#ffffff",
-  textWhiteMuted: "rgba(255,255,255,0.7)",
-  gold: "#c9a84c",
-  goldHover: "#b8943a",
-  red: "#8B0000",
-  darkRed: "#660000",
-  lightRed: "#a52a2a",
-  background: "#f5f0e8",
-  cardBg: "#ffffff",
-  danger: "#d9534f",
+  success: "#2e7d32",
+  danger: "#c62828",
+  facebook: "#8B0000",
+  facebookLight: "#fdf0ea",
 };
-
 
 // =====================================================
 // COMPONENT
 // =====================================================
 
 const Reviewuser = () => {
-
-  const {
-    user,
-    authLoading,
-  } = useAuth();
-
+  const { user, authLoading } = useAuth();
 
   // =====================================================
   // STATES
   // =====================================================
 
-  const [
-    reviews,
-    setReviews,
-  ] = useState([]);
-
-
-  const [
-    newComment,
-    setNewComment,
-  ] = useState("");
-
-
-  const [
-    newRating,
-    setNewRating,
-  ] = useState(5);
-
-
-  const [
-    loading,
-    setLoading,
-  ] = useState(false);
-
-
-  const [
-    fetchingReviews,
-    setFetchingReviews,
-  ] = useState(true);
-
+  const [reviews, setReviews] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [newRating, setNewRating] = useState(5);
+  const [loading, setLoading] = useState(false);
+  const [fetchingReviews, setFetchingReviews] = useState(true);
 
   // EDIT STATES
-
-  const [
-    editDialogOpen,
-    setEditDialogOpen,
-  ] = useState(false);
-
-
-  const [
-    selectedReview,
-    setSelectedReview,
-  ] = useState(null);
-
-
-  const [
-    editComment,
-    setEditComment,
-  ] = useState("");
-
-
-  const [
-    editRating,
-    setEditRating,
-  ] = useState(5);
-
-
-  const [
-    editLoading,
-    setEditLoading,
-  ] = useState(false);
-
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [selectedReview, setSelectedReview] = useState(null);
+  const [editComment, setEditComment] = useState("");
+  const [editRating, setEditRating] = useState(5);
+  const [editLoading, setEditLoading] = useState(false);
 
   // DELETE STATES
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [reviewToDelete, setReviewToDelete] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
-  const [
-    deleteDialogOpen,
-    setDeleteDialogOpen,
-  ] = useState(false);
+  // ✅ VIEW FULL REVIEW DIALOG (لتعليق واحد)
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [viewReview, setViewReview] = useState(null);
 
-
-  const [
-    reviewToDelete,
-    setReviewToDelete,
-  ] = useState(null);
-
-
-  const [
-    deleteLoading,
-    setDeleteLoading,
-  ] = useState(false);
-
-
-  // VIEW FULL REVIEW DIALOG
-
-  const [
-    viewDialogOpen,
-    setViewDialogOpen,
-  ] = useState(false);
-
-
-  const [
-    viewReview,
-    setViewReview,
-  ] = useState(null);
-
+  // ✅ VIEW ALL REVIEWS DIALOG (لكل التعليقات)
+  const [viewAllDialogOpen, setViewAllDialogOpen] = useState(false);
 
   // SNACKBAR
-
-  const [
-    snackbar,
-    setSnackbar,
-  ] = useState({
+  const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
-
   // =====================================================
   // SHOW MESSAGE
   // =====================================================
 
-  const showMessage = (
-    message,
-    severity = "success"
-  ) => {
-
+  const showMessage = (message, severity = "success") => {
     setSnackbar({
       open: true,
       message,
       severity,
     });
-
   };
-
 
   // =====================================================
   // FETCH REVIEWS
   // =====================================================
 
   const fetchReviews = async () => {
-
     try {
-
       setFetchingReviews(true);
-
-      const response =
-        await api.get(
-          "/all-reviews"
-        );
-
-      setReviews(
-        response.data.reviews || []
+      const response = await api.get("/all-reviews");
+      const sortedReviews = (response.data.reviews || []).sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
       );
-
+      setReviews(sortedReviews);
     } catch (error) {
-
-      console.error(
-        "Fetch reviews error:",
-        error
-      );
-
+      console.error("Fetch reviews error:", error);
       showMessage(
-        error.response?.data?.message ||
-        "Failed to load reviews",
+        error.response?.data?.message || "Failed to load reviews",
         "error"
       );
-
     } finally {
-
       setFetchingReviews(false);
-
     }
-
   };
-
 
   // =====================================================
   // PAGE LOAD
   // =====================================================
 
   useEffect(() => {
-
     fetchReviews();
-
   }, []);
-
 
   // =====================================================
   // STATISTICS
   // =====================================================
 
   const getStats = () => {
-
-    const total =
-      reviews.length;
-
-
+    const total = reviews.length;
     if (total === 0) {
-
       return {
         total: 0,
         average: 0,
@@ -308,630 +195,272 @@ const Reviewuser = () => {
         twoStar: 0,
         oneStar: 0,
       };
-
     }
 
-
     const average = (
-
-      reviews.reduce(
-        (
-          sum,
-          review
-        ) =>
-          sum +
-          Number(
-            review.rating
-          ),
-        0
-      ) / total
-
+      reviews.reduce((sum, review) => sum + Number(review.rating), 0) / total
     ).toFixed(1);
 
-
     return {
-
       total,
-
       average,
-
-      fiveStar:
-        reviews.filter(
-          (review) =>
-            Number(
-              review.rating
-            ) === 5
-        ).length,
-
-      fourStar:
-        reviews.filter(
-          (review) =>
-            Number(
-              review.rating
-            ) === 4
-        ).length,
-
-      threeStar:
-        reviews.filter(
-          (review) =>
-            Number(
-              review.rating
-            ) === 3
-        ).length,
-
-      twoStar:
-        reviews.filter(
-          (review) =>
-            Number(
-              review.rating
-            ) === 2
-        ).length,
-
-      oneStar:
-        reviews.filter(
-          (review) =>
-            Number(
-              review.rating
-            ) === 1
-        ).length,
-
+      fiveStar: reviews.filter((review) => Number(review.rating) === 5).length,
+      fourStar: reviews.filter((review) => Number(review.rating) === 4).length,
+      threeStar: reviews.filter((review) => Number(review.rating) === 3).length,
+      twoStar: reviews.filter((review) => Number(review.rating) === 2).length,
+      oneStar: reviews.filter((review) => Number(review.rating) === 1).length,
     };
-
   };
 
-
-  const stats =
-    getStats();
-
+  const stats = getStats();
 
   // =====================================================
   // LIKE / UNLIKE
   // =====================================================
 
-  const handleLike = async (
-    reviewId
-  ) => {
-
-    if (authLoading) {
-      return;
-    }
-
-
+  const handleLike = async (reviewId) => {
+    if (authLoading) return;
     if (!user) {
-
-      showMessage(
-        "Please login first",
-        "warning"
-      );
-
+      showMessage("Please login first", "warning");
       return;
-
     }
-
 
     try {
+      const review = reviews.find((item) => item.id === reviewId);
+      if (!review) return;
 
-
-      const review =
-        reviews.find(
-          (item) =>
-            item.id === reviewId
-        );
-
-
-      if (!review) {
-        return;
-      }
-
-
-      const method =
-        review.liked
-          ? "delete"
-          : "post";
-
+      const method = review.liked ? "delete" : "post";
 
       await api.request({
-
         method,
-
-        url:
-          `/review/${reviewId}/like`,
-
+        url: `/review/${reviewId}/like`,
       });
 
-
-      setReviews(
-        (
-          previousReviews
-        ) =>
-
-          previousReviews.map(
-            (item) =>
-
-              item.id === reviewId
-                ? {
-
-                    ...item,
-
-                    liked:
-                      !item.liked,
-
-                    likes_count:
-                      item.liked
-
-                        ? Math.max(
-                            0,
-                            (
-                              item.likes_count ||
-                              0
-                            ) - 1
-                          )
-
-                        : (
-                            item.likes_count ||
-                            0
-                          ) + 1,
-
-                  }
-
-                : item
-
-          )
-
+      setReviews((previousReviews) =>
+        previousReviews.map((item) =>
+          item.id === reviewId
+            ? {
+                ...item,
+                liked: !item.liked,
+                likes_count: item.liked
+                  ? Math.max(0, (item.likes_count || 0) - 1)
+                  : (item.likes_count || 0) + 1,
+              }
+            : item
+        )
       );
-
     } catch (error) {
-
-      console.error(
-        "Like error:",
-        error
-      );
-
-
+      console.error("Like error:", error);
       showMessage(
-
-        error.response?.data?.message ||
-        "Like action failed",
-
+        error.response?.data?.message || "Like action failed",
         "error"
-
       );
-
     }
-
   };
-
 
   // =====================================================
   // ADD REVIEW
   // =====================================================
 
   const handleAddReview = async () => {
-
     if (!newComment.trim()) {
-
-      showMessage(
-        "Please write a comment",
-        "warning"
-      );
-
-      return;
-
-    }
-
-
-    if (authLoading) {
+      showMessage("Please write a comment", "warning");
       return;
     }
 
-
+    if (authLoading) return;
     if (!user) {
-
-      showMessage(
-        "Please login first",
-        "warning"
-      );
-
+      showMessage("Please login first", "warning");
       return;
-
     }
-
 
     try {
-
       setLoading(true);
-
-
-      await api.post(
-        "/review",
-        {
-          rating: newRating,
-          comment:
-            newComment.trim(),
-        }
-      );
-
+      await api.post("/review", {
+        rating: newRating,
+        comment: newComment.trim(),
+      });
 
       setNewComment("");
-
       setNewRating(5);
-
-
       await fetchReviews();
-
 
       showMessage(
         "✨ Your review has been posted! Thank you for your feedback!",
         "success"
       );
-
     } catch (error) {
-
-      console.error(
-        "Create review error:",
-        error
-      );
-
-
+      console.error("Create review error:", error);
       showMessage(
-
-        error.response?.data?.message ||
-        "Failed to create review",
-
+        error.response?.data?.message || "Failed to create review",
         "error"
-
       );
-
     } finally {
-
       setLoading(false);
-
     }
-
   };
-
 
   // =====================================================
   // OPEN EDIT DIALOG
   // =====================================================
 
-  const handleOpenEdit = (
-    review
-  ) => {
-
-    setSelectedReview(
-      review
-    );
-
-
-    setEditComment(
-      review.comment
-    );
-
-
-    setEditRating(
-      Number(
-        review.rating
-      )
-    );
-
-
-    setEditDialogOpen(
-      true
-    );
-
+  const handleOpenEdit = (review) => {
+    setSelectedReview(review);
+    setEditComment(review.comment);
+    setEditRating(Number(review.rating));
+    setEditDialogOpen(true);
   };
-
 
   // =====================================================
   // CLOSE EDIT DIALOG
   // =====================================================
 
   const handleCloseEdit = () => {
-
-    if (editLoading) {
-      return;
-    }
-
-
-    setEditDialogOpen(
-      false
-    );
-
-
-    setSelectedReview(
-      null
-    );
-
-
-    setEditComment(
-      ""
-    );
-
-
-    setEditRating(
-      5
-    );
-
+    if (editLoading) return;
+    setEditDialogOpen(false);
+    setSelectedReview(null);
+    setEditComment("");
+    setEditRating(5);
   };
-
 
   // =====================================================
   // UPDATE REVIEW
   // =====================================================
 
   const handleUpdateReview = async () => {
-
     if (!editComment.trim()) {
-
-      showMessage(
-        "Please write a comment",
-        "warning"
-      );
-
-      return;
-
-    }
-
-
-    if (!selectedReview) {
+      showMessage("Please write a comment", "warning");
       return;
     }
 
+    if (!selectedReview) return;
 
     try {
+      setEditLoading(true);
+      const response = await api.put(`/review/${selectedReview.id}`, {
+        rating: editRating,
+        comment: editComment.trim(),
+      });
 
-      setEditLoading(
-        true
+      const updatedReview = response.data.review;
+
+      setReviews((previousReviews) =>
+        previousReviews.map((review) =>
+          review.id === selectedReview.id
+            ? {
+                ...review,
+                rating: updatedReview?.rating || editRating,
+                comment: updatedReview?.comment || editComment.trim(),
+              }
+            : review
+        )
       );
-
-
-      const response =
-        await api.put(
-
-          `/review/${selectedReview.id}`,
-
-          {
-            rating: editRating,
-
-            comment:
-              editComment.trim(),
-          }
-
-        );
-
-
-      const updatedReview =
-        response.data.review;
-
-
-      setReviews(
-
-        (previousReviews) =>
-
-          previousReviews.map(
-
-            (review) =>
-
-              review.id ===
-              selectedReview.id
-
-                ? {
-                    ...review,
-
-                    rating:
-                      updatedReview?.rating ||
-                      editRating,
-
-                    comment:
-                      updatedReview?.comment ||
-                      editComment.trim(),
-
-                  }
-
-                : review
-
-          )
-
-      );
-
 
       handleCloseEdit();
-
-
-      showMessage(
-        "✅ Review updated successfully",
-        "success"
-      );
-
-
+      showMessage("✅ Review updated successfully", "success");
     } catch (error) {
-
-      console.error(
-        "Update review error:",
-        error
-      );
-
-
+      console.error("Update review error:", error);
       showMessage(
-
-        error.response?.data?.message ||
-        "Failed to update review",
-
+        error.response?.data?.message || "Failed to update review",
         "error"
-
       );
-
     } finally {
-
-      setEditLoading(
-        false
-      );
-
+      setEditLoading(false);
     }
-
   };
-
 
   // =====================================================
   // OPEN DELETE DIALOG
   // =====================================================
 
-  const handleOpenDelete = (
-    review
-  ) => {
-
-    setReviewToDelete(
-      review
-    );
-
-
-    setDeleteDialogOpen(
-      true
-    );
-
+  const handleOpenDelete = (review) => {
+    setReviewToDelete(review);
+    setDeleteDialogOpen(true);
   };
-
 
   // =====================================================
   // DELETE REVIEW
   // =====================================================
 
   const handleDeleteReview = async () => {
-
-    if (!reviewToDelete) {
-      return;
-    }
-
+    if (!reviewToDelete) return;
 
     try {
+      setDeleteLoading(true);
+      await api.delete(`/review/${reviewToDelete.id}`);
 
-      setDeleteLoading(
-        true
+      setReviews((previousReviews) =>
+        previousReviews.filter((review) => review.id !== reviewToDelete.id)
       );
 
-
-      await api.delete(
-
-        `/review/${reviewToDelete.id}`
-
-      );
-
-
-      setReviews(
-
-        (previousReviews) =>
-
-          previousReviews.filter(
-
-            (review) =>
-
-              review.id !==
-              reviewToDelete.id
-
-          )
-
-      );
-
-
-      setDeleteDialogOpen(
-        false
-      );
-
-
-      setReviewToDelete(
-        null
-      );
-
-
-      showMessage(
-        "🗑️ Review deleted successfully",
-        "success"
-      );
-
-
+      setDeleteDialogOpen(false);
+      setReviewToDelete(null);
+      showMessage("🗑️ Review deleted successfully", "success");
     } catch (error) {
-
-      console.error(
-        "Delete review error:",
-        error
-      );
-
-
+      console.error("Delete review error:", error);
       showMessage(
-
-        error.response?.data?.message ||
-        "Failed to delete review",
-
+        error.response?.data?.message || "Failed to delete review",
         "error"
-
       );
-
     } finally {
-
-      setDeleteLoading(
-        false
-      );
-
+      setDeleteLoading(false);
     }
-
   };
 
-
   // =====================================================
-  // OPEN VIEW FULL REVIEW
+  // ✅ OPEN VIEW SINGLE REVIEW (للتعليق الواحد)
   // =====================================================
 
-  const handleOpenView = (
-    review
-  ) => {
-
-    setViewReview(
-      review
-    );
-
-    setViewDialogOpen(
-      true
-    );
-
+  const handleOpenView = (review) => {
+    setViewReview(review);
+    setViewDialogOpen(true);
   };
 
-
   // =====================================================
-  // CLOSE VIEW FULL REVIEW
+  // ✅ CLOSE VIEW SINGLE REVIEW
   // =====================================================
 
   const handleCloseView = () => {
-
-    setViewDialogOpen(
-      false
-    );
-
-    setViewReview(
-      null
-    );
-
+    setViewDialogOpen(false);
+    setViewReview(null);
   };
 
+  // =====================================================
+  // ✅ OPEN VIEW ALL REVIEWS (لكل التعليقات)
+  // =====================================================
+
+  const handleOpenViewAll = () => {
+    setViewAllDialogOpen(true);
+  };
+
+  // =====================================================
+  // ✅ CLOSE VIEW ALL REVIEWS
+  // =====================================================
+
+  const handleCloseViewAll = () => {
+    setViewAllDialogOpen(false);
+  };
 
   // =====================================================
   // RENDER
   // =====================================================
 
-  return (
+  // عرض أول 3 تعليقات فقط
+  const displayedReviews = reviews.slice(0, 3);
+  const hasMoreReviews = reviews.length > 3;
 
+  return (
     <Box
       sx={{
         minHeight: "100vh",
-        bgcolor: colors.primary,
+        bgcolor: colors.secondary,
       }}
     >
-
       <NavbarUser />
 
       {/* ============================================
-          HERO SECTION - مع فيديو خلفية rev11
-          ============================================ */}
+          HERO SECTION - فيديو كامل الطول
+      ============================================ */}
 
       <Box
         sx={{
@@ -941,8 +470,6 @@ const Reviewuser = () => {
           overflow: "hidden",
         }}
       >
-
-        {/* ✅ فيديو الخلفية */}
         <Box
           component="video"
           src={reviewVideo}
@@ -961,7 +488,6 @@ const Reviewuser = () => {
           }}
         />
 
-        {/* طبقة تعتيم حمراء خفيفة فوق الفيديو */}
         <Box
           sx={{
             position: "absolute",
@@ -969,12 +495,11 @@ const Reviewuser = () => {
             left: 0,
             right: 0,
             bottom: 0,
-            background: "rgba(139,0,0,0.5)",
+            background: "rgba(139,0,0,0.2)",
             zIndex: 1,
           }}
         />
 
-        {/* المحتوى فوق الفيديو */}
         <Box
           sx={{
             position: "absolute",
@@ -991,1024 +516,484 @@ const Reviewuser = () => {
             px: { xs: 3, md: 6 },
           }}
         >
-
-          <Box sx={{ mt: { xs: 10, md: 12 } }}>
-
-            <Typography
-              sx={{
-                color: colors.gold,
-                fontWeight: 700,
-                letterSpacing: 4,
-                fontSize: ".8rem",
-                textShadow: "0 2px 20px rgba(0,0,0,0.5)",
-              }}
-            >
-              💬 YOUR VOICE MATTERS
-            </Typography>
-
-            <Typography
-              variant="h2"
-              sx={{
-                mt: 2,
-
-                fontFamily:
-                  "'Cormorant Garamond', serif",
-
-                fontWeight: 700,
-
-                color:
-                  colors.textWhite,
-
-                fontSize: {
-                  xs: "2.5rem",
-                  md: "4rem",
-                },
-
-                textShadow: "0 2px 30px rgba(0,0,0,0.5)",
-              }}
-            >
-              We Value Your Feedback
-            </Typography>
-
-            <Typography
-              sx={{
-                mt: 2,
-                color:
-                  colors.textWhiteMuted,
-                maxWidth: 600,
-                mx: "auto",
-                textShadow: "0 2px 20px rgba(0,0,0,0.3)",
-                fontSize: { xs: "0.9rem", md: "1.1rem" },
-              }}
-            >
-              Your opinions help us grow and improve. Share your experience with us 
-              and help us create even better floral experiences for you.
-            </Typography>
-
-            {/* رسائل تشجيعية */}
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                gap: 2,
-                mt: 4,
-              }}
-            >
-              <Chip
-                icon={<EmojiEmotionsIcon />}
-                label="Your opinion matters to us"
-                sx={{
-                  backgroundColor: colors.gold,
-                  color: "#fff",
-                  fontWeight: 600,
-                  borderRadius: 3,
-                  px: 1,
-                }}
-              />
-              <Chip
-                icon={<FeedbackIcon />}
-                label="Help us improve"
-                sx={{
-                  backgroundColor: "#1a1a1a",
-                  color: "#fff",
-                  fontWeight: 600,
-                  borderRadius: 3,
-                  px: 1,
-                }}
-              />
-              <Chip
-                icon={<StarIcon />}
-                label="Share your experience"
-                sx={{
-                  backgroundColor: "#1a1a1a",
-                  color: "#fff",
-                  fontWeight: 600,
-                  borderRadius: 3,
-                  px: 1,
-                }}
-              />
-            </Box>
-
-            {/* خط فاصل تحت العنوان */}
-            <Box
-              sx={{
-                width: 80,
-                height: "3px",
-                background: `linear-gradient(90deg, ${colors.gold}, ${colors.goldHover})`,
-                mx: "auto",
-                mt: 4,
-                borderRadius: "3px",
-              }}
-            />
-
-            <Typography
-              sx={{
-                mt: 2,
-                color: colors.textWhiteMuted,
-                fontStyle: "italic",
-                fontSize: "0.9rem",
-                textShadow: "0 2px 20px rgba(0,0,0,0.3)",
-              }}
-            >
-              "Your feedback is the key to our growth and excellence." 🌸
-            </Typography>
-
-          </Box>
-
+          <Typography
+            sx={{
+              color: colors.textWhite,
+              fontSize: { xs: "1.2rem", md: "2rem" },
+              fontWeight: 300,
+              letterSpacing: 2,
+              textShadow: "0 2px 20px rgba(0,0,0,0.3)",
+              fontFamily: "'Cormorant Garamond', serif",
+              opacity: 0.9,
+            }}
+          >
+            Your Voice Matters
+          </Typography>
         </Box>
-
       </Box>
 
-
       {/* ============================================
-          MAIN CONTENT - خلفية حمراء
-          ============================================ */}
+          MAIN CONTENT
+      ============================================ */}
 
       <Container
-        maxWidth="lg"
+        maxWidth="md"
         sx={{
-          pt: 8,
+          pt: 4,
           pb: 8,
         }}
       >
-
-
         {/* ============================================
-            STATISTICS - خلفية بيضاء
+            STATISTICS
         ============================================ */}
 
         <Paper
           sx={{
-            p: {
-              xs: 2,
-              md: 4,
-            },
-
-            mb: 6,
-
-            borderRadius: 4,
-
+            p: { xs: 2, md: 3 },
+            mb: 4,
+            borderRadius: 3,
             bgcolor: "#ffffff",
-
-            boxShadow:
-              "0 10px 40px rgba(0,0,0,0.15)",
-
-            animation:
-              `${fadeInUp} .6s ease`,
+            boxShadow: "0 2px 12px rgba(139,0,0,0.1)",
+            animation: `${fadeInUp} .6s ease`,
+            border: "1px solid rgba(201,168,76,0.2)",
           }}
         >
-
           <Box
             sx={{
               display: "flex",
-
-              flexDirection: {
-                xs: "column",
-                md: "row",
-              },
-
+              flexDirection: { xs: "column", md: "row" },
               alignItems: "center",
-
-              gap: 5,
+              gap: 3,
             }}
           >
-
             <Box
               sx={{
-                minWidth: 180,
                 textAlign: "center",
+                minWidth: 120,
               }}
             >
-
               <Typography
                 sx={{
-                  fontSize: "4rem",
+                  fontSize: "3rem",
                   fontWeight: 800,
-                  color: colors.gold,
+                  color: colors.primary,
                 }}
               >
                 {stats.average}
               </Typography>
-
-
               <Rating
-                value={
-                  Number(
-                    stats.average
-                  )
-                }
+                value={Number(stats.average)}
                 precision={0.5}
                 readOnly
-                sx={{
-                  color:
-                    colors.gold,
-                }}
+                sx={{ color: colors.accent }}
               />
-
-
               <Typography
                 variant="body2"
                 sx={{
-                  mt: 1,
-                  color:
-                    colors.textMuted,
+                  mt: 0.5,
+                  color: colors.textSecondary,
                 }}
               >
-                Based on {stats.total} reviews
+                {stats.total} reviews
               </Typography>
-
             </Box>
 
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ display: { xs: "none", md: "block" } }}
+            />
 
-            <Box
-              sx={{
-                flex: 1,
-                width: "100%",
-              }}
-            >
-
+            <Box sx={{ flex: 1, width: "100%" }}>
               {[
-
-                {
-                  stars: 5,
-                  count:
-                    stats.fiveStar,
-                },
-
-                {
-                  stars: 4,
-                  count:
-                    stats.fourStar,
-                },
-
-                {
-                  stars: 3,
-                  count:
-                    stats.threeStar,
-                },
-
-                {
-                  stars: 2,
-                  count:
-                    stats.twoStar,
-                },
-
-                {
-                  stars: 1,
-                  count:
-                    stats.oneStar,
-                },
-
-              ].map(
-                ({
-                  stars,
-                  count,
-                }) => (
-
+                { stars: 5, count: stats.fiveStar },
+                { stars: 4, count: stats.fourStar },
+                { stars: 3, count: stats.threeStar },
+                { stars: 2, count: stats.twoStar },
+                { stars: 1, count: stats.oneStar },
+              ].map(({ stars, count }) => (
+                <Box
+                  key={stars}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    mb: 0.5,
+                  }}
+                >
+                  <Typography sx={{ width: 20, color: colors.textSecondary }}>
+                    {stars}
+                  </Typography>
+                  <StarIcon sx={{ fontSize: 14, color: colors.accent }} />
                   <Box
-                    key={stars}
                     sx={{
-                      display:
-                        "flex",
-
-                      alignItems:
-                        "center",
-
-                      gap: 1,
-
-                      mb: 1,
+                      flex: 1,
+                      height: 6,
+                      bgcolor: colors.lightGray,
+                      borderRadius: 10,
+                      overflow: "hidden",
                     }}
                   >
-
-                    <Typography
-                      sx={{
-                        width: 20,
-                        color:
-                          colors.textMuted,
-                      }}
-                    >
-                      {stars}
-                    </Typography>
-
-
-                    <StarIcon
-                      sx={{
-                        fontSize: 16,
-                        color:
-                          colors.gold,
-                      }}
-                    />
-
-
                     <Box
                       sx={{
-                        flex: 1,
-                        height: 7,
-                        bgcolor:
-                          "#e5e5e5",
+                        width:
+                          stats.total > 0
+                            ? `${(count / stats.total) * 100}%`
+                            : "0%",
+                        height: "100%",
+                        bgcolor: colors.primary,
                         borderRadius: 10,
-                        overflow:
-                          "hidden",
+                        transition: "width .5s ease",
                       }}
-                    >
-
-                      <Box
-                        sx={{
-                          width:
-                            stats.total > 0
-
-                              ? `${
-                                  (
-                                    count /
-                                    stats.total
-                                  ) *
-                                  100
-                                }%`
-
-                              : "0%",
-
-                          height: "100%",
-
-                          bgcolor:
-                            colors.gold,
-
-                          borderRadius:
-                            10,
-
-                          transition:
-                            "width .5s ease",
-                        }}
-                      />
-
-                    </Box>
-
-
-                    <Typography
-                      sx={{
-                        width: 30,
-                        color:
-                          colors.textMuted,
-                      }}
-                    >
-                      {count}
-                    </Typography>
-
+                    />
                   </Box>
-
-                )
-
-              )}
-
+                  <Typography sx={{ width: 30, color: colors.textSecondary }}>
+                    {count}
+                  </Typography>
+                </Box>
+              ))}
             </Box>
-
           </Box>
-
         </Paper>
 
-
         {/* ============================================
-            ADD REVIEW - خلفية بيضاء
+            CREATE POST
         ============================================ */}
 
         <Paper
           sx={{
-            p: {
-              xs: 2,
-              md: 4,
-            },
-
-            mb: 7,
-
-            borderRadius: 4,
-
+            p: { xs: 2, md: 3 },
+            mb: 4,
+            borderRadius: 3,
             bgcolor: "#ffffff",
-
-            boxShadow:
-              "0 10px 40px rgba(0,0,0,0.15)",
-
-            border: `2px solid ${colors.gold}30`,
+            boxShadow: "0 2px 12px rgba(139,0,0,0.08)",
+            border: "1px solid rgba(201,168,76,0.15)",
           }}
         >
-
-          <Typography
-            variant="h5"
-            sx={{
-              mb: 1,
-              fontWeight: 700,
-              color:
-                colors.textPrimary,
-            }}
-          >
-            Share Your Experience
-          </Typography>
-
-          <Typography
-            sx={{
-              mb: 3,
-              color: colors.textMuted,
-              fontSize: "0.9rem",
-            }}
-          >
-            We value your opinion! Let us know about your experience with us.
-          </Typography>
-
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
+            <Avatar
+              sx={{
+                width: 48,
+                height: 48,
+                bgcolor: colors.primary,
+                color: "#fff",
+                fontWeight: 700,
+              }}
+            >
+              {user?.name?.charAt(0)?.toUpperCase() || "U"}
+            </Avatar>
+            <Box sx={{ flex: 1 }}>
+              <Typography sx={{ fontWeight: 600, color: colors.textPrimary }}>
+                {user?.name || "Guest User"}
+              </Typography>
+              <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>
+                Share your experience
+              </Typography>
+            </Box>
+          </Box>
 
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               gap: 2,
-              mb: 3,
+              mb: 2,
             }}
           >
-
-            <Typography
-              sx={{
-                color:
-                  colors.textMuted,
-              }}
-            >
-              Rating
+            <Typography sx={{ color: colors.textSecondary, fontSize: "0.9rem" }}>
+              Rating:
             </Typography>
-
-
             <Rating
               value={newRating}
-              onChange={(
-                event,
-                value
-              ) => {
-
-                setNewRating(
-                  value || 5
-                );
-
+              onChange={(event, value) => {
+                setNewRating(value || 5);
               }}
-              sx={{
-                color:
-                  colors.gold,
-              }}
+              sx={{ color: colors.accent }}
             />
-
           </Box>
-
 
           <Box
             sx={{
               display: "flex",
               gap: 2,
-
-              flexDirection: {
-                xs: "column",
-                md: "row",
-              },
+              flexDirection: { xs: "column", md: "row" },
             }}
           >
-
             <TextField
               fullWidth
               multiline
-              rows={3}
-              placeholder="Write your review here... Your feedback helps us improve!"
+              rows={2}
+              placeholder="What's on your mind? Share your experience..."
               value={newComment}
-              onChange={(
-                event
-              ) =>
-
-                setNewComment(
-                  event.target.value
-                )
-
-              }
+              onChange={(event) => setNewComment(event.target.value)}
               sx={{
-                "& .MuiOutlinedInput-root":
-                  {
-                    borderRadius: 3,
-                    bgcolor: "#f5f5f5",
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  bgcolor: colors.secondary,
+                  border: "none",
+                  "& fieldset": {
+                    border: "none",
                   },
+                },
               }}
             />
-
 
             <Button
               variant="contained"
-              onClick={
-                handleAddReview
-              }
-              disabled={
-                loading ||
-                authLoading
-              }
+              onClick={handleAddReview}
+              disabled={loading || authLoading}
               sx={{
-                minWidth: {
-                  xs: "100%",
-                  md: 100,
-                },
-
+                minWidth: { xs: "100%", md: 120 },
                 borderRadius: 3,
-
-                bgcolor:
-                  colors.gold,
-
+                bgcolor: colors.primary,
+                textTransform: "none",
+                fontWeight: 600,
                 "&:hover": {
-                  bgcolor:
-                    colors.goldHover,
+                  bgcolor: colors.primaryDark,
                 },
               }}
             >
-
               {loading ? (
-
-                <CircularProgress
-                  size={24}
-                  sx={{
-                    color: "#fff",
-                  }}
-                />
-
+                <CircularProgress size={24} sx={{ color: "#fff" }} />
               ) : (
-
-                <SendIcon />
-
+                "Post Review"
               )}
-
             </Button>
-
           </Box>
-
         </Paper>
 
-
         {/* ============================================
-            REVIEWS GRID
+            REVIEWS FEED - عرض 3 تعليقات فقط
         ============================================ */}
 
         {fetchingReviews ? (
-
           <Box
             sx={{
               display: "flex",
-              justifyContent:
-                "center",
+              justifyContent: "center",
               py: 10,
             }}
           >
-
-            <CircularProgress
-              sx={{
-                color:
-                  colors.gold,
-              }}
-            />
-
+            <CircularProgress sx={{ color: colors.primary }} />
           </Box>
-
         ) : reviews.length === 0 ? (
-
           <Paper
             sx={{
               p: 6,
               textAlign: "center",
-              borderRadius: 4,
+              borderRadius: 3,
               bgcolor: "#ffffff",
+              boxShadow: "0 2px 12px rgba(139,0,0,0.08)",
             }}
           >
-
-            <Typography
-              color="text.secondary"
-            >
-              No reviews yet. Be the first to share your experience!
+            <Typography color="text.secondary">
+              No reviews yet. Be the first to share your experience! 🎉
             </Typography>
-
           </Paper>
-
         ) : (
-
-          <Box
-            sx={{
-              display: "grid",
-
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
-              },
-
-              gap: 3,
-            }}
-          >
-
-            {reviews.map(
-              (
-                review,
-                index
-              ) => {
-
+          <>
+            <Stack spacing={3}>
+              {displayedReviews.map((review, index) => {
                 const isOwner =
-                  user &&
-                  Number(
-                    user.id
-                  ) ===
-                  Number(
-                    review.user_id
-                  );
-
-                // ✅ التحقق من طول التعليق (أكثر من 15 حرف)
-                const isLongComment =
-                  review.comment?.length > 15;
-
-                // ✅ عرض أول 15 حرف فقط + ...
+                  user && Number(user.id) === Number(review.user_id);
+                const isLongComment = review.comment?.length > 50;
                 const displayComment =
                   isLongComment
-                    ? review.comment?.slice(0, 15) + "..."
+                    ? review.comment?.slice(0, 50) + "..."
                     : review.comment;
 
                 return (
-
                   <Card
-                    key={
-                      review.id
-                    }
-
+                    key={review.id}
                     sx={{
-                      position:
-                        "relative",
-
-                      minHeight:
-                        360,
-
-                      display:
-                        "flex",
-
-                      flexDirection:
-                        "column",
-
-                      borderRadius:
-                        4,
-
-                      overflow:
-                        "hidden",
-
+                      borderRadius: 3,
+                      overflow: "hidden",
                       bgcolor: "#ffffff",
-
-                      boxShadow:
-                        "0 10px 30px rgba(0,0,0,.12)",
-
-                      animation:
-                        `${fadeInUp} .5s ease forwards`,
-
-                      animationDelay:
-                        `${index * .05}s`,
-
+                      boxShadow: "0 2px 12px rgba(139,0,0,0.08)",
+                      border: "1px solid rgba(201,168,76,0.15)",
+                      animation: `${fadeInUp} .5s ease forwards`,
+                      animationDelay: `${index * 0.05}s`,
                       opacity: 0,
-
-                      transition:
-                        "all .3s ease",
-
-                      "&:hover":
-                        {
-                          transform:
-                            "translateY(-8px)",
-
-                          boxShadow:
-                            "0 20px 45px rgba(0,0,0,.2)",
-                        },
+                      transition: "all .2s ease",
+                      "&:hover": {
+                        boxShadow: "0 4px 20px rgba(139,0,0,0.15)",
+                      },
                     }}
                   >
-
-                    {/* TOP */}
-
-                    <Box
-                      sx={{
-                        p: 3,
-
-                        display:
-                          "flex",
-
-                        alignItems:
-                          "center",
-
-                        gap: 2,
-
-                        bgcolor:
-                          "#faf8f4",
-                      }}
-                    >
-
-                      <Avatar
-                        sx={{
-                          width: 58,
-                          height: 58,
-
-                          bgcolor:
-                            colors.gold,
-
-                          fontSize:
-                            "1.3rem",
-
-                          fontWeight:
-                            700,
-                          color: "#fff",
-                        }}
-                      >
-
-                        {review.user_name
-                          ?.charAt(
-                            0
-                          )
-                          .toUpperCase()}
-
-                      </Avatar>
-
-
-                      <Box
-                        sx={{
-                          flex: 1,
-                        }}
-                      >
-
-                        <Typography
+                    {/* HEADER */}
+                    <CardHeader
+                      avatar={
+                        <Avatar
                           sx={{
-                            fontWeight:
-                              700,
-
-                            color:
-                              colors.textPrimary,
+                            width: 48,
+                            height: 48,
+                            bgcolor: colors.primary,
+                            color: "#fff",
+                            fontWeight: 700,
                           }}
                         >
-                          {
-                            review.user_name
-                          }
+                          {review.user_name?.charAt(0)?.toUpperCase() || "U"}
+                        </Avatar>
+                      }
+                      title={
+                        <Typography sx={{ fontWeight: 600, color: colors.textPrimary }}>
+                          {review.user_name}
                         </Typography>
-
-
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            color:
-                              colors.textMuted,
-                          }}
-                        >
-                          {new Date(
-                            review.created_at
-                          ).toLocaleDateString(
-                            "en-US",
-                            {
-                              month:
-                                "short",
-
-                              day:
-                                "numeric",
-
-                              year:
-                                "numeric",
-                            }
-                          )}
-                        </Typography>
-
-                      </Box>
-
-                    </Box>
-
-
-                    {/* RATING */}
-
-                    <Box
+                      }
+                      subheader={
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                          <Rating
+                            value={Number(review.rating)}
+                            readOnly
+                            size="small"
+                            sx={{ color: colors.accent }}
+                          />
+                          <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>
+                            • {new Date(review.created_at).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })}
+                          </Typography>
+                        </Box>
+                      }
+                      action={
+                        isOwner && (
+                          <Box>
+                            <IconButton
+                              size="small"
+                              onClick={() => handleOpenEdit(review)}
+                              sx={{ color: colors.textSecondary }}
+                            >
+                              <EditIcon fontSize="small" />
+                            </IconButton>
+                            <IconButton
+                              size="small"
+                              onClick={() => handleOpenDelete(review)}
+                              sx={{ color: colors.danger }}
+                            >
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                          </Box>
+                        )
+                      }
                       sx={{
-                        px: 3,
-                        pt: 2,
+                        pb: 1,
+                        "& .MuiCardHeader-content": {
+                          overflow: "hidden",
+                        },
                       }}
-                    >
+                    />
 
-                      <Rating
-                        value={
-                          Number(
-                            review.rating
-                          )
-                        }
-                        readOnly
-                        size="small"
-                        sx={{
-                          color:
-                            colors.gold,
-                        }}
-                      />
-
-                    </Box>
-
-
-                    {/* COMMENT - مع See More */}
-
-                    <CardContent
-                      sx={{
-                        flex: 1,
-                        px: 3,
-                        py: 2,
-                      }}
-                    >
-
+                    {/* CONTENT */}
+                    <CardContent sx={{ pt: 0, pb: 1 }}>
                       <Typography
                         sx={{
-                          color:
-                            colors.textSecondary,
-
-                          lineHeight:
-                            1.8,
-
-                          fontSize:
-                            ".95rem",
+                          color: colors.textPrimary,
+                          lineHeight: 1.8,
+                          fontSize: "0.95rem",
+                          whiteSpace: "pre-wrap",
+                          wordBreak: "break-word",
                         }}
                       >
                         {displayComment}
                       </Typography>
 
-                      {/* ✅ زر See More - يفتح Dialog */}
+                      {/* ✅ See More - يظهر التعليق كاملاً في Dialog */}
                       {isLongComment && (
                         <Button
                           size="small"
                           onClick={() => handleOpenView(review)}
                           sx={{
-                            mt: 1,
-                            color: colors.gold,
+                            mt: 0.5,
+                            color: colors.accent,
                             fontWeight: 600,
                             textTransform: "none",
                             "&:hover": {
                               backgroundColor: "transparent",
-                              color: colors.goldHover,
+                              color: colors.accentHover,
                             },
                           }}
-                          startIcon={<ExpandMoreIcon />}
                         >
                           See More
                         </Button>
                       )}
-
                     </CardContent>
 
-
-                    {/* ACTIONS */}
-
+                    {/* ACTIONS - Like فقط */}
                     <Box
                       sx={{
-                        p: 2,
-
-                        display:
-                          "flex",
-
-                        justifyContent:
-                          "space-between",
-
-                        alignItems:
-                          "center",
-
-                        borderTop:
-                          "1px solid #eee",
+                        px: 2,
+                        py: 1,
+                        borderTop: "1px solid rgba(201,168,76,0.15)",
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
-
-                      {/* LIKE */}
-
                       <Button
                         size="small"
-                        onClick={() =>
-                          handleLike(
-                            review.id
-                          )
-                        }
+                        onClick={() => handleLike(review.id)}
                         startIcon={
                           review.liked ? (
-
-                            <FavoriteIcon
-                              sx={{
-                                color:
-                                  "#e74c3c",
-                              }}
-                            />
-
+                            <ThumbUpIcon sx={{ color: colors.primary }} />
                           ) : (
-
-                            <FavoriteBorderIcon
-                              sx={{
-                                color:
-                                  colors.textMuted,
-                              }}
-                            />
-
+                            <ThumbUpOffAltIcon sx={{ color: colors.textSecondary }} />
                           )
                         }
                         sx={{
-                          color:
-                            colors.textMuted,
-                          textTransform:
-                            "none",
+                          color: review.liked ? colors.primary : colors.textSecondary,
+                          textTransform: "none",
+                          fontWeight: review.liked ? 600 : 400,
+                          "&:hover": {
+                            backgroundColor: colors.facebookLight,
+                          },
                         }}
                       >
-                        {review.likes_count || 0}
+                        {review.likes_count || 0} Like
                       </Button>
-
-
-                      {/* OWNER ACTIONS */}
-
-                      {isOwner && (
-
-                        <Box
-                          sx={{
-                            display:
-                              "flex",
-
-                            gap: 1,
-                          }}
-                        >
-
-                          <Button
-                            size="small"
-                            startIcon={
-                              <EditIcon />
-                            }
-                            onClick={() =>
-                              handleOpenEdit(
-                                review
-                              )
-                            }
-                            sx={{
-                              color:
-                                colors.gold,
-
-                              textTransform:
-                                "none",
-                            }}
-                          >
-                            Edit
-                          </Button>
-
-
-                          <Button
-                            size="small"
-                            startIcon={
-                              <DeleteIcon />
-                            }
-                            onClick={() =>
-                              handleOpenDelete(
-                                review
-                              )
-                            }
-                            sx={{
-                              color:
-                                colors.danger,
-
-                              textTransform:
-                                "none",
-                            }}
-                          >
-                            Delete
-                          </Button>
-
-                        </Box>
-
-                      )}
-
                     </Box>
-
                   </Card>
-
                 );
+              })}
+            </Stack>
 
-              }
-
+            {/* ✅ See All Reviews - يعرض كل التعليقات في Dialog */}
+            {hasMoreReviews && (
+              <Box sx={{ textAlign: "center", mt: 4 }}>
+                <Button
+                  variant="outlined"
+                  onClick={handleOpenViewAll}
+                  sx={{
+                    color: colors.primary,
+                    borderColor: colors.primary,
+                    borderRadius: 3,
+                    px: 4,
+                    py: 1.5,
+                    textTransform: "none",
+                    fontWeight: 600,
+                    "&:hover": {
+                      borderColor: colors.primaryDark,
+                      backgroundColor: "rgba(139,0,0,0.05)",
+                    },
+                  }}
+                  endIcon={<ExpandMoreIcon />}
+                >
+                  See All {reviews.length} Reviews
+                </Button>
+              </Box>
             )}
-
-          </Box>
-
+          </>
         )}
 
-
-        <Box
-          sx={{
-            textAlign:
-              "center",
-
-            mt: 5,
-          }}
-        >
-
-          <Typography
-            variant="caption"
-            sx={{
-              color:
-                colors.textWhiteMuted,
-            }}
-          >
-            Showing {reviews.length} reviews
+        <Box sx={{ textAlign: "center", mt: 4 }}>
+          <Typography variant="caption" sx={{ color: colors.textSecondary }}>
+            Showing {displayedReviews.length} of {reviews.length} reviews
           </Typography>
-
         </Box>
-
       </Container>
 
-
       {/* ============================================
-          VIEW FULL REVIEW DIALOG
+          ✅ DIALOG 1: VIEW SINGLE REVIEW (تعليق واحد)
       ============================================ */}
 
       <Dialog
@@ -2018,91 +1003,64 @@ const Reviewuser = () => {
         fullWidth
         PaperProps={{
           sx: {
-            borderRadius: 4,
+            borderRadius: 3,
             overflow: "hidden",
             bgcolor: "#ffffff",
           },
         }}
       >
-
         {viewReview && (
-
           <>
-
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 p: 3,
-                bgcolor: "#faf8f4",
-                borderBottom: "1px solid #eee",
+                bgcolor: colors.secondary,
+                borderBottom: "1px solid rgba(201,168,76,0.2)",
               }}
             >
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                }}
-              >
-
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <Avatar
                   sx={{
-                    width: 56,
-                    height: 56,
-                    bgcolor: colors.gold,
-                    fontWeight: 700,
-                    fontSize: "1.5rem",
+                    width: 48,
+                    height: 48,
+                    bgcolor: colors.primary,
                     color: "#fff",
+                    fontWeight: 700,
                   }}
                 >
                   {viewReview.user_name?.charAt(0)?.toUpperCase()}
                 </Avatar>
 
                 <Box>
-                  <Typography sx={{ fontWeight: 700, color: colors.textPrimary, fontSize: "1.1rem" }}>
+                  <Typography sx={{ fontWeight: 600, color: colors.textPrimary }}>
                     {viewReview.user_name}
                   </Typography>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      mt: 0.5,
-                    }}
-                  >
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <Rating
                       value={Number(viewReview.rating)}
                       readOnly
                       size="small"
-                      sx={{ color: colors.gold }}
+                      sx={{ color: colors.accent }}
                     />
-                    <Typography sx={{ fontSize: "0.8rem", color: colors.textMuted }}>
+                    <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>
                       {viewReview.rating}/5
                     </Typography>
                   </Box>
                 </Box>
-
               </Box>
 
-              <IconButton
-                onClick={handleCloseView}
-                sx={{ color: colors.textMuted }}
-              >
+              <IconButton onClick={handleCloseView} sx={{ color: colors.textSecondary }}>
                 <CloseIcon />
               </IconButton>
-
             </Box>
 
-
             <DialogContent sx={{ p: 3 }}>
-
               <Typography
                 sx={{
-                  color: colors.textSecondary,
+                  color: colors.textPrimary,
                   fontSize: "1rem",
                   lineHeight: 2,
                   whiteSpace: "pre-wrap",
@@ -2116,7 +1074,7 @@ const Reviewuser = () => {
                 sx={{
                   mt: 2,
                   fontSize: "0.75rem",
-                  color: colors.textMuted,
+                  color: colors.textSecondary,
                 }}
               >
                 {new Date(viewReview.created_at).toLocaleDateString("en-US", {
@@ -2125,342 +1083,346 @@ const Reviewuser = () => {
                   year: "numeric",
                 })}
               </Typography>
-
             </DialogContent>
 
-
-            <DialogActions sx={{ p: 2, borderTop: "1px solid #eee" }}>
-
+            <DialogActions sx={{ p: 2, borderTop: "1px solid rgba(201,168,76,0.2)" }}>
               <Button
                 onClick={handleCloseView}
                 sx={{
-                  color: colors.gold,
+                  color: colors.primary,
                   fontWeight: 600,
-                  borderRadius: 3,
+                  borderRadius: 2,
                   px: 3,
+                  textTransform: "none",
                 }}
               >
                 Close
               </Button>
-
             </DialogActions>
-
           </>
-
         )}
-
       </Dialog>
 
+      {/* ============================================
+          ✅ DIALOG 2: VIEW ALL REVIEWS (كل التعليقات)
+      ============================================ */}
+
+      <Dialog
+        open={viewAllDialogOpen}
+        onClose={handleCloseViewAll}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            overflow: "hidden",
+            bgcolor: "#ffffff",
+            maxHeight: "80vh",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            p: 3,
+            bgcolor: colors.secondary,
+            borderBottom: "1px solid rgba(201,168,76,0.2)",
+          }}
+        >
+          <Typography sx={{ fontWeight: 700, color: colors.textPrimary, fontSize: "1.2rem" }}>
+            All Reviews ({reviews.length})
+          </Typography>
+
+          <IconButton onClick={handleCloseViewAll} sx={{ color: colors.textSecondary }}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+
+        <DialogContent sx={{ p: 0 }}>
+          <Stack spacing={0}>
+            {reviews.map((review, index) => {
+              const isOwner = user && Number(user.id) === Number(review.user_id);
+              
+              return (
+                <Box
+                  key={review.id}
+                  sx={{
+                    p: 3,
+                    borderBottom: index < reviews.length - 1 ? "1px solid rgba(201,168,76,0.1)" : "none",
+                    "&:hover": {
+                      bgcolor: colors.lightBg,
+                    },
+                  }}
+                >
+                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                    <Box sx={{ display: "flex", gap: 2, flex: 1 }}>
+                      <Avatar
+                        sx={{
+                          width: 40,
+                          height: 40,
+                          bgcolor: colors.primary,
+                          color: "#fff",
+                          fontWeight: 700,
+                          fontSize: "1rem",
+                        }}
+                      >
+                        {review.user_name?.charAt(0)?.toUpperCase() || "U"}
+                      </Avatar>
+
+                      <Box sx={{ flex: 1 }}>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                          <Typography sx={{ fontWeight: 600, color: colors.textPrimary }}>
+                            {review.user_name}
+                          </Typography>
+                          <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>
+                            • {new Date(review.created_at).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })}
+                          </Typography>
+                        </Box>
+
+                        <Rating
+                          value={Number(review.rating)}
+                          readOnly
+                          size="small"
+                          sx={{ color: colors.accent, mt: 0.5 }}
+                        />
+
+                        <Typography
+                          sx={{
+                            color: colors.textPrimary,
+                            lineHeight: 1.8,
+                            fontSize: "0.95rem",
+                            mt: 1,
+                            whiteSpace: "pre-wrap",
+                            wordBreak: "break-word",
+                          }}
+                        >
+                          {review.comment}
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    {isOwner && (
+                      <Box sx={{ display: "flex", gap: 0.5, ml: 2 }}>
+                        <IconButton
+                          size="small"
+                          onClick={() => {
+                            handleCloseViewAll();
+                            handleOpenEdit(review);
+                          }}
+                          sx={{ color: colors.textSecondary }}
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          onClick={() => {
+                            handleCloseViewAll();
+                            handleOpenDelete(review);
+                          }}
+                          sx={{ color: colors.danger }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                    )}
+                  </Box>
+
+                  {/* Like Button */}
+                  <Box sx={{ mt: 1, ml: 7 }}>
+                    <Button
+                      size="small"
+                      onClick={() => handleLike(review.id)}
+                      startIcon={
+                        review.liked ? (
+                          <ThumbUpIcon sx={{ color: colors.primary, fontSize: "0.9rem" }} />
+                        ) : (
+                          <ThumbUpOffAltIcon sx={{ color: colors.textSecondary, fontSize: "0.9rem" }} />
+                        )
+                      }
+                      sx={{
+                        color: review.liked ? colors.primary : colors.textSecondary,
+                        textTransform: "none",
+                        fontWeight: review.liked ? 600 : 400,
+                        fontSize: "0.8rem",
+                        "&:hover": {
+                          backgroundColor: colors.facebookLight,
+                        },
+                      }}
+                    >
+                      {review.likes_count || 0} Like
+                    </Button>
+                  </Box>
+                </Box>
+              );
+            })}
+          </Stack>
+        </DialogContent>
+      </Dialog>
 
       {/* ============================================
           EDIT DIALOG
       ============================================ */}
 
       <Dialog
-        open={
-          editDialogOpen
-        }
-        onClose={
-          handleCloseEdit
-        }
+        open={editDialogOpen}
+        onClose={handleCloseEdit}
         fullWidth
         maxWidth="sm"
         PaperProps={{
           sx: {
-            borderRadius: 4,
+            borderRadius: 3,
             bgcolor: "#ffffff",
           },
         }}
       >
-
         <DialogTitle
           sx={{
-            display:
-              "flex",
-
-            justifyContent:
-              "space-between",
-
-            alignItems:
-              "center",
-
-            fontWeight:
-              700,
-
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontWeight: 700,
             color: colors.textPrimary,
+            borderBottom: "1px solid rgba(201,168,76,0.2)",
           }}
         >
-
-          ✏️ Edit Your Review
-
-
-          <IconButton
-            onClick={
-              handleCloseEdit
-            }
-          >
-
+          ✏️ Edit Review
+          <IconButton onClick={handleCloseEdit}>
             <CloseIcon />
-
           </IconButton>
-
         </DialogTitle>
 
-
         <DialogContent>
-
-          <Box
-            sx={{
-              pt: 1,
-            }}
-          >
-
-            <Typography
-              sx={{
-                mb: 1,
-                color:
-                  colors.textSecondary,
-              }}
-            >
+          <Box sx={{ pt: 2 }}>
+            <Typography sx={{ mb: 1, color: colors.textSecondary }}>
               Your Rating
             </Typography>
 
-
             <Rating
-              value={
-                editRating
-              }
-              onChange={(
-                event,
-                value
-              ) => {
-
-                setEditRating(
-                  value || 5
-                );
-
+              value={editRating}
+              onChange={(event, value) => {
+                setEditRating(value || 5);
               }}
-              sx={{
-                color:
-                  colors.gold,
-
-                mb: 3,
-              }}
+              sx={{ color: colors.accent, mb: 3 }}
             />
-
 
             <TextField
               fullWidth
               multiline
               rows={4}
-              value={
-                editComment
-              }
-              onChange={(
-                event
-              ) =>
-
-                setEditComment(
-                  event.target.value
-                )
-
-              }
+              value={editComment}
+              onChange={(event) => setEditComment(event.target.value)}
               placeholder="Edit your review..."
               sx={{
                 "& .MuiOutlinedInput-root": {
                   borderRadius: 2,
-                  bgcolor: "#f5f5f5",
+                  bgcolor: colors.secondary,
                 },
               }}
             />
-
           </Box>
-
         </DialogContent>
 
-
-        <DialogActions
-          sx={{
-            p: 2,
-          }}
-        >
-
+        <DialogActions sx={{ p: 2, borderTop: "1px solid rgba(201,168,76,0.2)" }}>
           <Button
-            onClick={
-              handleCloseEdit
-            }
-            disabled={
-              editLoading
-            }
-            sx={{ color: colors.textMuted }}
+            onClick={handleCloseEdit}
+            disabled={editLoading}
+            sx={{ color: colors.textSecondary, textTransform: "none" }}
           >
             Cancel
           </Button>
 
-
           <Button
             variant="contained"
-            onClick={
-              handleUpdateReview
-            }
-            disabled={
-              editLoading
-            }
+            onClick={handleUpdateReview}
+            disabled={editLoading}
             sx={{
-              bgcolor:
-                colors.gold,
-
+              bgcolor: colors.primary,
+              textTransform: "none",
+              fontWeight: 600,
               "&:hover": {
-                bgcolor:
-                  colors.goldHover,
+                bgcolor: colors.primaryDark,
               },
             }}
           >
-
             {editLoading ? (
-
-              <CircularProgress
-                size={22}
-                sx={{
-                  color:
-                    "#fff",
-                }}
-              />
-
+              <CircularProgress size={22} sx={{ color: "#fff" }} />
             ) : (
-
               "Save Changes"
-
             )}
-
           </Button>
-
         </DialogActions>
-
       </Dialog>
-
 
       {/* ============================================
           DELETE DIALOG
       ============================================ */}
 
       <Dialog
-        open={
-          deleteDialogOpen
-        }
-        onClose={() =>
-          !deleteLoading &&
-          setDeleteDialogOpen(
-            false
-          )
-        }
+        open={deleteDialogOpen}
+        onClose={() => !deleteLoading && setDeleteDialogOpen(false)}
         maxWidth="xs"
         fullWidth
         PaperProps={{
           sx: {
-            borderRadius: 4,
+            borderRadius: 3,
             bgcolor: "#ffffff",
           },
         }}
       >
-
-        <DialogTitle
-          sx={{
-            fontWeight:
-              700,
-
-            color: colors.textPrimary,
-          }}
-        >
+        <DialogTitle sx={{ fontWeight: 700, color: colors.textPrimary }}>
           Delete Review?
         </DialogTitle>
 
-
         <DialogContent>
-
-          <Typography
-            color="text.secondary"
-          >
+          <Typography color="text.secondary">
             Are you sure you want to delete this review? This action cannot be undone.
           </Typography>
-
         </DialogContent>
 
-
-        <DialogActions
-          sx={{
-            p: 2,
-          }}
-        >
-
+        <DialogActions sx={{ p: 2, borderTop: "1px solid rgba(201,168,76,0.2)" }}>
           <Button
-            onClick={() =>
-              setDeleteDialogOpen(
-                false
-              )
-            }
-            disabled={
-              deleteLoading
-            }
-            sx={{ color: colors.textMuted }}
+            onClick={() => setDeleteDialogOpen(false)}
+            disabled={deleteLoading}
+            sx={{ color: colors.textSecondary, textTransform: "none" }}
           >
             Cancel
           </Button>
 
-
           <Button
             variant="contained"
-            onClick={
-              handleDeleteReview
-            }
-            disabled={
-              deleteLoading
-            }
+            onClick={handleDeleteReview}
+            disabled={deleteLoading}
             sx={{
-              bgcolor:
-                colors.danger,
-
+              bgcolor: colors.danger,
+              textTransform: "none",
+              fontWeight: 600,
               "&:hover": {
-                bgcolor:
-                  "#b52b27",
+                bgcolor: "#b71c1c",
               },
             }}
           >
-
             {deleteLoading ? (
-
-              <CircularProgress
-                size={22}
-                sx={{
-                  color:
-                    "#fff",
-                }}
-              />
-
+              <CircularProgress size={22} sx={{ color: "#fff" }} />
             ) : (
-
               "Delete"
-
             )}
-
           </Button>
-
         </DialogActions>
-
       </Dialog>
-
 
       {/* ============================================
           SNACKBAR
       ============================================ */}
 
       <Snackbar
-        open={
-          snackbar.open
-        }
-        autoHideDuration={
-          3000
-        }
+        open={snackbar.open}
+        autoHideDuration={3000}
         onClose={() =>
           setSnackbar({
             ...snackbar,
@@ -2468,18 +1430,12 @@ const Reviewuser = () => {
           })
         }
         anchorOrigin={{
-          vertical:
-            "bottom",
-
-          horizontal:
-            "center",
+          vertical: "bottom",
+          horizontal: "center",
         }}
       >
-
         <Alert
-          severity={
-            snackbar.severity
-          }
+          severity={snackbar.severity}
           onClose={() =>
             setSnackbar({
               ...snackbar,
@@ -2487,27 +1443,17 @@ const Reviewuser = () => {
             })
           }
           sx={{
-            borderRadius: 3,
+            borderRadius: 2,
             fontWeight: 600,
           }}
         >
-
-          {
-            snackbar.message
-          }
-
+          {snackbar.message}
         </Alert>
-
       </Snackbar>
 
-
       <Footer />
-
     </Box>
-
   );
-
 };
-
 
 export default Reviewuser;

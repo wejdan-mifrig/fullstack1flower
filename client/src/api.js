@@ -8,7 +8,7 @@ const api = axios.create({
   },
 });
 
-// Access Token محفوظ في الذاكرة فقط
+
 let accessToken = null;
 
 export const setAccessToken = (token) => {
