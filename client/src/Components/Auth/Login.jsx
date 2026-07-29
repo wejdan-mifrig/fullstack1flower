@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   Box,
   Paper,
@@ -7,13 +6,10 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-
 import { useAuth } from "../../Hooks/useAuth";
 import videoBg from "../../assets/video/login.mp4";
 
@@ -27,13 +23,18 @@ export default function Login() {
     password: "",
   });
 
-  const handleLogin = async () => {
-    await login(userData);
+  const [loading, setLoading] = useState(false);
 
-    setUserData({
-      email: "",
-      password: "",
-    });
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      await login(userData);
+      // الدالة login تقوم بدمج السلة تلقائياً
+    } catch (error) {
+      console.error('Login error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -198,6 +199,7 @@ export default function Login() {
             <Button
               variant="contained"
               onClick={handleLogin}
+              disabled={loading}
               sx={{
                 mt: 1,
                 bgcolor: mainColor,
@@ -207,7 +209,7 @@ export default function Login() {
                 py: 1,
               }}
             >
-              Login
+              {loading ? "Loading..." : "Login"}
             </Button>
 
             <Typography
@@ -218,7 +220,6 @@ export default function Login() {
               }}
             >
               Don't have an account?{" "}
-
               <Link
                 to="/register"
                 style={{

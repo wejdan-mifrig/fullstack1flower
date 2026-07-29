@@ -5,26 +5,29 @@ import "./index.css";
 import App from "./App.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter } from "react-router-dom";
+
 import AuthProvider from "./Context/AuthContext.jsx";
+import MenuProvider from "./Context/MenuContext.jsx";
+import CategoriesProvider from "./Context/CategoriesContext.jsx";
 
+import { OrderProvider } from "./Context/OrderContext.jsx";
+import { CartProvider } from "./Context/CartContext.jsx";
 
-import { ThemeProvider } from "@mui/material/styles";
-
-import  MenuProvider from './Context/MenuContext.jsx';
-import CategoriesProvider from './Context/CategoriesContext.jsx';
 createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-  
-      <BrowserRouter>
-        <AuthProvider>
-          <CategoriesProvider>
-            <MenuProvider>
-              <CssBaseline />
-              <App />
-            </MenuProvider>
-          </CategoriesProvider>
-        </AuthProvider>
-      </BrowserRouter>
-   
-  </React.StrictMode>
+  // <React.StrictMode>  // ← علق هذا السطر
+    <BrowserRouter>
+      <AuthProvider>
+        <CategoriesProvider>
+          <MenuProvider>
+            <CartProvider>
+              <OrderProvider>
+                <CssBaseline />
+                <App />
+              </OrderProvider>
+            </CartProvider>
+          </MenuProvider>
+        </CategoriesProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  // </React.StrictMode>  // ← وعلق هذا السطر
 );

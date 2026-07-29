@@ -151,3 +151,23 @@ export const me = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
+// ================= LOGOUT =================
+export const logoutController = asyncHandler(async (req, res) => {
+  const refreshToken = req.cookies.refreshTokens;
+
+  // احذف الكوكي حتى لو ما كان موجود
+  res.clearCookie("refreshTokens", {
+    httpOnly: true,
+    secure: false, // اجعليها true في الإنتاج مع HTTPS
+    sameSite: "strict",
+  });
+
+  // إذا كان المستخدم مسجل دخول، امسحي الـ refresh token من قاعدة البيانات
+  if (req.user?.id) {
+    await saveRefreshTokens(req.user.id, null);
+  }
+
+  return res.status(200).json({
+    message: "Logged out successfully",
+  });
+});

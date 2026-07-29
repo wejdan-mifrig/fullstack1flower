@@ -7,18 +7,15 @@ import {
   Typography,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
-
-import videoBg from "../../assets/video/register.mp4"; // تأكد من مسار الفيديو
+import videoBg from "../../assets/video/register.mp4";
 import { useAuth } from "../../Hooks/useAuth";
 
 const mainColor = "#3e4a3a";
 
 export default function Register() {
-  const navigate = useNavigate();
   const { register } = useAuth();
 
   const [userData, setUserData] = useState({
@@ -28,14 +25,24 @@ export default function Register() {
     confirmPassword: "",
   });
 
-  const handleRegister = () => {
-    register(userData);
-    setUserData({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
+  const [loading, setLoading] = useState(false);
+
+  const handleRegister = async () => {
+    // التحقق من تطابق كلمة المرور
+    if (userData.password !== userData.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await register(userData);
+      // الدالة register تقوم بتسجيل الدخول ودمج السلة تلقائياً
+    } catch (error) {
+      console.error('Register error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -173,6 +180,7 @@ export default function Register() {
             <Button
               variant="contained"
               onClick={handleRegister}
+              disabled={loading}
               sx={{
                 mt: 1,
                 bgcolor: mainColor,
@@ -180,7 +188,7 @@ export default function Register() {
                 py: 1,
               }}
             >
-              Register
+              {loading ? "Loading..." : "Register"}
             </Button>
 
             <Typography sx={{ mt: 1, textAlign: "center", fontSize: 13 }}>

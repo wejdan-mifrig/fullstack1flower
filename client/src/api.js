@@ -8,7 +8,7 @@ const api = axios.create({
   },
 });
 
-// Access Token محفوظ في الذاكرة فقط
+
 let accessToken = null;
 
 export const setAccessToken = (token) => {
@@ -35,6 +35,7 @@ api.interceptors.request.use(
   (error) => {
     return Promise.reject(error);
   }
+  
 );
 
 export default api;
