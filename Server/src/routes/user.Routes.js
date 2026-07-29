@@ -1,6 +1,7 @@
 import express from "express";
 import { adminOnly } from "../middleware/adminOnly.Middleware.js";
 import { protect } from "../middleware/protect.Middleware.js";
+
 import {
   deleteUserController,
   getAllUsersController,
@@ -8,12 +9,12 @@ import {
   getUserByIdController,
   updateUserInfoController,
   createUserController,
+  updateProfileController,
 } from "../controller/user.Controller.js";
 
 import { globalRateLimit } from "../middleware/ratelimit.Middleware.js";
 
 const route = express.Router();
-
 
 route.get(
   "/all-users",
@@ -49,6 +50,15 @@ route.put(
   adminOnly,
   globalRateLimit,
   updateUserInfoController
+);
+
+// ===============================
+// USER UPDATE HIS OWN PROFILE
+// ===============================
+route.put(
+  "/profile",
+  protect,
+  updateProfileController
 );
 
 route.delete(

@@ -8,7 +8,7 @@ import {
 
 import api from "../api.js";
 import toast from "react-hot-toast";
-import { useAuth } from "../Context/AuthContext.jsx"; // عدلي المسار إذا كان مختلف
+import { useAuth } from "../Context/AuthContext.jsx";
 
 const CartContext = createContext();
 
@@ -94,16 +94,26 @@ export const CartProvider = ({ children }) => {
   // =====================================================
 
   const updateQuantity = async (id, quantity) => {
+    if (quantity < 1) {
+      toast.error("Quantity cannot be less than 1");
+      return;
+    }
+
     try {
       await api.put(`/cart/${id}`, {
         quantity,
       });
 
       await getCart();
+      
+      toast.success("Quantity updated");
+
     } catch (error) {
       console.error("UPDATE QUANTITY ERROR:", error);
 
-      toast.error("Failed to update quantity");
+      toast.error(
+        error.response?.data?.message || "Failed to update quantity"
+      );
     }
   };
 

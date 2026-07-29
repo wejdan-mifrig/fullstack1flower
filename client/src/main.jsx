@@ -10,16 +10,17 @@ import AuthProvider from "./Context/AuthContext.jsx";
 import MenuProvider from "./Context/MenuContext.jsx";
 import CategoriesProvider from "./Context/CategoriesContext.jsx";
 
-import { OrderProvider } from "./Context/OrderContext.jsx"; // ✅ إضافة OrderProvider
+import { OrderProvider } from "./Context/OrderContext.jsx";
 import { CartProvider } from "./Context/CartContext.jsx";
+
 createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>  // ← علق هذا السطر
     <BrowserRouter>
       <AuthProvider>
         <CategoriesProvider>
           <MenuProvider>
             <CartProvider>
-              <OrderProvider>         {/* ✅ غلف التطبيق بـ OrderProvider */}
+              <OrderProvider>
                 <CssBaseline />
                 <App />
               </OrderProvider>
@@ -28,5 +29,5 @@ createRoot(document.getElementById("root")).render(
         </CategoriesProvider>
       </AuthProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>  // ← وعلق هذا السطر
 );

@@ -4,7 +4,8 @@ import {
     addToCartController,
     getMyCartController,
     removeCartItemController,
-    clearCartController
+    clearCartController,
+    updateCartItemQuantityController
 } from "../controller/cart.Controller.js";
 
 
@@ -33,6 +34,16 @@ route.get(
 "/cart",
 protect,
 getMyCartController
+);
+
+
+
+// Update quantity
+
+route.put(
+"/cart/:id",
+protect,
+updateCartItemQuantityController
 );
 
 

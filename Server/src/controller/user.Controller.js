@@ -31,7 +31,9 @@ export const getUserByIdController = async (req, res) => {
     const user = await getUserById(userId);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({
+        message: "User not found",
+      });
     }
 
     return res.status(200).json({
@@ -52,7 +54,9 @@ export const getUserByEmailController = async (req, res) => {
     const user = await getUserByEmail(email);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({
+        message: "User not found",
+      });
     }
 
     return res.status(200).json({
@@ -85,15 +89,23 @@ export const deleteUserController = async (req, res) => {
 export const updateUserInfoController = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { email, name, role, password } = req.body;
+
+    const {
+      email,
+      name,
+      role,
+      password,
+    } = req.body;
 
     const existedUser = await getUserById(userId);
 
     if (!existedUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({
+        message: "User not found",
+      });
     }
 
-    let hashedPassword = existedUser.password;
+    let hashedPassword = existedUser.hashed_password;
 
     if (password && password.trim() !== "") {
       hashedPassword = await bcrypt.hash(password, 10);
@@ -110,6 +122,63 @@ export const updateUserInfoController = async (req, res) => {
       message: "Updated successfully",
       user: updatedUser,
     });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+// =======================================================
+// USER UPDATE HIS OWN PROFILE
+// =======================================================
+
+export const updateProfileController = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const {
+      name,
+      email,
+      password,
+    } = req.body;
+
+    const existedUser = await getUserById(userId);
+
+    if (!existedUser) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    // منع تكرار الإيميل
+    if (email && email !== existedUser.email) {
+      const emailExists = await getUserByEmail(email);
+
+      if (emailExists) {
+        return res.status(400).json({
+          message: "Email already exists",
+        });
+      }
+    }
+
+    let hashedPassword = existedUser.hashed_password;
+
+    if (password && password.trim() !== "") {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
+
+    const updatedUser = await updateUserInfo(userId, {
+      name: name || existedUser.name,
+      email: email || existedUser.email,
+      role: existedUser.role,
+      password: hashedPassword,
+    });
+
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
 
   } catch (error) {
     return res.status(500).json({
@@ -120,7 +189,12 @@ export const updateUserInfoController = async (req, res) => {
 
 export const createUserController = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const {
+      name,
+      email,
+      password,
+      role,
+    } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -149,6 +223,7 @@ export const createUserController = async (req, res) => {
       message: "User created successfully",
       user,
     });
+
   } catch (error) {
     return res.status(500).json({
       message: error.message,

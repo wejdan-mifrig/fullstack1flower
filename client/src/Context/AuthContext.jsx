@@ -15,19 +15,16 @@ import api, {
 
 import toast from "react-hot-toast";
 
-
 // ============================================================
 // CONTEXT
 // ============================================================
 
 export const UserContext = createContext(null);
 
-
 // Hook لاستخدام الـ Context داخل الصفحات
 export const useAuth = () => {
   return useContext(UserContext);
 };
-
 
 // ============================================================
 // PROVIDER
@@ -37,7 +34,6 @@ export default function AuthProvider({ children }) {
 
   const navigate = useNavigate();
 
-
   const [user, setUser] = useState(null);
 
   const [users, setUsers] = useState([]);
@@ -46,15 +42,11 @@ export default function AuthProvider({ children }) {
 
   const [authLoading, setAuthLoading] = useState(true);
 
-
   // يمنع تكرار فحص المستخدم
   const authChecked = useRef(false);
 
-
   // يمنع تشغيل أكثر من refresh
   const refreshPromise = useRef(null);
-
-
 
   // ============================================================
   // LOGIN
@@ -66,63 +58,47 @@ export default function AuthProvider({ children }) {
 
       setLoading(true);
 
-
       const res = await api.post(
         "/auth/login",
         userData
       );
-
 
       const {
         accessToken,
         user,
       } = res.data;
 
-
-
       // حفظ التوكن بالذاكرة فقط
       setAccessToken(accessToken);
 
-
       // حفظ بيانات المستخدم
       setUser(user);
-
-
 
       toast.success(
         res.data.message ||
         "Logged in successfully"
       );
 
-
-
       setTimeout(() => {
 
-        if(user.role === "admin"){
+        if (user.role === "admin") {
 
           navigate("/admin");
 
-        }else{
+        } else {
 
           navigate("/user");
 
         }
 
-      },500);
-
-
+      }, 500);
 
       return res.data;
 
-
-
-    } catch(error){
-
+    } catch (error) {
 
       const data =
         error?.response?.data;
-
-
 
       toast.error(
         data?.errors?.[0] ||
@@ -130,10 +106,55 @@ export default function AuthProvider({ children }) {
         "Login failed"
       );
 
-
       throw error;
 
+    } finally {
 
+      setLoading(false);
+
+    }
+
+  };
+    // ============================================================
+  // REGISTER
+  // ============================================================
+
+  const register = async (userData) => {
+
+    try {
+
+      setLoading(true);
+
+      const res = await api.post(
+        "/auth/register",
+        userData
+      );
+
+      toast.success(
+        res.data.message ||
+        "Registered successfully"
+      );
+
+      setTimeout(() => {
+
+        navigate("/login");
+
+      }, 500);
+
+      return res.data;
+
+    } catch (error) {
+
+      const data =
+        error?.response?.data;
+
+      toast.error(
+        data?.errors?.[0] ||
+        data?.message ||
+        "Register failed"
+      );
+
+      throw error;
 
     } finally {
 
@@ -145,254 +166,107 @@ export default function AuthProvider({ children }) {
 
 
 
-
-
-  // ============================================================
-  // REGISTER
-  // ============================================================
-
-  const register = async(userData)=>{
-
-
-    try{
-
-
-      setLoading(true);
-
-
-      const res = await api.post(
-        "/auth/register",
-        userData
-      );
-
-
-
-      toast.success(
-        res.data.message ||
-        "Registered successfully"
-      );
-
-
-
-      setTimeout(()=>{
-
-        navigate("/login");
-
-      },500);
-
-
-
-      return res.data;
-
-
-
-    }catch(error){
-
-
-      const data =
-        error?.response?.data;
-
-
-
-      toast.error(
-        data?.errors?.[0] ||
-        data?.message ||
-        "Register failed"
-      );
-
-
-      throw error;
-
-
-
-    }finally{
-
-      setLoading(false);
-
-    }
-
-  };
-
-
-
-
-
   // ============================================================
   // CHECK USER
   // ============================================================
 
-  const authorizedUser = async()=>{
+  const authorizedUser = async () => {
 
-
-    if(authChecked.current){
+    if (authChecked.current) {
 
       return;
 
     }
 
-
-
-    if(refreshPromise.current){
+    if (refreshPromise.current) {
 
       return refreshPromise.current;
 
     }
 
-
-
     authChecked.current = true;
 
+    refreshPromise.current = (async () => {
 
-
-    refreshPromise.current = (async()=>{
-
-
-      try{
-
+      try {
 
         setAuthLoading(true);
 
-
-
-        // جلب access token جديد
+        // جلب Access Token جديد
         const refreshResponse =
-          await api.post(
-            "/auth/refresh"
-          );
-
-
+          await api.post("/auth/refresh");
 
         const newAccessToken =
           refreshResponse.data.accessToken;
 
+        if (!newAccessToken) {
 
-
-        if(!newAccessToken){
-
-          throw new Error(
-            "No access token"
-          );
+          throw new Error("No access token");
 
         }
 
+        setAccessToken(newAccessToken);
 
-
-        setAccessToken(
-          newAccessToken
-        );
-
-
-
-        // جلب المستخدم
+        // جلب بيانات المستخدم
         const res =
-          await api.get(
-            "/auth/me"
-          );
+          await api.get("/auth/me");
 
+        setUser(res.data.user);
 
+      } catch (error) {
 
-        setUser(
-          res.data.user
-        );
-
-
-
-      }catch(error){
-
-
-        console.log(
-          "Not authenticated"
-        );
-
+        console.log("Not authenticated");
 
         setUser(null);
 
         clearAccessToken();
 
-
-
-      }finally{
-
+      } finally {
 
         setAuthLoading(false);
 
-        refreshPromise.current=null;
-
+        refreshPromise.current = null;
 
       }
-
-
 
     })();
 
-
-
     return refreshPromise.current;
 
-
-  };
-
-
-
-
-
-  // ============================================================
+  }; 
+    // ============================================================
   // LOGOUT
   // ============================================================
 
-  const logout = async()=>{
+  const logout = async () => {
 
+    try {
 
-    try{
+      try {
 
+        await api.post("/auth/logout");
 
-      try{
+      } catch (error) {
 
-        await api.post(
-          "/auth/logout"
-        );
-
-      }catch(error){
-
-        console.log(
-          "Logout API unavailable"
-        );
+        console.log("Logout API unavailable");
 
       }
 
-
-
-
       clearAccessToken();
-
 
       setUser(null);
 
-
-
-      authChecked.current=false;
-
-
+      authChecked.current = false;
 
       navigate("/login");
 
+    } catch (error) {
 
-
-    }catch(error){
-
-
-      console.log(
-        "LOGOUT ERROR",
-        error
-      );
+      console.log("LOGOUT ERROR", error);
 
     }
 
-
   };
-
-
-
 
 
 
@@ -400,52 +274,30 @@ export default function AuthProvider({ children }) {
   // GET ALL USERS
   // ============================================================
 
-  const allUsers = async()=>{
+  const allUsers = async () => {
 
-
-    try{
-
+    try {
 
       setLoading(true);
 
-
-
       const res =
-        await api.get(
-          "/all-users"
-        );
+        await api.get("/all-users");
 
+      setUsers(res.data.users);
 
+    } catch (error) {
 
-      setUsers(
-        res.data.users
-      );
-
-
-
-    }catch(error){
-
-
-      toast.error(
-        "Failed to load users"
-      );
-
+      toast.error("Failed to load users");
 
       setUsers([]);
 
-
-
-    }finally{
-
+    } finally {
 
       setLoading(false);
 
     }
 
-
   };
-
-
 
 
 
@@ -453,104 +305,114 @@ export default function AuthProvider({ children }) {
   // DELETE USER
   // ============================================================
 
-  const deleteUser = async(id)=>{
+  const deleteUser = async (id) => {
 
-
-    try{
-
+    try {
 
       await api.delete(
         `/user/delete/${id}`
       );
 
-
-
       toast.success(
         "User deleted successfully"
       );
 
-
-
       await allUsers();
 
-
-
-    }catch(error){
-
+    } catch (error) {
 
       toast.error(
         error.response?.data?.message ||
         "Delete failed"
       );
 
-
     }
-
 
   };
 
 
 
-
-
-
   // ============================================================
-  // UPDATE USER
+  // UPDATE USER (ADMIN)
   // ============================================================
 
-  const updateUser = async(id,data)=>{
+  const updateUser = async (id, data) => {
 
-
-    try{
-
+    try {
 
       await api.put(
         `/user/update/${id}`,
         data
       );
 
-
-
       toast.success(
         "User updated successfully"
       );
 
-
-
       await allUsers();
 
-
-
-    }catch(error){
-
+    } catch (error) {
 
       toast.error(
         error.response?.data?.message ||
         "Update failed"
       );
 
-
     }
-
 
   };
 
 
 
-
-
   // ============================================================
+  // UPDATE MY PROFILE
+  // ============================================================
+
+  const updateProfile = async (data) => {
+
+    try {
+
+      setLoading(true);
+
+      const res = await api.put(
+        "/profile",
+        data
+      );
+
+      // تحديث بيانات المستخدم مباشرة
+      setUser(res.data.user);
+
+      toast.success(
+        res.data.message ||
+        "Profile updated successfully"
+      );
+
+      return res.data;
+
+    } catch (error) {
+
+      toast.error(
+        error.response?.data?.message ||
+        "Profile update failed"
+      );
+
+      throw error;
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };  // ============================================================
   // START AUTH CHECK
   // ============================================================
 
-  useEffect(()=>{
+  useEffect(() => {
 
     authorizedUser();
 
-  },[]);
-
-
-
+  }, []);
 
 
 
@@ -592,6 +454,8 @@ export default function AuthProvider({ children }) {
         deleteUser,
 
         updateUser,
+
+        updateProfile,
 
       }}
 

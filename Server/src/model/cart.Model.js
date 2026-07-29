@@ -11,7 +11,6 @@ export const addToCart = async(
  quantity
 )=>{
 
-
 const result = await pool.query(
 
 `
@@ -41,7 +40,6 @@ quantity
 
 );
 
-
 return result.rows[0];
 
 };
@@ -57,7 +55,6 @@ return result.rows[0];
 export const getCartByUser = async(
  userId
 )=>{
-
 
 const result = await pool.query(
 
@@ -101,13 +98,49 @@ userId
 
 );
 
-
 return result.rows;
 
 };
 
 
 
+// =======================================
+// UPDATE QUANTITY
+// =======================================
+
+export const updateCartQuantity = async(
+ id,
+ userId,
+ quantity
+)=>{
+
+const result = await pool.query(
+
+`
+
+UPDATE cart
+
+SET quantity = $1
+
+WHERE id = $2
+
+AND user_id = $3
+
+RETURNING *
+
+`,
+[
+quantity,
+id,
+userId
+
+]
+
+);
+
+return result.rows[0];
+
+};
 
 
 
@@ -120,7 +153,6 @@ export const removeFromCart = async(
  id,
  userId
 )=>{
-
 
 const result = await pool.query(
 
@@ -138,10 +170,10 @@ RETURNING *
 [
 id,
 userId
+
 ]
 
 );
-
 
 return result.rows[0];
 
@@ -161,7 +193,6 @@ export const clearCart = async(
  userId
 )=>{
 
-
 await pool.query(
 
 `
@@ -174,6 +205,5 @@ userId
 ]
 
 );
-
 
 };
