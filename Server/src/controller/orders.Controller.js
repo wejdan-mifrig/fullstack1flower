@@ -7,84 +7,151 @@ import {
   getOrdersByUser,
   getOrderItems,
   getOrderById,
-  updateOrderStatus,
+  updateOrderStatus
 } from "../model/orders.Model.js";
-
 
 import {
   getCartByUser,
-  clearCart,
+  clearCart
 } from "../model/cart.Model.js";
 
 
 
 
 // ======================================================
-// Create Order From Cart
+// Create Order
 // ======================================================
 
-export const createOrderController =
-
-asyncHandler(async(req,res)=>{
+export const createOrderController = asyncHandler(async (req, res) => {
 
 
-const userId = req.user.id;
+  const userId = req.user.id;
+
+
+  const {
+
+    phone,
+
+    address,
+
+    delivery_address,
+
+    shipping_address,
+
+    paymentMethod
+
+  } = req.body;
 
 
 
-// جلب الكارت
+  // يدعم جميع أسماء العنوان القادمة من الفرونت
 
-const cartItems = await getCartByUser(
-  userId
-);
-
-
-
-if(!cartItems || cartItems.length === 0){
+  const orderAddress =
+    address ||
+    delivery_address ||
+    shipping_address ||
+    "Not specified";
 
 
-return res.status(400).json({
 
-message:"Cart is empty"
+
+  const cartItems = await getCartByUser(userId);
+
+
+
+  if (!cartItems || cartItems.length === 0) {
+
+    return res.status(400).json({
+
+      message: "Cart is empty"
+
+    });
+
+  }
+
+
+
+
+  const totalPrice = cartItems.reduce(
+
+    (total, item) => {
+
+      return total + 
+      (Number(item.price) * item.quantity);
+
+    },
+
+    0
+
+  );
+
+
+
+
+
+  const order = await createOrder(
+
+    userId,
+
+    totalPrice,
+
+    phone,
+
+    orderAddress,
+
+    paymentMethod
+
+  );
+
+
+
+
+
+
+
+  for (const item of cartItems) {
+
+
+    await createOrderItem(
+
+      order.id,
+
+      item.product_id,
+
+      item.quantity,
+
+      item.price
+
+    );
+
+
+  }
+
+
+
+
+
+
+  await clearCart(userId);
+
+
+
+
+
+
+  return res.status(201).json({
+
+    message: "Order created successfully",
+
+    order
+
+  });
+
+
 
 });
 
 
-}
-
-
-
-
-
-// حساب السعر
-
-const totalPrice = cartItems.reduce(
-
-(total,item)=>{
-
-return total + 
-(Number(item.price) * item.quantity);
-
-},
-
-0
-
-);
-
-
-
-
-
-
-// إنشاء الطلب
-
-const order = await createOrder(
-
-userId,
-
-totalPrice
-
-);
 
 
 
@@ -92,53 +159,41 @@ totalPrice
 
 
 
-// نقل المنتجات إلى order_items
+// ======================================================
+// Get My Orders
+// ======================================================
+
+export const getMyOrdersController = asyncHandler(async (req, res) => {
 
 
-for(const item of cartItems){
+  const orders = await getOrdersByUser(
 
+    req.user.id
 
-await createOrderItem(
-
-order.id,
-
-item.product_id,
-
-item.quantity,
-
-item.price
-
-);
-
-
-}
+  );
 
 
 
+  for (const order of orders) {
 
 
+    order.items = await getOrderItems(
 
-// تفريغ الكارت
+      order.id
 
-await clearCart(
+    );
 
-userId
 
-);
+  }
 
 
 
 
+  res.status(200).json({
 
+    orders
 
-return res.status(201).json({
-
-message:"Order created successfully",
-
-order
-
-});
-
+  });
 
 
 });
@@ -155,38 +210,30 @@ order
 // Get All Orders Admin
 // ======================================================
 
-
-export const getAllOrdersController =
-
-asyncHandler(async(req,res)=>{
+export const getAllOrdersController = asyncHandler(async (req, res) => {
 
 
-const orders = await getAllOrders();
+  const orders = await getAllOrders();
 
 
 
-
-for(const order of orders){
-
-
-order.items = await getOrderItems(
-
-order.id
-
-);
+  for (const order of orders) {
 
 
-}
+    order.items = await getOrderItems(order.id);
+
+
+  }
 
 
 
 
 
-return res.status(200).json({
+  res.status(200).json({
 
-orders
+    orders
 
-});
+  });
 
 
 });
@@ -200,69 +247,10 @@ orders
 
 
 // ======================================================
-// Get My Orders User
+// Single Order
 // ======================================================
 
-
-export const getMyOrdersController =
-
-asyncHandler(async(req,res)=>{
-
-
-const userId = req.user.id;
-
-
-
-const orders = await getOrdersByUser(
-
-userId
-
-);
-
-
-
-
-for(const order of orders){
-
-
-order.items = await getOrderItems(
-
-order.id
-
-);
-
-
-}
-
-
-
-
-
-return res.status(200).json({
-
-orders
-
-});
-
-
-});
-
-
-
-
-
-
-
-
-
-// ======================================================
-// Get Single Order
-// ======================================================
-
-
-export const getSingleOrderController =
-
-asyncHandler(async(req,res)=>{
+export const getSingleOrderController = asyncHandler(async (req,res)=>{
 
 
 const order = await getOrderById(
@@ -275,9 +263,7 @@ req.user.id
 
 
 
-
 if(!order){
-
 
 return res.status(404).json({
 
@@ -285,23 +271,15 @@ message:"Order not found"
 
 });
 
-
 }
 
 
 
-
-
-order.items = await getOrderItems(
-
-order.id
-
-);
+order.items = await getOrderItems(order.id);
 
 
 
-
-return res.status(200).json({
+res.status(200).json({
 
 order
 
@@ -322,10 +300,7 @@ order
 // Accept Order
 // ======================================================
 
-
-export const acceptOrderController =
-
-asyncHandler(async(req,res)=>{
+export const acceptOrderController = asyncHandler(async(req,res)=>{
 
 
 const order = await updateOrderStatus(
@@ -340,25 +315,7 @@ req.params.id,
 
 
 
-
-
-if(!order){
-
-
-return res.status(404).json({
-
-message:"Order not found"
-
-});
-
-
-}
-
-
-
-
-
-return res.status(200).json({
+res.status(200).json({
 
 message:"Order accepted successfully",
 
@@ -381,32 +338,14 @@ order
 // Reject Order
 // ======================================================
 
-
-export const rejectOrderController =
-
-asyncHandler(async(req,res)=>{
+export const rejectOrderController = asyncHandler(async(req,res)=>{
 
 
 const {
+
 message
+
 }=req.body;
-
-
-
-
-if(!message){
-
-
-return res.status(400).json({
-
-message:"Rejection reason is required"
-
-});
-
-
-}
-
-
 
 
 
@@ -423,24 +362,7 @@ message
 
 
 
-
-if(!order){
-
-
-return res.status(404).json({
-
-message:"Order not found"
-
-});
-
-
-}
-
-
-
-
-
-return res.status(200).json({
+res.status(200).json({
 
 message:"Order rejected successfully",
 

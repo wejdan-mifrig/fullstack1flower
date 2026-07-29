@@ -17,7 +17,7 @@ import NavbarUser from "../../Components/NavUserAdmin/Navuser.jsx";
 import Footer from "../../Components/Footer/Footer.jsx";
 import { useNavigate } from "react-router-dom";
 
-const Mybooking = () => {
+const Bookuser = () => {
   const { orders, loading, getMyOrders } = useOrders();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -247,4 +247,4 @@ const Mybooking = () => {
   );
 };
 
-export default Mybooking;
+export default Bookuser;

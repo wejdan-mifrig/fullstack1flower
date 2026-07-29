@@ -2,39 +2,66 @@ import pool from "../config/db.js";
 
 
 
-// =======================================
+
 // Create Order
-// =======================================
 
 export const createOrder = async (
-  userId,
-  totalPrice
+
+userId,
+
+totalPrice,
+
+phone,
+
+address,
+
+paymentMethod
+
 )=>{
 
 
 const result = await pool.query(
 
 `
+
 INSERT INTO orders
+
 (
 user_id,
-total_price
+total_price,
+phone,
+address,
+payment_method
 )
 
-VALUES($1,$2)
+VALUES($1,$2,$3,$4,$5)
 
 RETURNING *
+
 `
+
 ,
+
 [
+
 userId,
-totalPrice
+
+totalPrice,
+
+phone,
+
+address,
+
+paymentMethod
+
 ]
+
 
 );
 
 
 return result.rows[0];
+
 
 };
 
@@ -42,16 +69,20 @@ return result.rows[0];
 
 
 
-// =======================================
-// Add Items To Order
-// =======================================
 
 
-export const createOrderItem = async (
+
+
+// Create Order Item
+
+export const createOrderItem = async(
 
 orderId,
+
 productId,
+
 quantity,
+
 price
 
 )=>{
@@ -60,6 +91,7 @@ price
 const result = await pool.query(
 
 `
+
 INSERT INTO order_items
 
 (
@@ -72,16 +104,26 @@ price
 VALUES($1,$2,$3,$4)
 
 RETURNING *
+
 `
+
 ,
+
 [
+
 orderId,
+
 productId,
+
 quantity,
+
 price
+
 ]
 
+
 );
+
 
 
 return result.rows[0];
@@ -95,37 +137,27 @@ return result.rows[0];
 
 
 
-// =======================================
-// Get All Orders Admin
-// =======================================
 
 
-export const getAllOrders = async ()=>{
+// Get All Orders
+
+export const getAllOrders = async()=>{
 
 
 const result = await pool.query(
 
 `
+
 SELECT
 
 
-orders.id,
+orders.*,
 
-orders.total_price,
-
-orders.status,
-
-orders.admin_message,
-
-orders.created_at,
-
-
-users.id AS user_id,
 
 users.name,
 
-users.email
 
+users.email
 
 
 FROM orders
@@ -138,10 +170,10 @@ ON orders.user_id = users.id
 
 ORDER BY orders.created_at DESC
 
+
 `
 
 );
-
 
 
 return result.rows;
@@ -155,14 +187,14 @@ return result.rows;
 
 
 
-// =======================================
-// Get Single Order User
-// =======================================
 
 
-export const getOrderById = async (
+// Get Order By Id
+
+export const getOrderById = async(
 
 id,
+
 userId
 
 )=>{
@@ -172,22 +204,46 @@ const result = await pool.query(
 
 `
 
-SELECT *
+SELECT
+
+
+orders.*,
+
+
+users.name,
+
+
+users.email
+
 
 FROM orders
 
-WHERE id=$1
-AND user_id=$2
+
+JOIN users
+
+ON orders.user_id = users.id
+
+
+WHERE orders.id=$1
+
+AND orders.user_id=$2
+
 
 `
 
 ,
+
 [
+
 id,
+
 userId
+
 ]
 
+
 );
+
 
 
 return result.rows[0];
@@ -201,16 +257,11 @@ return result.rows[0];
 
 
 
-// =======================================
+
+
 // Get Order Items
-// =======================================
 
-
-export const getOrderItems = async (
-
-orderId
-
-)=>{
+export const getOrderItems = async(orderId)=>{
 
 
 const result = await pool.query(
@@ -244,6 +295,7 @@ FROM order_items
 
 JOIN menu
 
+
 ON menu.id = order_items.product_id
 
 
@@ -254,9 +306,9 @@ WHERE order_items.order_id=$1
 `
 
 ,
-[
-orderId
-]
+
+[orderId]
+
 
 );
 
@@ -273,36 +325,51 @@ return result.rows;
 
 
 
-// =======================================
+
+
 // User Orders
-// =======================================
 
-
-export const getOrdersByUser = async (
-
-userId
-
-)=>{
+export const getOrdersByUser = async(userId)=>{
 
 
 const result = await pool.query(
 
 `
 
-SELECT *
+SELECT
+
+
+orders.*,
+
+
+users.name,
+
+
+users.email
+
 
 FROM orders
 
-WHERE user_id=$1
 
-ORDER BY created_at DESC
+JOIN users
+
+
+ON orders.user_id = users.id
+
+
+
+WHERE orders.user_id=$1
+
+
+ORDER BY orders.created_at DESC
+
 
 `
 
 ,
-[
-userId
-]
+
+[userId]
+
 
 );
 
@@ -319,15 +386,16 @@ return result.rows;
 
 
 
-// =======================================
+
+
 // Update Status
-// =======================================
 
-
-export const updateOrderStatus = async (
+export const updateOrderStatus = async(
 
 id,
+
 status,
+
 adminMessage=null
 
 )=>{
@@ -355,11 +423,17 @@ RETURNING *
 `
 
 ,
+
 [
+
 status,
+
 adminMessage,
+
 id
+
 ]
+
 
 );
 
@@ -376,16 +450,11 @@ return result.rows[0];
 
 
 
-// =======================================
+
+
 // Delete Order
-// =======================================
 
-
-export const deleteOrder = async (
-
-id
-
-)=>{
+export const deleteOrder = async(id)=>{
 
 
 const result = await pool.query(
@@ -401,9 +470,9 @@ RETURNING *
 `
 
 ,
-[
-id
-]
+
+[id]
+
 
 );
 

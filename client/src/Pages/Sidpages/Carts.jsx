@@ -38,6 +38,8 @@ import Footer from "../../Components/Footer/Footer.jsx";
 import Navbar from "../../Components/Navhero/Nav.jsx";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useCart } from "../../Context/CartContext.jsx";
+import { useAuth } from "../../Context/AuthContext.jsx";
 
 // White Flowers
 import whiteTulip from "../../assets/images/white-tulip.jpg";
@@ -241,7 +243,7 @@ const successPulse = keyframes`
 `;
 
 // ============================================================
-// ✅ Success Dialog - خلفية بيضاء
+// ✅ Success Dialog
 // ============================================================
 const SuccessDialog = ({ open, onClose, orderData }) => {
   if (!orderData) return null;
@@ -265,7 +267,6 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
       }}
     >
       <Box sx={{ bgcolor: "#ffffff", p: { xs: 2, md: 3 } }}>
-        {/* Success Header */}
         <Box sx={{ textAlign: "center", mb: 3 }}>
           <motion.div
             initial={{ scale: 0 }}
@@ -416,10 +417,10 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
             }}
           >
             <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}>
-              ITEMS ({orderData.items.length})
+              ITEMS ({orderData.items?.length || 0})
             </Typography>
             
-            {orderData.items.slice(0, 3).map((item, index) => (
+            {orderData.items?.slice(0, 3).map((item, index) => (
               <Box
                 key={index}
                 sx={{
@@ -457,7 +458,7 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
               </Box>
             ))}
 
-            {orderData.items.length > 3 && (
+            {orderData.items?.length > 3 && (
               <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem", textAlign: "center", mt: 0.5 }}>
                 +{orderData.items.length - 3} more items
               </Typography>
@@ -469,7 +470,7 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>Subtotal</Typography>
                 <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
-                  ${orderData.subtotal.toFixed(2)}
+                  ${orderData.subtotal?.toFixed(2) || '0.00'}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -484,7 +485,7 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
                   Total
                 </Typography>
                 <Typography sx={{ fontSize: "1.2rem", fontWeight: 800, color: colors.gold }}>
-                  ${orderData.total.toFixed(2)}
+                  ${orderData.total?.toFixed(2) || '0.00'}
                 </Typography>
               </Box>
             </Box>
@@ -545,7 +546,7 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
 };
 
 // ============================================================
-// 💳 Checkout Dialog - خلفية بيضاء
+// 💳 Checkout Dialog
 // ============================================================
 const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
   const [fullName, setFullName] = useState("");
@@ -619,13 +620,6 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
           subtotal: subtotal,
           total: subtotal + delivery,
           orderDate: new Date().toISOString(),
-          ...(paymentMethod === "visa" && {
-            cardDetails: {
-              cardNumber: cardNumber.replace(/\s/g, "").slice(-4),
-              cardName,
-              cardExpiry,
-            }
-          })
         };
         
         onSuccess(orderData);
@@ -668,7 +662,6 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
 
   const subtotal = cartItems.reduce((sum, item) => sum + (parseFloat(item.price || 0) * (item.quantity || 1)), 0);
   const delivery = subtotal > 50 ? 0 : 5;
-  const totalWithDelivery = subtotal + delivery;
 
   return (
     <Dialog
@@ -1114,8 +1107,12 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
   );
 };
 
+// ============================================================
+// 🛒 Carts Component - باستخدام CartContext
+// ============================================================
 const Carts = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const { cart, updateQuantity, removeFromCart, clearCart, getCart, cartLoading } = useCart();
+  const { user } = useAuth();
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -1123,15 +1120,10 @@ const Carts = () => {
   const [orderData, setOrderData] = useState(null);
   const navigate = useNavigate();
 
+  // تحميل السلة عند تحميل الصفحة
   useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    setCartItems(savedCart);
+    getCart();
   }, []);
-
-  const updateCart = (newCart) => {
-    setCartItems(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
-  };
 
   const getImage = (imageName) => {
     if (!imageName || imageName === "" || imageName === "null" || imageName === "undefined") {
@@ -1153,46 +1145,104 @@ const Carts = () => {
     return imagesMap[imageName] || placeholder;
   };
 
-  const increaseQuantity = (productId) => {
-    const updatedCart = cartItems.map(item =>
-      item.id === productId
-        ? { ...item, quantity: (item.quantity || 1) + 1 }
-        : item
-    );
-    updateCart(updatedCart);
+  // ============================================================
+  // زيادة الكمية - تستخدم من CartContext
+  // ============================================================
+  const increaseQuantity = async (productId) => {
+    try {
+      const item = cart.find(i => (i.id || i.product_id) === productId);
+      if (item) {
+        const cartId = item.id || item.cart_id;
+        await updateQuantity(cartId || productId, (item.quantity || 1) + 1);
+      }
+    } catch (error) {
+      console.error('Error increasing quantity:', error);
+      setSnackbar({
+        open: true,
+        message: 'Failed to update quantity',
+        severity: 'error'
+      });
+    }
   };
 
-  const decreaseQuantity = (productId) => {
-    const updatedCart = cartItems.map(item =>
-      item.id === productId && item.quantity > 1
-        ? { ...item, quantity: item.quantity - 1 }
-        : item
-    ).filter(item => item.quantity > 0);
-    updateCart(updatedCart);
+  // ============================================================
+  // نقصان الكمية - تستخدم من CartContext
+  // ============================================================
+  const decreaseQuantity = async (productId) => {
+    try {
+      const item = cart.find(i => (i.id || i.product_id) === productId);
+      if (item) {
+        const cartId = item.id || item.cart_id;
+        if (item.quantity > 1) {
+          await updateQuantity(cartId || productId, item.quantity - 1);
+        } else {
+          await removeFromCart(cartId || productId);
+          setSnackbar({
+            open: true,
+            message: `"${item.name}" has been removed`,
+            severity: 'info'
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error decreasing quantity:', error);
+      setSnackbar({
+        open: true,
+        message: 'Failed to update quantity',
+        severity: 'error'
+      });
+    }
   };
 
-  const removeItem = (productId, productName) => {
-    const updatedCart = cartItems.filter(item => item.id !== productId);
-    updateCart(updatedCart);
-    setSnackbar({
-      open: true,
-      message: `"${productName}" has been removed`,
-      severity: "info"
-    });
+  // ============================================================
+  // حذف العنصر - تستخدم من CartContext
+  // ============================================================
+  const removeItem = async (productId, productName) => {
+    try {
+      const item = cart.find(i => (i.id || i.product_id) === productId);
+      if (item) {
+        const cartId = item.id || item.cart_id;
+        await removeFromCart(cartId || productId);
+        setSnackbar({
+          open: true,
+          message: `"${productName}" has been removed`,
+          severity: 'info'
+        });
+      }
+    } catch (error) {
+      console.error('Error removing item:', error);
+      setSnackbar({
+        open: true,
+        message: 'Failed to remove item',
+        severity: 'error'
+      });
+    }
   };
 
-  const clearCart = () => {
-    if (cartItems.length === 0) return;
-    updateCart([]);
-    setSnackbar({
-      open: true,
-      message: "Your cart has been cleared",
-      severity: "info"
-    });
+  // ============================================================
+  // مسح السلة - تستخدم من CartContext
+  // ============================================================
+  const clearCartHandler = async () => {
+    if (cart.length === 0) return;
+    try {
+      await clearCart();
+      setSnackbar({
+        open: true,
+        message: "Your cart has been cleared",
+        severity: "info"
+      });
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      setSnackbar({
+        open: true,
+        message: 'Failed to clear cart',
+        severity: 'error'
+      });
+    }
   };
 
   const calculateTotal = () => {
-    return cartItems.reduce((total, item) => {
+    return cart.reduce((total, item) => {
       const price = parseFloat(item.price) || 0;
       const quantity = item.quantity || 1;
       return total + (price * quantity);
@@ -1200,7 +1250,7 @@ const Carts = () => {
   };
 
   const getTotalItems = () => {
-    return cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
+    return cart.reduce((total, item) => total + (item.quantity || 1), 0);
   };
 
   const handleViewProduct = (product) => {
@@ -1208,7 +1258,7 @@ const Carts = () => {
   };
 
   const handleCheckout = () => {
-    if (cartItems.length === 0) {
+    if (cart.length === 0) {
       setSnackbar({
         open: true,
         message: "Your cart is empty. Please add items first",
@@ -1222,7 +1272,8 @@ const Carts = () => {
   const handleOrderSuccess = (data) => {
     setOrderData(data);
     setSuccessOpen(true);
-    updateCart([]);
+    // تفريغ السلة بعد الطلب
+    clearCart();
     setSnackbar({
       open: true,
       message: "Order placed successfully!",
@@ -1236,7 +1287,37 @@ const Carts = () => {
     navigate("/shop");
   };
 
-  if (cartItems.length === 0 && !successOpen) {
+  // عرض التحميل
+  if (cartLoading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          bgcolor: colors.bgPrimary,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Navbar />
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography sx={{ color: colors.textWhite, fontSize: "1.5rem" }}>
+            Loading your cart...
+          </Typography>
+        </Box>
+        <Footer />
+      </Box>
+    );
+  }
+
+  // عرض السلة فارغة
+  if (cart.length === 0 && !successOpen) {
     return (
       <Box
         sx={{
@@ -1417,7 +1498,7 @@ const Carts = () => {
         >
           <Button
             variant="outlined"
-            onClick={clearCart}
+            onClick={clearCartHandler}
             startIcon={<DeleteIcon />}
             sx={{
               color: colors.textWhiteMuted,
@@ -1444,9 +1525,9 @@ const Carts = () => {
             gap: 2,
           }}
         >
-          {cartItems.map((item, index) => (
+          {cart.map((item, index) => (
             <motion.div
-              key={item.id}
+              key={item.id || index}
               initial="hidden"
               animate="visible"
               variants={{
@@ -1549,7 +1630,7 @@ const Carts = () => {
                   >
                     <IconButton
                       size="small"
-                      onClick={() => decreaseQuantity(item.id)}
+                      onClick={() => decreaseQuantity(item.id || item.product_id)}
                       sx={{
                         color: colors.textMuted,
                         "&:hover": {
@@ -1575,7 +1656,7 @@ const Carts = () => {
 
                     <IconButton
                       size="small"
-                      onClick={() => increaseQuantity(item.id)}
+                      onClick={() => increaseQuantity(item.id || item.product_id)}
                       sx={{
                         color: colors.textMuted,
                         "&:hover": {
@@ -1601,7 +1682,7 @@ const Carts = () => {
                   </Typography>
 
                   <IconButton
-                    onClick={() => removeItem(item.id, item.name)}
+                    onClick={() => removeItem(item.id || item.product_id, item.name)}
                     sx={{
                       color: "rgba(139,0,0,0.2)",
                       "&:hover": {
@@ -1730,7 +1811,7 @@ const Carts = () => {
       <CheckoutDialog
         open={checkoutOpen}
         onClose={() => setCheckoutOpen(false)}
-        cartItems={cartItems}
+        cartItems={cart}
         total={calculateTotal()}
         onSuccess={handleOrderSuccess}
       />
