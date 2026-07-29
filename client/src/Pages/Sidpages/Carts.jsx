@@ -39,7 +39,8 @@ import Navbar from "../../Components/Navhero/Nav.jsx";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useCart } from "../../Context/CartContext.jsx";
-import { useAuth } from "../../Context/AuthContext.jsx";
+import { useAuth } from "../../Hooks/useAuth.js";
+import toast from "react-hot-toast";
 
 // White Flowers
 import whiteTulip from "../../assets/images/white-tulip.jpg";
@@ -1257,6 +1258,9 @@ const Carts = () => {
     setSelectedProduct(product);
   };
 
+  // ============================================================
+  // 🛒 دالة الدفع المعدلة - تتحقق من تسجيل الدخول
+  // ============================================================
   const handleCheckout = () => {
     if (cart.length === 0) {
       setSnackbar({
@@ -1266,6 +1270,17 @@ const Carts = () => {
       });
       return;
     }
+
+    // ✅ التحقق من وجود مستخدم مسجل دخول
+    if (!user) {
+      // حفظ مسار العودة بعد تسجيل الدخول
+      localStorage.setItem('redirectAfterLogin', '/cart');
+      toast('Please login first to complete your order');
+      navigate('/login');
+      return;
+    }
+
+    // إذا كان مسجلاً دخول، نفتح نافذة الدفع
     setCheckoutOpen(true);
   };
 

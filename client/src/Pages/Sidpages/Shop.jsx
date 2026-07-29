@@ -17,6 +17,7 @@ import Footer from "../../Components/Footer/Footer.jsx";
 import Navbar from "../../Components/Navhero/Nav.jsx";
 import { categoriesContext } from "../../Context/CategoriesContext.jsx";
 import { menuContext } from "../../Context/MenuContext.jsx";
+import { useCart } from "../../Context/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -277,11 +278,6 @@ const useInView = (options = { threshold: 0.15 }) => {
   }, []);
 
   return [ref, isVisible];
-};
-
-const textVariant = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
 };
 
 // ============================================================
@@ -647,9 +643,13 @@ const DividerSection = ({ bgColor, index }) => {
   );
 };
 
+// ============================================================
+// 🏪 Shop Component الرئيسي
+// ============================================================
 const Shop = () => {
   const { categories, loadCategories } = useContext(categoriesContext);
   const { menu, loadMenu } = useContext(menuContext);
+  const { addToCart } = useCart();
 
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -666,26 +666,20 @@ const Shop = () => {
   }, []);
 
   // ============================================================
-  // 🛒 دالة إضافة المنتج إلى السلة
+  // 🛒 دالة إضافة المنتج إلى السلة وإغلاق الـ Dialog
   // ============================================================
-  const addToCart = (product) => {
-    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
-    
-    const existingIndex = existingCart.findIndex(item => item.id === product.id);
-    
-    if (existingIndex !== -1) {
-      existingCart[existingIndex].quantity = (existingCart[existingIndex].quantity || 1) + 1;
-    } else {
-      existingCart.push({ ...product, quantity: 1 });
-    }
-    
-    localStorage.setItem("cart", JSON.stringify(existingCart));
+  const handleAddToCart = (product) => {
+    // استخدام CartContext بدلاً من localStorage مباشرة
+    addToCart(product);
     
     setSnackbar({
       open: true,
       message: `"${product.name}" has been added to your cart!`,
       severity: "success"
     });
+    
+    // ✅ إغلاق الـ Dialog بعد إضافة المنتج
+    setSelectedProduct(null);
   };
 
   const getImage = (imageName) => {
@@ -999,7 +993,7 @@ const Shop = () => {
                     animation: `${shimmer} 1.6s linear infinite`,
                   },
                 }}
-                onClick={() => addToCart(selectedProduct)}
+                onClick={() => handleAddToCart(selectedProduct)}
               >
                 Add to Cart
               </Button>
