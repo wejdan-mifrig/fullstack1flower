@@ -1,6 +1,4 @@
-import NavbarUser from '../../Components/NavUserAdmin/Navuser.jsx';
-
-
+import NavbarUser from "../../Components/NavUserAdmin/Navuser.jsx";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -42,9 +40,6 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
-// ============================================================
-// 🎨 الألوان
-// ============================================================
 const colors = {
   primary: "#8B0000",
   primaryLight: "#ffffff",
@@ -116,9 +111,6 @@ export default function Aboutuser() {
 
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: colors.primaryLight }}>
-
-      {/* Fixed Background - White */}
-      
       <Box
         sx={{
           height: "100vh",
@@ -159,28 +151,23 @@ export default function Aboutuser() {
           style={{ zIndex: 2 }}
         >
           <Typography sx={{ color: "#fff", fontSize: "1.5rem" }}>
-          "𝐿𝑒𝑡’𝑠 𝑐𝑟𝑒𝑎𝑡𝑒 𝑦𝑜𝑢𝑟 𝑚𝑜𝑚𝑒𝑛𝑡 𝑡𝑜𝑔𝑒𝑡ℎ𝑒𝑟"
+            "𝐿𝑒𝑡’𝑠 𝑐𝑟𝑒𝑎𝑡𝑒 𝑦𝑜𝑢𝑟 𝑚𝑜𝑚𝑒𝑛𝑡 𝑡𝑜𝑔𝑒𝑡ℎ𝑒𝑟"
           </Typography>
         </motion.div>
       </Box>
 
-        {/* Navbar فوق الفيديو */}
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 10,
-          }}
-        >
-          <NavbarUser />
-        </Box>
-      
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+        }}
+      >
+        <NavbarUser />
+      </Box>
 
-      {/* ============================================================
-          📝 السكشن الثاني - ترتيب جديد (About Us + Designers)
-          ============================================================ */}
       <Box
         sx={{
           position: "relative",
@@ -192,11 +179,14 @@ export default function Aboutuser() {
       >
         <Container maxWidth="lg">
           <Slide direction="up" in={fadeIn} timeout={600}>
-            <Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 6 }}>
-
-              {/* ============================================================
-                  🎨 Meet Our Designers Section - FIRST
-                  ============================================================ */}
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                gap: 6,
+              }}
+            >
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -245,7 +235,8 @@ export default function Aboutuser() {
                         mx: "auto",
                       }}
                     >
-                      Our team of talented designers brings your dreams to life with passion and creativity
+                      Our team of talented designers brings your dreams to life
+                      with passion and creativity
                     </Typography>
                   </Box>
 
@@ -269,12 +260,12 @@ export default function Aboutuser() {
                           gap: 4,
                           mb: 8,
                           p: { xs: 2, md: 4 },
-                          bgcolor: index % 2 === 0 ? "rgba(139,0,0,0.03)" : "#ffffff",
+                          bgcolor:
+                            index % 2 === 0 ? "rgba(139,0,0,0.03)" : "#ffffff",
                           borderRadius: 4,
                           border: "1px solid rgba(201,168,76,0.15)",
                         }}
                       >
-                        {/* Designer Card */}
                         <Box
                           sx={{
                             flex: 1,
@@ -284,7 +275,10 @@ export default function Aboutuser() {
                           }}
                         >
                           <motion.div
-                            initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60 }}
+                            initial={{
+                              opacity: 0,
+                              x: index % 2 === 0 ? -60 : 60,
+                            }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -401,7 +395,9 @@ export default function Aboutuser() {
                                     }}
                                   >
                                     View Project
-                                    <ArrowForwardRoundedIcon sx={{ ml: 1, fontSize: "1rem" }} />
+                                    <ArrowForwardRoundedIcon
+                                      sx={{ ml: 1, fontSize: "1rem" }}
+                                    />
                                   </Button>
                                 </motion.div>
                               </CardContent>
@@ -409,9 +405,11 @@ export default function Aboutuser() {
                           </motion.div>
                         </Box>
 
-                        {/* Designer Info */}
                         <motion.div
-                          initial={{ opacity: 0, x: index % 2 === 0 ? 60 : -60 }}
+                          initial={{
+                            opacity: 0,
+                            x: index % 2 === 0 ? 60 : -60,
+                          }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true, amount: 0.3 }}
                           transition={{ duration: 0.9, delay: 0.2 }}
@@ -441,10 +439,12 @@ export default function Aboutuser() {
                               {d.desc}
                               <br />
                               <br />
-                              We craft unforgettable luxury experiences where every flower,
-                              every light, every texture, and every detail tells a beautiful
-                              story. Our designers transform dreams into elegant celebrations
-                              filled with emotion, creativity, and timeless beauty.
+                              We craft unforgettable luxury experiences where
+                              every flower, every light, every texture, and
+                              every detail tells a beautiful story. Our
+                              designers transform dreams into elegant
+                              celebrations filled with emotion, creativity, and
+                              timeless beauty.
                             </Typography>
 
                             <motion.div
@@ -471,7 +471,8 @@ export default function Aboutuser() {
                                       sx={{
                                         bgcolor: colors.primary,
                                         color: "#ffffff",
-                                        border: "1px solid rgba(201,168,76,0.3)",
+                                        border:
+                                          "1px solid rgba(201,168,76,0.3)",
                                         transition: "all 0.3s ease",
                                         padding: "10px",
                                         "&:hover": {
@@ -496,9 +497,6 @@ export default function Aboutuser() {
                 </Box>
               </motion.div>
 
-              {/* ============================================================
-                  🏷️ About Us Section - SECOND (بعد المصممين)
-                  ============================================================ */}
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -550,7 +548,11 @@ export default function Aboutuser() {
                       initial={{ opacity: 0, x: -60 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+                      transition={{
+                        duration: 0.8,
+                        ease: "easeOut",
+                        delay: 0.3,
+                      }}
                     >
                       <Box>
                         <Typography
@@ -562,10 +564,11 @@ export default function Aboutuser() {
                             mb: 2,
                           }}
                         >
-                          Welcome to <strong>Flora</strong>, where we believe that every
-                          moment deserves to be celebrated with beauty and elegance.
-                          Our passion for floral design and event decoration has made
-                          us one of the most trusted names in the industry.
+                          Welcome to <strong>Flora</strong>, where we believe
+                          that every moment deserves to be celebrated with
+                          beauty and elegance. Our passion for floral design and
+                          event decoration has made us one of the most trusted
+                          names in the industry.
                         </Typography>
                         <Typography
                           sx={{
@@ -575,9 +578,10 @@ export default function Aboutuser() {
                             lineHeight: 2,
                           }}
                         >
-                          From intimate gatherings to grand celebrations, we bring
-                          your vision to life with creativity, attention to detail,
-                          and a commitment to excellence that sets us apart.
+                          From intimate gatherings to grand celebrations, we
+                          bring your vision to life with creativity, attention
+                          to detail, and a commitment to excellence that sets us
+                          apart.
                         </Typography>
                       </Box>
                     </motion.div>
@@ -586,7 +590,11 @@ export default function Aboutuser() {
                       initial={{ opacity: 0, x: 60 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+                      transition={{
+                        duration: 0.8,
+                        ease: "easeOut",
+                        delay: 0.5,
+                      }}
                     >
                       <Box
                         sx={{
@@ -607,7 +615,10 @@ export default function Aboutuser() {
                             initial={{ opacity: 0, x: 30 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                            transition={{
+                              duration: 0.5,
+                              delay: 0.6 + index * 0.1,
+                            }}
                             whileHover={{
                               scale: 1.02,
                               boxShadow: "0 8px 25px rgba(201,168,76,0.2)",
@@ -647,9 +658,6 @@ export default function Aboutuser() {
                 </Box>
               </motion.div>
 
-              {/* ============================================================
-                  📱 App Download Section
-                  ============================================================ */}
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -695,15 +703,19 @@ export default function Aboutuser() {
                           mb: 3,
                         }}
                       >
-                        Enjoy a seamless floral experience right from your mobile phone.
-                        Browse our luxury flower collections, discover elegant wedding
-                        decorations, receive exclusive offers, and place your orders
-                        anytime with just a few taps.
+                        Enjoy a seamless floral experience right from your
+                        mobile phone. Browse our luxury flower collections,
+                        discover elegant wedding decorations, receive exclusive
+                        offers, and place your orders anytime with just a few
+                        taps.
                       </Typography>
 
                       <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
                         <motion.div
-                          whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(201,168,76,0.4)" }}
+                          whileHover={{
+                            scale: 1.05,
+                            boxShadow: "0 10px 30px rgba(201,168,76,0.4)",
+                          }}
                           whileTap={{ scale: 0.95 }}
                         >
                           <Box
@@ -722,14 +734,19 @@ export default function Aboutuser() {
                             }}
                           >
                             <FaGooglePlay size={22} />
-                            <Typography sx={{ fontWeight: 600, fontFamily: "sans-serif" }}>
+                            <Typography
+                              sx={{ fontWeight: 600, fontFamily: "sans-serif" }}
+                            >
                               Google Play
                             </Typography>
                           </Box>
                         </motion.div>
 
                         <motion.div
-                          whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(201,168,76,0.4)" }}
+                          whileHover={{
+                            scale: 1.05,
+                            boxShadow: "0 10px 30px rgba(201,168,76,0.4)",
+                          }}
                           whileTap={{ scale: 0.95 }}
                         >
                           <Box
@@ -748,7 +765,9 @@ export default function Aboutuser() {
                             }}
                           >
                             <FaApple size={22} />
-                            <Typography sx={{ fontWeight: 600, fontFamily: "sans-serif" }}>
+                            <Typography
+                              sx={{ fontWeight: 600, fontFamily: "sans-serif" }}
+                            >
                               App Store
                             </Typography>
                           </Box>
@@ -757,62 +776,58 @@ export default function Aboutuser() {
                     </Box>
 
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
-                  
+                      <Box
+                        sx={{
+                          bgcolor: "#ffffff",
+                          borderRadius: "20px",
+                          p: 3,
+                          textAlign: "center",
+                          boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+                          maxWidth: 300,
+                        }}
+                      >
                         <Box
+                          component="img"
+                          src={qrCode}
+                          alt="QR Code"
                           sx={{
-                            bgcolor: "#ffffff",
-                            borderRadius: "20px",
-                            p: 3,
-                            textAlign: "center",
-                            boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
-                            maxWidth: 300,
+                            width: "100%",
+                            maxWidth: 200,
+                            mx: "auto",
+                            display: "block",
+                            borderRadius: "12px",
+                          }}
+                        />
+
+                        <Typography
+                          sx={{
+                            mt: 2,
+                            color: colors.primary,
+                            fontWeight: 700,
+                            fontSize: "1.2rem",
+                            fontFamily: "'Cormorant Garamond', serif",
                           }}
                         >
-                          <Box
-                            component="img"
-                            src={qrCode}
-                            alt="QR Code"
-                            sx={{
-                              width: "100%",
-                              maxWidth: 200,
-                              mx: "auto",
-                              display: "block",
-                              borderRadius: "12px",
-                            }}
-                          />
+                          Scan to Download
+                        </Typography>
 
-                          <Typography
-                            sx={{
-                              mt: 2,
-                              color: colors.primary,
-                              fontWeight: 700,
-                              fontSize: "1.2rem",
-                              fontFamily: "'Cormorant Garamond', serif",
-                            }}
-                          >
-                            Scan to Download
-                          </Typography>
-
-                          <Typography
-                            sx={{
-                              mt: 1,
-                              color: "rgba(0,0,0,0.6)",
-                              fontSize: "0.85rem",
-                              lineHeight: 1.6,
-                            }}
-                          >
-                            Scan the QR code using your phone camera to download our app
-                          </Typography>
-                        </Box>
-                    
+                        <Typography
+                          sx={{
+                            mt: 1,
+                            color: "rgba(0,0,0,0.6)",
+                            fontSize: "0.85rem",
+                            lineHeight: 1.6,
+                          }}
+                        >
+                          Scan the QR code using your phone camera to download
+                          our app
+                        </Typography>
+                      </Box>
                     </Box>
                   </Box>
                 </Paper>
               </motion.div>
 
-              {/* ============================================================
-                  📍 Location Section
-                  ============================================================ */}
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -861,8 +876,9 @@ export default function Aboutuser() {
                         mx: "auto",
                       }}
                     >
-                      Located near <strong>Irbid City Center</strong>, our flower studio is
-                      easy to reach and surrounded by shops, cafés, and everyday conveniences.
+                      Located near <strong>Irbid City Center</strong>, our
+                      flower studio is easy to reach and surrounded by shops,
+                      cafés, and everyday conveniences.
                     </Typography>
                   </Box>
 
@@ -895,15 +911,11 @@ export default function Aboutuser() {
                   </motion.div>
                 </Box>
               </motion.div>
-
             </Box>
           </Slide>
         </Container>
       </Box>
 
-      {/* ============================================================
-          🎬 Designer Project Dialog
-          ============================================================ */}
       <Dialog
         open={Boolean(open)}
         onClose={() => setOpen(null)}

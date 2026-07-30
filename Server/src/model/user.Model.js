@@ -6,7 +6,7 @@ export const getAllUsers = async () => {
     SELECT id, name, email, role, created_at
     FROM users
     ORDER BY id ASC
-    `
+    `,
   );
 
   return result.rows;
@@ -19,7 +19,7 @@ export const getUserById = async (userId) => {
     FROM users
     WHERE id = $1
     `,
-    [userId]
+    [userId],
   );
 
   return result.rows[0];
@@ -32,7 +32,7 @@ export const getUserByEmail = async (email) => {
     FROM users
     WHERE email = $1
     `,
-    [email]
+    [email],
   );
 
   return result.rows[0];
@@ -62,21 +62,13 @@ export const createUser = async (user) => {
       role,
       created_at
     `,
-    [
-      user.name,
-      user.email,
-      user.password,
-      user.role || "user",
-    ]
+    [user.name, user.email, user.password, user.role || "user"],
   );
 
   return result.rows[0];
 };
 
-export const updateUserInfo = async (
-  userId,
-  userInfo
-) => {
+export const updateUserInfo = async (userId, userInfo) => {
   const result = await pool.query(
     `
     UPDATE users
@@ -93,13 +85,7 @@ export const updateUserInfo = async (
       role,
       created_at
     `,
-    [
-      userInfo.name,
-      userInfo.email,
-      userInfo.role,
-      userInfo.password,
-      userId,
-    ]
+    [userInfo.name, userInfo.email, userInfo.role, userInfo.password, userId],
   );
 
   return result.rows[0];
@@ -111,23 +97,17 @@ export const deleteUser = async (id) => {
     DELETE FROM users
     WHERE id = $1
     `,
-    [id]
+    [id],
   );
 };
 
-export const saveRefreshTokens = async (
-  id,
-  token
-) => {
+export const saveRefreshTokens = async (id, token) => {
   await pool.query(
     `
     UPDATE users
     SET refresh_tokens = $1
     WHERE id = $2
     `,
-    [
-      token,
-      id,
-    ]
+    [token, id],
   );
 };

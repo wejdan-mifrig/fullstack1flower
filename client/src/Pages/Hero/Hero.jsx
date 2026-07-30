@@ -1,12 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
-import {
-  FaLeaf,
-  FaHeart,
-  FaTruck,
-  FaStar,
-} from "react-icons/fa";
+import { FaLeaf, FaHeart, FaTruck, FaStar } from "react-icons/fa";
 import Footer from "../../Components/Footer/Footer.jsx";
 import Navbar from "../../Components/Navhero/Nav.jsx";
 import heroVideo from "../../assets/video/Hero.mp4";
@@ -28,7 +23,6 @@ const textVariant = {
 export default function Hero() {
   return (
     <Box>
-      {/* HERO SECTION — unchanged as requested */}
       <Box
         sx={{
           position: "relative",
@@ -95,7 +89,6 @@ export default function Hero() {
         </Box>
       </Box>
 
-      {/* SECTION 1: Brand Story */}
       <Box
         sx={{
           bgcolor: "#f4f1ea",
@@ -136,7 +129,6 @@ export default function Hero() {
         </Box>
       </Box>
 
-      {/* SECTION 2: Full-width video */}
       <Box
         sx={{
           height: "60vh",
@@ -163,7 +155,6 @@ export default function Hero() {
         />
       </Box>
 
-      {/* SECTION 3: Stats with Icons */}
       <Box
         sx={{
           bgcolor: "#f4f1ea",
@@ -228,7 +219,6 @@ export default function Hero() {
         </Box>
       </Box>
 
-      {/* SECTION 4: Curated Collections (video cards) */}
       <Box
         sx={{
           bgcolor: "#3e4a3a",
@@ -364,7 +354,6 @@ export default function Hero() {
         </Box>
       </Box>
 
-      {/* SECTION 5: Testimonial */}
       <Box
         sx={{
           bgcolor: "#f4f1ea",
@@ -445,7 +434,6 @@ export default function Hero() {
         </Box>
       </Box>
 
-      {/* SECTION 6: Wedding & Bridal Bouquets — Centered Header Layout */}
       <Box
         sx={{
           bgcolor: "#f4f1ea",
@@ -563,11 +551,18 @@ export default function Hero() {
                 >
                   Timeless Elegance for Your Special Day
                 </Typography>
-                <Typography sx={{ color: "#5c574e", lineHeight: 1.9, mb: 4, fontSize: "1.02rem" }}>
-                  From intimate elopements to grand celebrations, we craft bespoke
-                  bridal bouquets that capture the essence of your love story.
-                  Each petal, every stem is meticulously styled to make your moment
-                  truly unforgettable.
+                <Typography
+                  sx={{
+                    color: "#5c574e",
+                    lineHeight: 1.9,
+                    mb: 4,
+                    fontSize: "1.02rem",
+                  }}
+                >
+                  From intimate elopements to grand celebrations, we craft
+                  bespoke bridal bouquets that capture the essence of your love
+                  story. Each petal, every stem is meticulously styled to make
+                  your moment truly unforgettable.
                 </Typography>
 
                 <Box
@@ -578,9 +573,18 @@ export default function Hero() {
                   }}
                 >
                   {[
-                    { title: "Classic Round", desc: "Symmetrical perfection featuring lush traditional garden roses." },
-                    { title: "Cascading", desc: "A dramatic, fluid waterfall style that brings effortless grace." },
-                    { title: "Wild & Free", desc: "Unstructured, bohemian arrangements with organic botanical flow." },
+                    {
+                      title: "Classic Round",
+                      desc: "Symmetrical perfection featuring lush traditional garden roses.",
+                    },
+                    {
+                      title: "Cascading",
+                      desc: "A dramatic, fluid waterfall style that brings effortless grace.",
+                    },
+                    {
+                      title: "Wild & Free",
+                      desc: "Unstructured, bohemian arrangements with organic botanical flow.",
+                    },
                   ].map((style, index) => (
                     <Box
                       key={style.title}
@@ -612,7 +616,9 @@ export default function Hero() {
                         >
                           {style.title}
                         </Typography>
-                        <Typography sx={{ color: "#6c665c", fontSize: "0.82rem" }}>
+                        <Typography
+                          sx={{ color: "#6c665c", fontSize: "0.82rem" }}
+                        >
                           {style.desc}
                         </Typography>
                       </Box>
@@ -625,7 +631,6 @@ export default function Hero() {
         </Box>
       </Box>
 
-      {/* SECTION 7: Our Floral Services — Immersive Cinematic Grid */}
       <Box
         sx={{
           bgcolor: "#2c3629",
@@ -637,7 +642,14 @@ export default function Hero() {
           overflow: "hidden",
         }}
       >
-        <Box sx={{ maxWidth: "1250px", width: "100%", position: "relative", zIndex: 1 }}>
+        <Box
+          sx={{
+            maxWidth: "1250px",
+            width: "100%",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -753,8 +765,7 @@ export default function Hero() {
                       zIndex: 1,
                     }}
                   />
-                  
-                  {/* Floating Tag */}
+
                   <Box
                     sx={{
                       position: "absolute",
@@ -781,7 +792,14 @@ export default function Hero() {
                     </Typography>
                   </Box>
 
-                  <Box sx={{ position: "relative", zIndex: 2, p: 4, width: "100%" }}>
+                  <Box
+                    sx={{
+                      position: "relative",
+                      zIndex: 2,
+                      p: 4,
+                      width: "100%",
+                    }}
+                  >
                     <Typography
                       sx={{
                         fontFamily: "'Cormorant Garamond', serif",
@@ -811,7 +829,6 @@ export default function Hero() {
         </Box>
       </Box>
 
-      {/* SECTION 8: Our Sanctuary & Story */}
       <Box
         sx={{
           bgcolor: "#f4f1ea",
@@ -869,9 +886,13 @@ export default function Hero() {
                 mb: 3,
               }}
             >
-              Nestled in the heart of botanical elegance, our atelier is more than just a floral design space—it is a sanctuary dedicated to capturing life's most precious celebrations through living poetry. Every stem we choose, every palette we curate, and every corner of our boutique is designed to immerse you in the quiet, sophisticated luxury of nature.
+              Nestled in the heart of botanical elegance, our atelier is more
+              than just a floral design space—it is a sanctuary dedicated to
+              capturing life's most precious celebrations through living poetry.
+              Every stem we choose, every palette we curate, and every corner of
+              our boutique is designed to immerse you in the quiet,
+              sophisticated luxury of nature.
             </Typography>
-         
           </motion.div>
         </Box>
       </Box>

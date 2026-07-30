@@ -11,11 +11,9 @@ export default function MenuProvider({ children }) {
     try {
       const res = await api.get("/all-menu");
       
-      // تأكد من أن البيانات تحتوي على price
-      // إذا كانت الـ API ترجع البيانات مباشرة
+ 
       setMenu(res.data.menuItem || res.data || []);
       
-      // للتحقق من البيانات في الـ console (اختياري)
       console.log("Menu data loaded:", res.data.menuItem);
 
     } catch (error) {

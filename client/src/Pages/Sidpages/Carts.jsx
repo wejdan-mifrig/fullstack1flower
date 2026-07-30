@@ -42,7 +42,6 @@ import { useCart } from "../../Context/CartContext.jsx";
 import { useAuth } from "../../Hooks/useAuth.js";
 import toast from "react-hot-toast";
 
-// White Flowers
 import whiteTulip from "../../assets/images/white-tulip.jpg";
 import whiteRoseBouquet from "../../assets/images/white-rose-bouquet.jpg";
 import whiteLily from "../../assets/images/white-lily.jpg";
@@ -50,7 +49,6 @@ import whiteOrchid from "../../assets/images/white-orchid.jpg";
 import whiteMix from "../../assets/images/white-mix.jpg";
 import whiteGarden from "../../assets/images/white-garden.jpg";
 
-// Red Flowers
 import redRose from "../../assets/images/red-rose.jpg";
 import redTulip from "../../assets/images/red-tulip.jpg";
 import redMix from "../../assets/images/red-mix.jpg";
@@ -58,7 +56,6 @@ import luxRedRose from "../../assets/images/lux-red-rose.jpg";
 import redLove from "../../assets/images/red-love.jpg";
 import redGarden from "../../assets/images/red-garden.jpg";
 
-// Pink Flowers
 import pinkRose from "../../assets/images/pink-rose.jpg";
 import pinkTulip from "../../assets/images/pink-tulip.jpg";
 import pinkLily from "../../assets/images/pink-lily.jpg";
@@ -66,7 +63,6 @@ import pinkMix from "../../assets/images/pink-mix.jpg";
 import pinkRomantic from "../../assets/images/pink-romantic.jpg";
 import pinkGarden from "../../assets/images/pink-garden.jpg";
 
-// Yellow Flowers
 import sunflower from "../../assets/images/sunflower.jpg";
 import yellowRose from "../../assets/images/yellow-rose.jpg";
 import yellowTulip from "../../assets/images/yellow-tulip.jpg";
@@ -74,7 +70,6 @@ import yellowMix from "../../assets/images/yellow-mix.jpg";
 import golden from "../../assets/images/golden.jpg";
 import yellowGarden from "../../assets/images/yellow-garden.jpg";
 
-// Purple Flowers
 import purpleOrchid from "../../assets/images/purple-orchid.jpg";
 import purpleRose from "../../assets/images/purple-rose.jpg";
 import purpleTulip from "../../assets/images/purple-tulip.jpg";
@@ -82,14 +77,12 @@ import purpleMix from "../../assets/images/purple-mix.jpg";
 import royalPurple from "../../assets/images/royal-purple.jpg";
 import purpleGarden from "../../assets/images/purple-garden.jpg";
 
-// Mixed Flowers
 import springMix from "../../assets/images/spring-mix.jpg";
 import rainbow from "../../assets/images/rainbow.jpg";
 import luxMix from "../../assets/images/lux-mix.jpg";
 import seasonal from "../../assets/images/seasonal.jpg";
 import elegantMix from "../../assets/images/elegant-mix.jpg";
 
-// Rose Bouquets
 import classicRose from "../../assets/images/classic-rose.jpg";
 import luxRose from "../../assets/images/lux-rose.jpg";
 import romanticRose from "../../assets/images/romantic-rose.jpg";
@@ -97,7 +90,6 @@ import whiteRedRose from "../../assets/images/white-red-rose.jpg";
 import pinkLuxRose from "../../assets/images/pink-lux-rose.jpg";
 import royalRose from "../../assets/images/royal-rose.jpg";
 
-// Wedding Flowers
 import weddingWhite from "../../assets/images/wedding-white.jpg";
 import bridalRose from "../../assets/images/bridal-rose.jpg";
 import centerpiece from "../../assets/images/centerpiece.jpg";
@@ -105,7 +97,6 @@ import weddingSet from "../../assets/images/wedding-set.jpg";
 import arch from "../../assets/images/arch.jpg";
 import bridePremium from "../../assets/images/bride-premium.jpg";
 
-// Birthday Flowers
 import birthdaySurprise from "../../assets/images/birthday-surprise.jpg";
 import birthdayRoses from "../../assets/images/birthday-roses.jpg";
 import birthdayMix from "../../assets/images/birthday-mix.jpg";
@@ -113,7 +104,6 @@ import balloonSet from "../../assets/images/balloon-set.jpg";
 import birthdayLux from "../../assets/images/birthday-lux.jpg";
 import celebration from "../../assets/images/celebration.jpg";
 
-// Gift Boxes
 import chocoBox from "../../assets/images/choco-box.jpg";
 import teddyBox from "../../assets/images/teddy-box.jpg";
 import luxBox from "../../assets/images/lux-box.jpg";
@@ -124,26 +114,19 @@ import specialBox from "../../assets/images/special-box.jpg";
 const placeholder =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='20' fill='%23999999' text-anchor='middle' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E";
 
-// ============================================================
-// 🎨 الألوان - خلفية حمراء، منتجات وديالوجات بيضاء
-// ============================================================
 const colors = {
-  // ألوان الخلفية الحمراء
   bgPrimary: "#8B0000",
   bgDark: "#660000",
-  
-  // ألوان المنتجات والبطاقات البيضاء
+
   cardBg: "#ffffff",
   cardBorder: "rgba(139,0,0,0.12)",
-  
-  // ألوان النصوص
+
   textPrimary: "#000000",
   textSecondary: "rgba(0,0,0,0.75)",
   textMuted: "rgba(0,0,0,0.5)",
   textWhite: "#ffffff",
   textWhiteMuted: "rgba(255,255,255,0.7)",
-  
-  // ألوان العناصر
+
   gold: "#c9a84c",
   goldHover: "#b8943a",
   goldSoft: "rgba(201,168,76,0.15)",
@@ -243,9 +226,6 @@ const successPulse = keyframes`
   100% { transform: scale(1); }
 `;
 
-// ============================================================
-// ✅ Success Dialog
-// ============================================================
 const SuccessDialog = ({ open, onClose, orderData }) => {
   if (!orderData) return null;
 
@@ -319,7 +299,6 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
         </Typography>
 
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-          {/* Order Information */}
           <Paper
             sx={{
               p: 1.5,
@@ -328,21 +307,43 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
               border: "1px solid rgba(139,0,0,0.08)",
             }}
           >
-            <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}>
+            <Typography
+              sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}
+            >
               ORDER INFORMATION
             </Typography>
-            
+
             <Box sx={{ display: "flex", flexDirection: "column", gap: 0.8 }}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem" }}>Order Number</Typography>
-                <Typography sx={{ color: colors.textPrimary, fontWeight: 600, fontSize: "0.8rem" }}>
+                <Typography
+                  sx={{ color: colors.textMuted, fontSize: "0.7rem" }}
+                >
+                  Order Number
+                </Typography>
+                <Typography
+                  sx={{
+                    color: colors.textPrimary,
+                    fontWeight: 600,
+                    fontSize: "0.8rem",
+                  }}
+                >
                   #{Date.now().toString().slice(-8)}
                 </Typography>
               </Box>
 
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem" }}>Date</Typography>
-                <Typography sx={{ color: colors.textPrimary, fontWeight: 500, fontSize: "0.75rem" }}>
+                <Typography
+                  sx={{ color: colors.textMuted, fontSize: "0.7rem" }}
+                >
+                  Date
+                </Typography>
+                <Typography
+                  sx={{
+                    color: colors.textPrimary,
+                    fontWeight: 500,
+                    fontSize: "0.75rem",
+                  }}
+                >
                   {new Date().toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
@@ -352,15 +353,27 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
               </Box>
 
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem" }}>Payment</Typography>
-                <Typography sx={{ color: colors.textPrimary, fontWeight: 500, textTransform: "capitalize", fontSize: "0.75rem" }}>
-                  {orderData.paymentMethod === "cash" ? "Cash on Delivery" : "Visa / Credit Card"}
+                <Typography
+                  sx={{ color: colors.textMuted, fontSize: "0.7rem" }}
+                >
+                  Payment
+                </Typography>
+                <Typography
+                  sx={{
+                    color: colors.textPrimary,
+                    fontWeight: 500,
+                    textTransform: "capitalize",
+                    fontSize: "0.75rem",
+                  }}
+                >
+                  {orderData.paymentMethod === "cash"
+                    ? "Cash on Delivery"
+                    : "Visa / Credit Card"}
                 </Typography>
               </Box>
             </Box>
           </Paper>
 
-          {/* Customer Information */}
           <Paper
             sx={{
               p: 1.5,
@@ -369,24 +382,35 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
               border: "1px solid rgba(139,0,0,0.08)",
             }}
           >
-            <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}>
+            <Typography
+              sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}
+            >
               CUSTOMER
             </Typography>
-            
+
             <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
-              <Typography sx={{ color: colors.textPrimary, fontWeight: 600, fontSize: "0.8rem" }}>
+              <Typography
+                sx={{
+                  color: colors.textPrimary,
+                  fontWeight: 600,
+                  fontSize: "0.8rem",
+                }}
+              >
                 {orderData.fullName}
               </Typography>
-              <Typography sx={{ color: colors.textSecondary, fontSize: "0.7rem" }}>
+              <Typography
+                sx={{ color: colors.textSecondary, fontSize: "0.7rem" }}
+              >
                 {orderData.email}
               </Typography>
-              <Typography sx={{ color: colors.textSecondary, fontSize: "0.7rem" }}>
+              <Typography
+                sx={{ color: colors.textSecondary, fontSize: "0.7rem" }}
+              >
                 {orderData.phone}
               </Typography>
             </Box>
           </Paper>
 
-          {/* Delivery Address */}
           <Paper
             sx={{
               p: 1.5,
@@ -395,20 +419,28 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
               border: "1px solid rgba(139,0,0,0.08)",
             }}
           >
-            <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 0.5 }}>
+            <Typography
+              sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 0.5 }}
+            >
               DELIVERY
             </Typography>
             <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
               {orderData.address}
             </Typography>
             {orderData.notes && (
-              <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem", fontStyle: "italic", mt: 0.5 }}>
+              <Typography
+                sx={{
+                  color: colors.textMuted,
+                  fontSize: "0.7rem",
+                  fontStyle: "italic",
+                  mt: 0.5,
+                }}
+              >
                 Note: {orderData.notes}
               </Typography>
             )}
           </Paper>
 
-          {/* Order Items */}
           <Paper
             sx={{
               p: 1.5,
@@ -417,10 +449,12 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
               border: "1px solid rgba(139,0,0,0.08)",
             }}
           >
-            <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}>
+            <Typography
+              sx={{ color: colors.textMuted, fontSize: "0.65rem", mb: 1 }}
+            >
               ITEMS ({orderData.items?.length || 0})
             </Typography>
-            
+
             {orderData.items?.slice(0, 3).map((item, index) => (
               <Box
                 key={index}
@@ -429,13 +463,20 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
                   justifyContent: "space-between",
                   alignItems: "center",
                   py: 0.8,
-                  borderBottom: index < Math.min(orderData.items.length, 3) - 1 ? "1px solid rgba(0,0,0,0.05)" : "none",
+                  borderBottom:
+                    index < Math.min(orderData.items.length, 3) - 1
+                      ? "1px solid rgba(0,0,0,0.05)"
+                      : "none",
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                   <Box
                     component="img"
-                    src={item.image ? imagesMap[item.image] || placeholder : placeholder}
+                    src={
+                      item.image
+                        ? imagesMap[item.image] || placeholder
+                        : placeholder
+                    }
                     alt={item.name}
                     sx={{
                       width: 36,
@@ -445,22 +486,46 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
                     }}
                   />
                   <Box>
-                    <Typography sx={{ color: colors.textPrimary, fontWeight: 500, fontSize: "0.8rem" }}>
+                    <Typography
+                      sx={{
+                        color: colors.textPrimary,
+                        fontWeight: 500,
+                        fontSize: "0.8rem",
+                      }}
+                    >
                       {item.name}
                     </Typography>
-                    <Typography sx={{ color: colors.textMuted, fontSize: "0.65rem" }}>
+                    <Typography
+                      sx={{ color: colors.textMuted, fontSize: "0.65rem" }}
+                    >
                       Qty: {item.quantity || 1}
                     </Typography>
                   </Box>
                 </Box>
-                <Typography sx={{ color: colors.gold, fontWeight: 600, fontSize: "0.8rem" }}>
-                  ${(parseFloat(item.price || 0) * (item.quantity || 1)).toFixed(2)}
+                <Typography
+                  sx={{
+                    color: colors.gold,
+                    fontWeight: 600,
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  $
+                  {(parseFloat(item.price || 0) * (item.quantity || 1)).toFixed(
+                    2,
+                  )}
                 </Typography>
               </Box>
             ))}
 
             {orderData.items?.length > 3 && (
-              <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem", textAlign: "center", mt: 0.5 }}>
+              <Typography
+                sx={{
+                  color: colors.textMuted,
+                  fontSize: "0.7rem",
+                  textAlign: "center",
+                  mt: 0.5,
+                }}
+              >
                 +{orderData.items.length - 3} more items
               </Typography>
             )}
@@ -469,30 +534,59 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>Subtotal</Typography>
-                <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
-                  ${orderData.subtotal?.toFixed(2) || '0.00'}
+                <Typography
+                  sx={{ color: colors.textMuted, fontSize: "0.75rem" }}
+                >
+                  Subtotal
+                </Typography>
+                <Typography
+                  sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}
+                >
+                  ${orderData.subtotal?.toFixed(2) || "0.00"}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>Delivery</Typography>
-                <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
+                <Typography
+                  sx={{ color: colors.textMuted, fontSize: "0.75rem" }}
+                >
+                  Delivery
+                </Typography>
+                <Typography
+                  sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}
+                >
                   {orderData.subtotal > 50 ? "Free" : "$5.00"}
                 </Typography>
               </Box>
               <Divider sx={{ borderColor: "rgba(0,0,0,0.05)", my: 0.5 }} />
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography sx={{ fontSize: "0.9rem", fontWeight: 700, color: colors.textPrimary }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    fontWeight: 700,
+                    color: colors.textPrimary,
+                  }}
+                >
                   Total
                 </Typography>
-                <Typography sx={{ fontSize: "1.2rem", fontWeight: 800, color: colors.gold }}>
-                  ${orderData.total?.toFixed(2) || '0.00'}
+                <Typography
+                  sx={{
+                    fontSize: "1.2rem",
+                    fontWeight: 800,
+                    color: colors.gold,
+                  }}
+                >
+                  ${orderData.total?.toFixed(2) || "0.00"}
                 </Typography>
               </Box>
             </Box>
           </Paper>
 
-          {/* Delivery Estimate */}
           <Paper
             sx={{
               display: "flex",
@@ -504,13 +598,23 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
               border: "1px solid rgba(76, 175, 80, 0.15)",
             }}
           >
-            <LocalShippingIcon sx={{ color: colors.success, fontSize: "1.2rem" }} />
+            <LocalShippingIcon
+              sx={{ color: colors.success, fontSize: "1.2rem" }}
+            />
             <Box>
-              <Typography sx={{ color: colors.textPrimary, fontWeight: 600, fontSize: "0.8rem" }}>
+              <Typography
+                sx={{
+                  color: colors.textPrimary,
+                  fontWeight: 600,
+                  fontSize: "0.8rem",
+                }}
+              >
                 Estimated Delivery
               </Typography>
               <Typography sx={{ color: colors.textMuted, fontSize: "0.7rem" }}>
-                {new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", {
+                {new Date(
+                  Date.now() + 3 * 24 * 60 * 60 * 1000,
+                ).toLocaleDateString("en-US", {
                   weekday: "short",
                   month: "short",
                   day: "numeric",
@@ -546,9 +650,6 @@ const SuccessDialog = ({ open, onClose, orderData }) => {
   );
 };
 
-// ============================================================
-// 💳 Checkout Dialog
-// ============================================================
 const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -586,16 +687,20 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
     else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Email is invalid";
     if (!address.trim()) newErrors.address = "Address is required";
     if (!phoneNumber.trim()) newErrors.phoneNumber = "Phone number is required";
-    else if (!/^\d+$/.test(phoneNumber)) newErrors.phoneNumber = "Phone number must contain only digits";
+    else if (!/^\d+$/.test(phoneNumber))
+      newErrors.phoneNumber = "Phone number must contain only digits";
 
     if (paymentMethod === "visa") {
       if (!cardNumber.trim()) newErrors.cardNumber = "Card number is required";
-      else if (!/^\d{16}$/.test(cardNumber.replace(/\s/g, ""))) newErrors.cardNumber = "Card number must be 16 digits";
+      else if (!/^\d{16}$/.test(cardNumber.replace(/\s/g, "")))
+        newErrors.cardNumber = "Card number must be 16 digits";
       if (!cardName.trim()) newErrors.cardName = "Card holder name is required";
       if (!cardExpiry.trim()) newErrors.cardExpiry = "Expiry date is required";
-      else if (!/^(0[1-9]|1[0-2])\/([0-9]{2})$/.test(cardExpiry)) newErrors.cardExpiry = "Format: MM/YY";
+      else if (!/^(0[1-9]|1[0-2])\/([0-9]{2})$/.test(cardExpiry))
+        newErrors.cardExpiry = "Format: MM/YY";
       if (!cardCvv.trim()) newErrors.cardCvv = "CVV is required";
-      else if (!/^\d{3,4}$/.test(cardCvv)) newErrors.cardCvv = "CVV must be 3 or 4 digits";
+      else if (!/^\d{3,4}$/.test(cardCvv))
+        newErrors.cardCvv = "CVV must be 3 or 4 digits";
     }
 
     setErrors(newErrors);
@@ -605,11 +710,15 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
   const handleSubmit = () => {
     if (validateForm()) {
       setIsSubmitting(true);
-      
+
       setTimeout(() => {
-        const subtotal = cartItems.reduce((sum, item) => sum + (parseFloat(item.price || 0) * (item.quantity || 1)), 0);
+        const subtotal = cartItems.reduce(
+          (sum, item) =>
+            sum + parseFloat(item.price || 0) * (item.quantity || 1),
+          0,
+        );
         const delivery = subtotal > 50 ? 0 : 5;
-        
+
         const orderData = {
           fullName,
           email,
@@ -622,7 +731,7 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
           total: subtotal + delivery,
           orderDate: new Date().toISOString(),
         };
-        
+
         onSuccess(orderData);
         setIsSubmitting(false);
         onClose();
@@ -661,7 +770,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
     setCardExpiry(value.slice(0, 5));
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (parseFloat(item.price || 0) * (item.quantity || 1)), 0);
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + parseFloat(item.price || 0) * (item.quantity || 1),
+    0,
+  );
   const delivery = subtotal > 50 ? 0 : 5;
 
   return (
@@ -683,7 +795,12 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
       }}
     >
       <Box sx={{ bgcolor: "#ffffff", p: { xs: 2, md: 2.5 } }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={1.5}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={1.5}
+        >
           <Typography
             sx={{
               fontSize: "1.2rem",
@@ -693,7 +810,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
           >
             Checkout
           </Typography>
-          <IconButton onClick={!isSubmitting ? onClose : undefined} sx={{ color: colors.textMuted }}>
+          <IconButton
+            onClick={!isSubmitting ? onClose : undefined}
+            sx={{ color: colors.textMuted }}
+          >
             <CloseIcon fontSize="small" />
           </IconButton>
         </Box>
@@ -724,7 +844,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
               disabled={isSubmitting}
               sx={{
                 mb: 1.5,
-                "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
+                "& .MuiInputLabel-root": {
+                  color: colors.textMuted,
+                  fontSize: "0.75rem",
+                },
                 "& .MuiOutlinedInput-root": {
                   color: colors.textPrimary,
                   fontSize: "0.85rem",
@@ -747,7 +870,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
               disabled={isSubmitting}
               sx={{
                 mb: 1.5,
-                "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
+                "& .MuiInputLabel-root": {
+                  color: colors.textMuted,
+                  fontSize: "0.75rem",
+                },
                 "& .MuiOutlinedInput-root": {
                   color: colors.textPrimary,
                   fontSize: "0.85rem",
@@ -769,7 +895,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
               disabled={isSubmitting}
               sx={{
                 mb: 1.5,
-                "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
+                "& .MuiInputLabel-root": {
+                  color: colors.textMuted,
+                  fontSize: "0.75rem",
+                },
                 "& .MuiOutlinedInput-root": {
                   color: colors.textPrimary,
                   fontSize: "0.85rem",
@@ -782,7 +911,11 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
 
             <Box sx={{ display: "flex", gap: 1, mb: 1.5 }}>
               <FormControl sx={{ minWidth: 100 }} size="small">
-                <InputLabel sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>Code</InputLabel>
+                <InputLabel
+                  sx={{ color: colors.textMuted, fontSize: "0.75rem" }}
+                >
+                  Code
+                </InputLabel>
                 <Select
                   value={countryCode}
                   onChange={(e) => setCountryCode(e.target.value)}
@@ -804,7 +937,11 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                   }}
                 >
                   {countryCodes.map((item) => (
-                    <MenuItem key={item.code} value={item.code} sx={{ fontSize: "0.8rem" }}>
+                    <MenuItem
+                      key={item.code}
+                      value={item.code}
+                      sx={{ fontSize: "0.8rem" }}
+                    >
                       {item.code}
                     </MenuItem>
                   ))}
@@ -816,19 +953,27 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                 label="Phone"
                 size="small"
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value.replace(/[^0-9]/g, ""))}
+                onChange={(e) =>
+                  setPhoneNumber(e.target.value.replace(/[^0-9]/g, ""))
+                }
                 error={!!errors.phoneNumber}
                 helperText={errors.phoneNumber}
                 disabled={isSubmitting}
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start" sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>
+                    <InputAdornment
+                      position="start"
+                      sx={{ color: colors.textMuted, fontSize: "0.75rem" }}
+                    >
                       {countryCode}
                     </InputAdornment>
                   ),
                 }}
                 sx={{
-                  "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
+                  "& .MuiInputLabel-root": {
+                    color: colors.textMuted,
+                    fontSize: "0.75rem",
+                  },
                   "& .MuiOutlinedInput-root": {
                     color: colors.textPrimary,
                     fontSize: "0.85rem",
@@ -851,7 +996,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
               disabled={isSubmitting}
               sx={{
                 mb: 1.5,
-                "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
+                "& .MuiInputLabel-root": {
+                  color: colors.textMuted,
+                  fontSize: "0.75rem",
+                },
                 "& .MuiOutlinedInput-root": {
                   color: colors.textPrimary,
                   fontSize: "0.85rem",
@@ -901,9 +1049,17 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                     />
                   }
                   label={
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                      <PaymentsIcon sx={{ color: colors.textMuted, fontSize: "1rem" }} />
-                      <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>Cash on Delivery</Typography>
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                    >
+                      <PaymentsIcon
+                        sx={{ color: colors.textMuted, fontSize: "1rem" }}
+                      />
+                      <Typography
+                        sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}
+                      >
+                        Cash on Delivery
+                      </Typography>
                     </Box>
                   }
                   disabled={isSubmitting}
@@ -920,9 +1076,17 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                     />
                   }
                   label={
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                      <CreditCardIcon sx={{ color: colors.textMuted, fontSize: "1rem" }} />
-                      <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>Visa / Credit Card</Typography>
+                    <Box
+                      sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                    >
+                      <CreditCardIcon
+                        sx={{ color: colors.textMuted, fontSize: "1rem" }}
+                      />
+                      <Typography
+                        sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}
+                      >
+                        Visa / Credit Card
+                      </Typography>
                     </Box>
                   }
                   disabled={isSubmitting}
@@ -961,7 +1125,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                   disabled={isSubmitting}
                   sx={{
                     mb: 1,
-                    "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
+                    "& .MuiInputLabel-root": {
+                      color: colors.textMuted,
+                      fontSize: "0.75rem",
+                    },
                     "& .MuiOutlinedInput-root": {
                       color: colors.textPrimary,
                       fontSize: "0.85rem",
@@ -983,7 +1150,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                   disabled={isSubmitting}
                   sx={{
                     mb: 1,
-                    "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
+                    "& .MuiInputLabel-root": {
+                      color: colors.textMuted,
+                      fontSize: "0.75rem",
+                    },
                     "& .MuiOutlinedInput-root": {
                       color: colors.textPrimary,
                       fontSize: "0.85rem",
@@ -1006,7 +1176,10 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                     helperText={errors.cardExpiry}
                     disabled={isSubmitting}
                     sx={{
-                      "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
+                      "& .MuiInputLabel-root": {
+                        color: colors.textMuted,
+                        fontSize: "0.75rem",
+                      },
                       "& .MuiOutlinedInput-root": {
                         color: colors.textPrimary,
                         fontSize: "0.85rem",
@@ -1023,12 +1196,19 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
                     placeholder="123"
                     size="small"
                     value={cardCvv}
-                    onChange={(e) => setCardCvv(e.target.value.replace(/[^0-9]/g, "").slice(0, 4))}
+                    onChange={(e) =>
+                      setCardCvv(
+                        e.target.value.replace(/[^0-9]/g, "").slice(0, 4),
+                      )
+                    }
                     error={!!errors.cardCvv}
                     helperText={errors.cardCvv}
                     disabled={isSubmitting}
                     sx={{
-                      "& .MuiInputLabel-root": { color: colors.textMuted, fontSize: "0.75rem" },
+                      "& .MuiInputLabel-root": {
+                        color: colors.textMuted,
+                        fontSize: "0.75rem",
+                      },
                       "& .MuiOutlinedInput-root": {
                         color: colors.textPrimary,
                         fontSize: "0.85rem",
@@ -1053,26 +1233,54 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
             border: "1px solid rgba(139,0,0,0.08)",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
+          <Box
+            sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}
+          >
             <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>
-              Items ({cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0)})
+              Items (
+              {cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0)})
             </Typography>
             <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
-              ${cartItems.reduce((sum, item) => sum + (parseFloat(item.price || 0) * (item.quantity || 1)), 0).toFixed(2)}
+              $
+              {cartItems
+                .reduce(
+                  (sum, item) =>
+                    sum + parseFloat(item.price || 0) * (item.quantity || 1),
+                  0,
+                )
+                .toFixed(2)}
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
-            <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>Delivery</Typography>
+          <Box
+            sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}
+          >
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.75rem" }}>
+              Delivery
+            </Typography>
             <Typography sx={{ color: colors.textPrimary, fontSize: "0.8rem" }}>
               {total > 50 ? "FREE" : "$5.00"}
             </Typography>
           </Box>
           <Divider sx={{ borderColor: "rgba(139,0,0,0.08)", my: 0.5 }} />
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography sx={{ fontSize: "0.9rem", fontWeight: 700, color: colors.textPrimary }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "0.9rem",
+                fontWeight: 700,
+                color: colors.textPrimary,
+              }}
+            >
               Total
             </Typography>
-            <Typography sx={{ fontSize: "1.2rem", fontWeight: 800, color: colors.gold }}>
+            <Typography
+              sx={{ fontSize: "1.2rem", fontWeight: 800, color: colors.gold }}
+            >
               ${(total + (total > 50 ? 0 : 5)).toFixed(2)}
             </Typography>
           </Box>
@@ -1108,30 +1316,46 @@ const CheckoutDialog = ({ open, onClose, cartItems, total, onSuccess }) => {
   );
 };
 
-// ============================================================
-// 🛒 Carts Component - باستخدام CartContext
-// ============================================================
 const Carts = () => {
-  const { cart, updateQuantity, removeFromCart, clearCart, getCart, cartLoading } = useCart();
+  const {
+    cart,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    getCart,
+    cartLoading,
+  } = useCart();
   const { user } = useAuth();
-  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [orderData, setOrderData] = useState(null);
   const navigate = useNavigate();
 
-  // تحميل السلة عند تحميل الصفحة
   useEffect(() => {
     getCart();
   }, []);
 
   const getImage = (imageName) => {
-    if (!imageName || imageName === "" || imageName === "null" || imageName === "undefined") {
+    if (
+      !imageName ||
+      imageName === "" ||
+      imageName === "null" ||
+      imageName === "undefined"
+    ) {
       return placeholder;
     }
 
-    if (imageName.startsWith("http://") || imageName.startsWith("https://") || imageName.startsWith("data:")) {
+    if (
+      imageName.startsWith("http://") ||
+      imageName.startsWith("https://") ||
+      imageName.startsWith("data:")
+    ) {
       return imageName;
     }
 
@@ -1146,32 +1370,26 @@ const Carts = () => {
     return imagesMap[imageName] || placeholder;
   };
 
-  // ============================================================
-  // زيادة الكمية - تستخدم من CartContext
-  // ============================================================
   const increaseQuantity = async (productId) => {
     try {
-      const item = cart.find(i => (i.id || i.product_id) === productId);
+      const item = cart.find((i) => (i.id || i.product_id) === productId);
       if (item) {
         const cartId = item.id || item.cart_id;
         await updateQuantity(cartId || productId, (item.quantity || 1) + 1);
       }
     } catch (error) {
-      console.error('Error increasing quantity:', error);
+      console.error("Error increasing quantity:", error);
       setSnackbar({
         open: true,
-        message: 'Failed to update quantity',
-        severity: 'error'
+        message: "Failed to update quantity",
+        severity: "error",
       });
     }
   };
 
-  // ============================================================
-  // نقصان الكمية - تستخدم من CartContext
-  // ============================================================
   const decreaseQuantity = async (productId) => {
     try {
-      const item = cart.find(i => (i.id || i.product_id) === productId);
+      const item = cart.find((i) => (i.id || i.product_id) === productId);
       if (item) {
         const cartId = item.id || item.cart_id;
         if (item.quantity > 1) {
@@ -1181,48 +1399,42 @@ const Carts = () => {
           setSnackbar({
             open: true,
             message: `"${item.name}" has been removed`,
-            severity: 'info'
+            severity: "info",
           });
         }
       }
     } catch (error) {
-      console.error('Error decreasing quantity:', error);
+      console.error("Error decreasing quantity:", error);
       setSnackbar({
         open: true,
-        message: 'Failed to update quantity',
-        severity: 'error'
+        message: "Failed to update quantity",
+        severity: "error",
       });
     }
   };
 
-  // ============================================================
-  // حذف العنصر - تستخدم من CartContext
-  // ============================================================
   const removeItem = async (productId, productName) => {
     try {
-      const item = cart.find(i => (i.id || i.product_id) === productId);
+      const item = cart.find((i) => (i.id || i.product_id) === productId);
       if (item) {
         const cartId = item.id || item.cart_id;
         await removeFromCart(cartId || productId);
         setSnackbar({
           open: true,
           message: `"${productName}" has been removed`,
-          severity: 'info'
+          severity: "info",
         });
       }
     } catch (error) {
-      console.error('Error removing item:', error);
+      console.error("Error removing item:", error);
       setSnackbar({
         open: true,
-        message: 'Failed to remove item',
-        severity: 'error'
+        message: "Failed to remove item",
+        severity: "error",
       });
     }
   };
 
-  // ============================================================
-  // مسح السلة - تستخدم من CartContext
-  // ============================================================
   const clearCartHandler = async () => {
     if (cart.length === 0) return;
     try {
@@ -1230,14 +1442,14 @@ const Carts = () => {
       setSnackbar({
         open: true,
         message: "Your cart has been cleared",
-        severity: "info"
+        severity: "info",
       });
     } catch (error) {
-      console.error('Error clearing cart:', error);
+      console.error("Error clearing cart:", error);
       setSnackbar({
         open: true,
-        message: 'Failed to clear cart',
-        severity: 'error'
+        message: "Failed to clear cart",
+        severity: "error",
       });
     }
   };
@@ -1246,7 +1458,7 @@ const Carts = () => {
     return cart.reduce((total, item) => {
       const price = parseFloat(item.price) || 0;
       const quantity = item.quantity || 1;
-      return total + (price * quantity);
+      return total + price * quantity;
     }, 0);
   };
 
@@ -1258,41 +1470,34 @@ const Carts = () => {
     setSelectedProduct(product);
   };
 
-  // ============================================================
-  // 🛒 دالة الدفع المعدلة - تتحقق من تسجيل الدخول
-  // ============================================================
   const handleCheckout = () => {
     if (cart.length === 0) {
       setSnackbar({
         open: true,
         message: "Your cart is empty. Please add items first",
-        severity: "warning"
+        severity: "warning",
       });
       return;
     }
 
-    // ✅ التحقق من وجود مستخدم مسجل دخول
     if (!user) {
-      // حفظ مسار العودة بعد تسجيل الدخول
-      localStorage.setItem('redirectAfterLogin', '/cart');
-      toast('Please login first to complete your order');
-      navigate('/login');
+      localStorage.setItem("redirectAfterLogin", "/cart");
+      toast("Please login first to complete your order");
+      navigate("/login");
       return;
     }
 
-    // إذا كان مسجلاً دخول، نفتح نافذة الدفع
     setCheckoutOpen(true);
   };
 
   const handleOrderSuccess = (data) => {
     setOrderData(data);
     setSuccessOpen(true);
-    // تفريغ السلة بعد الطلب
     clearCart();
     setSnackbar({
       open: true,
       message: "Order placed successfully!",
-      severity: "success"
+      severity: "success",
     });
   };
 
@@ -1302,7 +1507,6 @@ const Carts = () => {
     navigate("/shop");
   };
 
-  // عرض التحميل
   if (cartLoading) {
     return (
       <Box
@@ -1331,7 +1535,6 @@ const Carts = () => {
     );
   }
 
-  // عرض السلة فارغة
   if (cart.length === 0 && !successOpen) {
     return (
       <Box
@@ -1354,7 +1557,7 @@ const Carts = () => {
             py: { xs: 4, md: 8 },
             px: 2,
             mt: 20,
-            mb: 20
+            mb: 20,
           }}
         >
           <motion.div
@@ -1380,7 +1583,11 @@ const Carts = () => {
             animate="visible"
             variants={{
               hidden: { opacity: 0, y: 30 },
-              visible: { opacity: 1, y: 0, transition: { delay: 0.2, duration: 0.6 } },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { delay: 0.2, duration: 0.6 },
+              },
             }}
           >
             <Typography
@@ -1432,7 +1639,7 @@ const Carts = () => {
   }
 
   return (
-    <Box 
+    <Box
       sx={{
         minHeight: "100vh",
         bgcolor: colors.bgPrimary,
@@ -1454,7 +1661,7 @@ const Carts = () => {
           px: { xs: 2, md: 3 },
           py: { xs: 4, md: 6 },
           mt: 15,
-          mb: 15
+          mb: 15,
         }}
       >
         <motion.div
@@ -1488,7 +1695,8 @@ const Carts = () => {
               mb: 1,
             }}
           >
-            <span style={{ color: colors.gold }}>{getTotalItems()}</span> Items in Your Cart
+            <span style={{ color: colors.gold }}>{getTotalItems()}</span> Items
+            in Your Cart
           </Typography>
 
           <Box
@@ -1645,7 +1853,9 @@ const Carts = () => {
                   >
                     <IconButton
                       size="small"
-                      onClick={() => decreaseQuantity(item.id || item.product_id)}
+                      onClick={() =>
+                        decreaseQuantity(item.id || item.product_id)
+                      }
                       sx={{
                         color: colors.textMuted,
                         "&:hover": {
@@ -1671,7 +1881,9 @@ const Carts = () => {
 
                     <IconButton
                       size="small"
-                      onClick={() => increaseQuantity(item.id || item.product_id)}
+                      onClick={() =>
+                        increaseQuantity(item.id || item.product_id)
+                      }
                       sx={{
                         color: colors.textMuted,
                         "&:hover": {
@@ -1693,11 +1905,16 @@ const Carts = () => {
                       textAlign: "center",
                     }}
                   >
-                    ${(parseFloat(item.price || 0) * (item.quantity || 1)).toFixed(2)}
+                    $
+                    {(
+                      parseFloat(item.price || 0) * (item.quantity || 1)
+                    ).toFixed(2)}
                   </Typography>
 
                   <IconButton
-                    onClick={() => removeItem(item.id || item.product_id, item.name)}
+                    onClick={() =>
+                      removeItem(item.id || item.product_id, item.name)
+                    }
                     sx={{
                       color: "rgba(139,0,0,0.2)",
                       "&:hover": {
@@ -1764,7 +1981,9 @@ const Carts = () => {
               mb: 0.5,
             }}
           >
-            <Typography sx={{ color: colors.textMuted, fontSize: "0.9rem" }}>Delivery</Typography>
+            <Typography sx={{ color: colors.textMuted, fontSize: "0.9rem" }}>
+              Delivery
+            </Typography>
             <Typography sx={{ color: colors.textPrimary }}>
               {calculateTotal() > 50 ? "FREE" : "$5.00"}
             </Typography>
@@ -1854,7 +2073,10 @@ const Carts = () => {
         {selectedProduct && (
           <Box sx={{ bgcolor: "#ffffff" }}>
             <Box display="flex" justifyContent="flex-end" p={0.5}>
-              <IconButton onClick={() => setSelectedProduct(null)} sx={{ color: colors.textMuted }}>
+              <IconButton
+                onClick={() => setSelectedProduct(null)}
+                sx={{ color: colors.textMuted }}
+              >
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
@@ -1907,7 +2129,10 @@ const Carts = () => {
                   mb: 2,
                 }}
               >
-                ${selectedProduct.price ? Number(selectedProduct.price).toFixed(2) : "0.00"}
+                $
+                {selectedProduct.price
+                  ? Number(selectedProduct.price).toFixed(2)
+                  : "0.00"}
               </Typography>
 
               <Button

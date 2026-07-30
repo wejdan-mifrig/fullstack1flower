@@ -14,7 +14,7 @@ import { OrderProvider } from "./Context/OrderContext.jsx";
 import { CartProvider } from "./Context/CartContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  // <React.StrictMode>  // ← علق هذا السطر
+  // <React.StrictMode> 
     <BrowserRouter>
       <AuthProvider>
         <CategoriesProvider>
@@ -29,5 +29,5 @@ createRoot(document.getElementById("root")).render(
         </CategoriesProvider>
       </AuthProvider>
     </BrowserRouter>
-  // </React.StrictMode>  // ← وعلق هذا السطر
+  // </React.StrictMode>  
 );

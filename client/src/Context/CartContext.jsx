@@ -19,38 +19,28 @@ export const CartProvider = ({ children }) => {
   const [cartLoading, setCartLoading] = useState(false);
   const [cartError, setCartError] = useState(null);
 
-  // =====================================================
-  // 🆕 تحميل السلة من localStorage للمستخدم غير المسجل
-  // =====================================================
   const loadLocalCart = useCallback(() => {
     try {
-      const savedCart = localStorage.getItem('local_cart');
+      const savedCart = localStorage.getItem("local_cart");
       if (savedCart) {
         return JSON.parse(savedCart);
       }
     } catch (error) {
-      console.error('Error loading local cart:', error);
+      console.error("Error loading local cart:", error);
     }
     return [];
   }, []);
 
-  // =====================================================
-  // 💾 حفظ السلة في localStorage للمستخدم غير المسجل
-  // =====================================================
   const saveLocalCart = useCallback((cartData) => {
     try {
-      localStorage.setItem('local_cart', JSON.stringify(cartData));
+      localStorage.setItem("local_cart", JSON.stringify(cartData));
     } catch (error) {
-      console.error('Error saving local cart:', error);
+      console.error("Error saving local cart:", error);
     }
   }, []);
 
-  // =====================================================
-  // GET CART
-  // =====================================================
   const getCart = useCallback(async () => {
     if (!user) {
-      // للمستخدم غير المسجل: نستخدم localStorage
       const localCart = loadLocalCart();
       setCart(localCart);
       setCartLoading(false);
@@ -72,9 +62,6 @@ export const CartProvider = ({ children }) => {
     }
   }, [user, loadLocalCart]);
 
-  // =====================================================
-  // LOAD CART AFTER AUTH
-  // =====================================================
   useEffect(() => {
     if (authLoading) return;
 
@@ -86,18 +73,14 @@ export const CartProvider = ({ children }) => {
     }
   }, [user, authLoading, getCart, loadLocalCart]);
 
-  // =====================================================
-  // 🆕 دمج السلة المحلية مع سلة السيرفر بعد تسجيل الدخول
-  // =====================================================
   const mergeLocalCartWithServer = useCallback(async () => {
     const localCart = loadLocalCart();
-    
+
     if (!localCart || localCart.length === 0) {
       return;
     }
 
     try {
-      // إرسال كل عنصر من السلة المحلية إلى السيرفر
       for (const item of localCart) {
         try {
           await api.post("/cart", {
@@ -105,50 +88,45 @@ export const CartProvider = ({ children }) => {
             quantity: item.quantity || 1,
           });
         } catch (error) {
-          console.error('Error adding item to server cart:', error);
+          console.error("Error adding item to server cart:", error);
         }
       }
 
-      // حذف السلة المحلية بعد الدمج
-      localStorage.removeItem('local_cart');
-      
-      // إعادة جلب السلة من السيرفر
+      localStorage.removeItem("local_cart");
+
       await getCart();
-      
-      toast.success('Your cart has been synchronized!');
+
+      toast.success("Your cart has been synchronized!");
     } catch (error) {
-      console.error('Error merging local cart:', error);
-      toast.error('Failed to sync your cart');
+      console.error("Error merging local cart:", error);
+      toast.error("Failed to sync your cart");
     }
   }, [loadLocalCart, getCart]);
 
-  // =====================================================
-  // ADD TO CART
-  // =====================================================
   const addToCart = async (product) => {
-    // ✅ إذا كان المستخدم غير مسجل، نضيف للسلة المحلية
     if (!user) {
       const localCart = loadLocalCart();
-      const existingItem = localCart.find(item => (item.id || item.product_id) === product.id);
-      
+      const existingItem = localCart.find(
+        (item) => (item.id || item.product_id) === product.id,
+      );
+
       let updatedCart;
       if (existingItem) {
-        updatedCart = localCart.map(item =>
+        updatedCart = localCart.map((item) =>
           (item.id || item.product_id) === product.id
             ? { ...item, quantity: (item.quantity || 1) + 1 }
-            : item
+            : item,
         );
       } else {
         updatedCart = [...localCart, { ...product, quantity: 1 }];
       }
-      
+
       saveLocalCart(updatedCart);
       setCart(updatedCart);
       toast.success(`${product.name} added to cart!`);
       return;
     }
 
-    // ✅ للمستخدم المسجل: نضيف للسيرفر
     try {
       await api.post("/cart", {
         product_id: product.id,
@@ -160,29 +138,22 @@ export const CartProvider = ({ children }) => {
       await getCart();
     } catch (error) {
       console.error("ADD TO CART ERROR:", error);
-      toast.error(
-        error.response?.data?.message ||
-          "Failed to add product"
-      );
+      toast.error(error.response?.data?.message || "Failed to add product");
     }
   };
 
-  // =====================================================
-  // UPDATE QUANTITY
-  // =====================================================
   const updateQuantity = async (id, quantity) => {
     if (quantity < 1) {
       toast.error("Quantity cannot be less than 1");
       return;
     }
 
-    // ✅ للمستخدم غير المسجل: نحدث السلة المحلية
     if (!user) {
       const localCart = loadLocalCart();
-      const updatedCart = localCart.map(item =>
+      const updatedCart = localCart.map((item) =>
         (item.id || item.product_id || item.cart_id) === id
           ? { ...item, quantity }
-          : item
+          : item,
       );
       saveLocalCart(updatedCart);
       setCart(updatedCart);
@@ -198,21 +169,15 @@ export const CartProvider = ({ children }) => {
       toast.success("Quantity updated");
     } catch (error) {
       console.error("UPDATE QUANTITY ERROR:", error);
-      toast.error(
-        error.response?.data?.message || "Failed to update quantity"
-      );
+      toast.error(error.response?.data?.message || "Failed to update quantity");
     }
   };
 
-  // =====================================================
-  // REMOVE ITEM
-  // =====================================================
   const removeFromCart = async (id) => {
-    // ✅ للمستخدم غير المسجل: نحذف من السلة المحلية
     if (!user) {
       const localCart = loadLocalCart();
-      const updatedCart = localCart.filter(item => 
-        (item.id || item.product_id || item.cart_id) !== id
+      const updatedCart = localCart.filter(
+        (item) => (item.id || item.product_id || item.cart_id) !== id,
       );
       saveLocalCart(updatedCart);
       setCart(updatedCart);
@@ -230,12 +195,9 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // =====================================================
-  // CLEAR CART
-  // =====================================================
   const clearCart = async () => {
     if (!user) {
-      localStorage.removeItem('local_cart');
+      localStorage.removeItem("local_cart");
       setCart([]);
       toast.success("Cart cleared");
       return;
@@ -280,9 +242,7 @@ export const useCart = () => {
   const context = useContext(CartContext);
 
   if (!context) {
-    throw new Error(
-      "useCart must be used within a CartProvider"
-    );
+    throw new Error("useCart must be used within a CartProvider");
   }
 
   return context;

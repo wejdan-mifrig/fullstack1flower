@@ -49,10 +49,6 @@ import Footer from "../../Components/Footer/Footer.jsx";
 
 import { useNavigate } from "react-router-dom";
 
-// =====================================================
-// ANIMATION
-// =====================================================
-
 const fadeInUp = keyframes`
   from {
     opacity: 0;
@@ -63,10 +59,6 @@ const fadeInUp = keyframes`
     transform: translateY(0);
   }
 `;
-
-// =====================================================
-// COLORS
-// =====================================================
 
 const colors = {
   primary: "#8B0000",
@@ -92,35 +84,19 @@ const colors = {
   warningLight: "#fff3e0",
 };
 
-// =====================================================
-// COMPONENT
-// =====================================================
-
 const Mybooking = () => {
   const { orders, loading, getMyOrders } = useOrders();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // =====================================================
-  // STATES
-  // =====================================================
-
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-
-  // =====================================================
-  // EFFECTS
-  // =====================================================
 
   useEffect(() => {
     if (user) {
       getMyOrders();
     }
   }, [user]);
-
-  // =====================================================
-  // STATUS HELPERS
-  // =====================================================
 
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -177,10 +153,6 @@ const Mybooking = () => {
     }
   };
 
-  // =====================================================
-  // DIALOG HANDLERS
-  // =====================================================
-
   const handleOpenDialog = (order) => {
     setSelectedOrder(order);
     setDialogOpen(true);
@@ -190,10 +162,6 @@ const Mybooking = () => {
     setDialogOpen(false);
     setSelectedOrder(null);
   };
-
-  // =====================================================
-  // LOADING
-  // =====================================================
 
   if (loading) {
     return (
@@ -211,10 +179,6 @@ const Mybooking = () => {
     );
   }
 
-  // =====================================================
-  // RENDER
-  // =====================================================
-
   return (
     <Box
       sx={{
@@ -225,10 +189,6 @@ const Mybooking = () => {
       }}
     >
       <NavbarUser />
-
-      {/* ============================================
-          SECTION 1: RED HERO FULL HEIGHT
-      ============================================ */}
 
       <Box
         sx={{
@@ -245,7 +205,6 @@ const Mybooking = () => {
           overflow: "hidden",
         }}
       >
-        {/* Decorative overlay */}
         <Box
           sx={{
             position: "absolute",
@@ -258,7 +217,6 @@ const Mybooking = () => {
           }}
         />
 
-        {/* Decorative circles */}
         <Box
           sx={{
             position: "absolute",
@@ -349,7 +307,6 @@ const Mybooking = () => {
           </Box>
         </Box>
 
-        {/* Scroll indicator */}
         <Box
           sx={{
             position: "absolute",
@@ -375,10 +332,6 @@ const Mybooking = () => {
         </Box>
       </Box>
 
-      {/* ============================================
-          SECTION 2: ORDERS WITH LIGHT BACKGROUND
-      ============================================ */}
-
       <Container
         maxWidth="lg"
         sx={{
@@ -388,10 +341,6 @@ const Mybooking = () => {
         }}
       >
         {orders.length === 0 ? (
-          // ============================================
-          // EMPTY STATE
-          // ============================================
-
           <Paper
             sx={{
               p: { xs: 4, md: 6 },
@@ -446,10 +395,6 @@ const Mybooking = () => {
             </Button>
           </Paper>
         ) : (
-          // ============================================
-          // ORDERS LIST
-          // ============================================
-
           <Stack spacing={4}>
             {orders.map((order, index) => {
               const borderColor = getBorderColor(order.status);
@@ -474,10 +419,6 @@ const Mybooking = () => {
                     },
                   }}
                 >
-                  {/* ============================================
-                      ORDER HEADER
-                  ============================================ */}
-
                   <Box
                     sx={{
                       p: 3,
@@ -523,7 +464,7 @@ const Mybooking = () => {
                               month: "long",
                               day: "numeric",
                               year: "numeric",
-                            }
+                            },
                           )}
                           {" • "}
                           {new Date(order.created_at).toLocaleTimeString(
@@ -531,7 +472,7 @@ const Mybooking = () => {
                             {
                               hour: "2-digit",
                               minute: "2-digit",
-                            }
+                            },
                           )}
                         </Typography>
                       </Box>
@@ -576,42 +517,57 @@ const Mybooking = () => {
                     </Box>
                   </Box>
 
-                  {/* ============================================
-                      ORDER SUMMARY (Preview)
-                  ============================================ */}
-
                   <CardContent sx={{ p: 3 }}>
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                          <PersonIcon sx={{ fontSize: 18, color: colors.gray }} />
+                        <Box
+                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                        >
+                          <PersonIcon
+                            sx={{ fontSize: 18, color: colors.gray }}
+                          />
                           <Typography color={colors.textPrimary}>
-                            <strong>Name:</strong> {order.name || "Not specified"}
+                            <strong>Name:</strong>{" "}
+                            {order.name || "Not specified"}
                           </Typography>
                         </Box>
                       </Grid>
 
                       <Grid item xs={12} sm={6}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                          <EmailIcon sx={{ fontSize: 18, color: colors.gray }} />
+                        <Box
+                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                        >
+                          <EmailIcon
+                            sx={{ fontSize: 18, color: colors.gray }}
+                          />
                           <Typography color={colors.textPrimary}>
-                            <strong>Email:</strong> {order.email || "Not specified"}
+                            <strong>Email:</strong>{" "}
+                            {order.email || "Not specified"}
                           </Typography>
                         </Box>
                       </Grid>
 
                       <Grid item xs={12} sm={6}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                          <PhoneIcon sx={{ fontSize: 18, color: colors.gray }} />
+                        <Box
+                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                        >
+                          <PhoneIcon
+                            sx={{ fontSize: 18, color: colors.gray }}
+                          />
                           <Typography color={colors.textPrimary}>
-                            <strong>Phone:</strong> {order.phone || "Not specified"}
+                            <strong>Phone:</strong>{" "}
+                            {order.phone || "Not specified"}
                           </Typography>
                         </Box>
                       </Grid>
 
                       <Grid item xs={12} sm={6}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                          <AttachMoneyIcon sx={{ fontSize: 18, color: colors.gray }} />
+                        <Box
+                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                        >
+                          <AttachMoneyIcon
+                            sx={{ fontSize: 18, color: colors.gray }}
+                          />
                           <Typography
                             sx={{
                               color: colors.primary,
@@ -619,17 +575,27 @@ const Mybooking = () => {
                               fontSize: "1.1rem",
                             }}
                           >
-                            <strong>Total:</strong> ${Number(order.total_price || 0).toFixed(2)}
+                            <strong>Total:</strong> $
+                            {Number(order.total_price || 0).toFixed(2)}
                           </Typography>
                         </Box>
                       </Grid>
                     </Grid>
 
-                    <Box sx={{ mt: 2, display: "flex", gap: 1, flexWrap: "wrap" }}>
-                      <Typography color={colors.textSecondary} sx={{ fontSize: "0.85rem" }}>
-                        <strong>Payment:</strong> {order.payment_method || "Cash"}
+                    <Box
+                      sx={{ mt: 2, display: "flex", gap: 1, flexWrap: "wrap" }}
+                    >
+                      <Typography
+                        color={colors.textSecondary}
+                        sx={{ fontSize: "0.85rem" }}
+                      >
+                        <strong>Payment:</strong>{" "}
+                        {order.payment_method || "Cash"}
                       </Typography>
-                      <Typography color={colors.textSecondary} sx={{ fontSize: "0.85rem" }}>
+                      <Typography
+                        color={colors.textSecondary}
+                        sx={{ fontSize: "0.85rem" }}
+                      >
                         <strong>Items:</strong> {order.items?.length || 0}
                       </Typography>
                     </Box>
@@ -640,10 +606,6 @@ const Mybooking = () => {
           </Stack>
         )}
       </Container>
-
-      {/* ============================================
-          ORDER DETAILS DIALOG
-      ============================================ */}
 
       <Dialog
         open={dialogOpen}
@@ -661,7 +623,6 @@ const Mybooking = () => {
       >
         {selectedOrder && (
           <>
-            {/* Dialog Header */}
             <Box
               sx={{
                 p: 3,
@@ -673,32 +634,53 @@ const Mybooking = () => {
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <ReceiptIcon sx={{ color: getBorderColor(selectedOrder.status), fontSize: 32 }} />
+                <ReceiptIcon
+                  sx={{
+                    color: getBorderColor(selectedOrder.status),
+                    fontSize: 32,
+                  }}
+                />
                 <Box>
-                  <Typography sx={{ fontWeight: 700, color: colors.textPrimary, fontSize: "1.2rem" }}>
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      color: colors.textPrimary,
+                      fontSize: "1.2rem",
+                    }}
+                  >
                     Order #{selectedOrder.id}
                   </Typography>
-                  <Typography sx={{ color: colors.textSecondary, fontSize: "0.85rem" }}>
-                    {new Date(selectedOrder.created_at).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
+                  <Typography
+                    sx={{ color: colors.textSecondary, fontSize: "0.85rem" }}
+                  >
+                    {new Date(selectedOrder.created_at).toLocaleDateString(
+                      "en-US",
+                      {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      },
+                    )}
                     {" • "}
-                    {new Date(selectedOrder.created_at).toLocaleTimeString("en-US", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {new Date(selectedOrder.created_at).toLocaleTimeString(
+                      "en-US",
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      },
+                    )}
                   </Typography>
                 </Box>
               </Box>
 
-              <IconButton onClick={handleCloseDialog} sx={{ color: colors.textSecondary }}>
+              <IconButton
+                onClick={handleCloseDialog}
+                sx={{ color: colors.textSecondary }}
+              >
                 <CloseIcon />
               </IconButton>
             </Box>
 
-            {/* Dialog Content */}
             <DialogContent sx={{ p: 3 }}>
               {/* Status */}
               <Box sx={{ mb: 3 }}>
@@ -718,7 +700,6 @@ const Mybooking = () => {
                 />
               </Box>
 
-              {/* Customer Information */}
               <Typography
                 sx={{
                   fontWeight: 700,
@@ -729,17 +710,42 @@ const Mybooking = () => {
                   pb: 1,
                 }}
               >
-                <PersonIcon sx={{ fontSize: 20, color: colors.accent, mr: 1, verticalAlign: "middle" }} />
+                <PersonIcon
+                  sx={{
+                    fontSize: 20,
+                    color: colors.accent,
+                    mr: 1,
+                    verticalAlign: "middle",
+                  }}
+                />
                 Customer Information
               </Typography>
 
               <Grid container spacing={2} sx={{ mb: 3 }}>
                 <Grid item xs={12} sm={6}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, p: 1, bgcolor: colors.lightBg, borderRadius: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      p: 1,
+                      bgcolor: colors.lightBg,
+                      borderRadius: 1,
+                    }}
+                  >
                     <PersonIcon sx={{ fontSize: 20, color: colors.gray }} />
                     <Box>
-                      <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>Name</Typography>
-                      <Typography sx={{ color: colors.textPrimary, fontWeight: 500 }}>
+                      <Typography
+                        sx={{
+                          fontSize: "0.75rem",
+                          color: colors.textSecondary,
+                        }}
+                      >
+                        Name
+                      </Typography>
+                      <Typography
+                        sx={{ color: colors.textPrimary, fontWeight: 500 }}
+                      >
                         {selectedOrder.name || "Not specified"}
                       </Typography>
                     </Box>
@@ -747,11 +753,29 @@ const Mybooking = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, p: 1, bgcolor: colors.lightBg, borderRadius: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      p: 1,
+                      bgcolor: colors.lightBg,
+                      borderRadius: 1,
+                    }}
+                  >
                     <EmailIcon sx={{ fontSize: 20, color: colors.gray }} />
                     <Box>
-                      <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>Email</Typography>
-                      <Typography sx={{ color: colors.textPrimary, fontWeight: 500 }}>
+                      <Typography
+                        sx={{
+                          fontSize: "0.75rem",
+                          color: colors.textSecondary,
+                        }}
+                      >
+                        Email
+                      </Typography>
+                      <Typography
+                        sx={{ color: colors.textPrimary, fontWeight: 500 }}
+                      >
                         {selectedOrder.email || "Not specified"}
                       </Typography>
                     </Box>
@@ -759,11 +783,29 @@ const Mybooking = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, p: 1, bgcolor: colors.lightBg, borderRadius: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      p: 1,
+                      bgcolor: colors.lightBg,
+                      borderRadius: 1,
+                    }}
+                  >
                     <PhoneIcon sx={{ fontSize: 20, color: colors.gray }} />
                     <Box>
-                      <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>Phone</Typography>
-                      <Typography sx={{ color: colors.textPrimary, fontWeight: 500 }}>
+                      <Typography
+                        sx={{
+                          fontSize: "0.75rem",
+                          color: colors.textSecondary,
+                        }}
+                      >
+                        Phone
+                      </Typography>
+                      <Typography
+                        sx={{ color: colors.textPrimary, fontWeight: 500 }}
+                      >
                         {selectedOrder.phone || "Not specified"}
                       </Typography>
                     </Box>
@@ -771,11 +813,29 @@ const Mybooking = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, p: 1, bgcolor: colors.lightBg, borderRadius: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      p: 1,
+                      bgcolor: colors.lightBg,
+                      borderRadius: 1,
+                    }}
+                  >
                     <PaymentIcon sx={{ fontSize: 20, color: colors.gray }} />
                     <Box>
-                      <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>Payment</Typography>
-                      <Typography sx={{ color: colors.textPrimary, fontWeight: 500 }}>
+                      <Typography
+                        sx={{
+                          fontSize: "0.75rem",
+                          color: colors.textSecondary,
+                        }}
+                      >
+                        Payment
+                      </Typography>
+                      <Typography
+                        sx={{ color: colors.textPrimary, fontWeight: 500 }}
+                      >
                         {selectedOrder.payment_method || "Cash"}
                       </Typography>
                     </Box>
@@ -783,11 +843,29 @@ const Mybooking = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, p: 1, bgcolor: colors.lightBg, borderRadius: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      p: 1,
+                      bgcolor: colors.lightBg,
+                      borderRadius: 1,
+                    }}
+                  >
                     <HomeIcon sx={{ fontSize: 20, color: colors.gray }} />
                     <Box>
-                      <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>Address</Typography>
-                      <Typography sx={{ color: colors.textPrimary, fontWeight: 500 }}>
+                      <Typography
+                        sx={{
+                          fontSize: "0.75rem",
+                          color: colors.textSecondary,
+                        }}
+                      >
+                        Address
+                      </Typography>
+                      <Typography
+                        sx={{ color: colors.textPrimary, fontWeight: 500 }}
+                      >
                         {selectedOrder.address || "Not specified"}
                       </Typography>
                     </Box>
@@ -795,7 +873,6 @@ const Mybooking = () => {
                 </Grid>
               </Grid>
 
-              {/* Products */}
               <Typography
                 sx={{
                   fontWeight: 700,
@@ -806,7 +883,14 @@ const Mybooking = () => {
                   pb: 1,
                 }}
               >
-                <ShoppingBagIcon sx={{ fontSize: 20, color: colors.accent, mr: 1, verticalAlign: "middle" }} />
+                <ShoppingBagIcon
+                  sx={{
+                    fontSize: 20,
+                    color: colors.accent,
+                    mr: 1,
+                    verticalAlign: "middle",
+                  }}
+                />
                 Products
               </Typography>
 
@@ -825,13 +909,25 @@ const Mybooking = () => {
                     }}
                   >
                     <Box>
-                      <Typography sx={{ fontWeight: 600, color: colors.textPrimary }}>
+                      <Typography
+                        sx={{ fontWeight: 600, color: colors.textPrimary }}
+                      >
                         {item.name}
                       </Typography>
-                      <Typography sx={{ color: colors.textSecondary, fontSize: "0.85rem" }}>
+                      <Typography
+                        sx={{
+                          color: colors.textSecondary,
+                          fontSize: "0.85rem",
+                        }}
+                      >
                         Quantity: {item.quantity}
                       </Typography>
-                      <Typography sx={{ color: colors.textSecondary, fontSize: "0.85rem" }}>
+                      <Typography
+                        sx={{
+                          color: colors.textSecondary,
+                          fontSize: "0.85rem",
+                        }}
+                      >
                         ${Number(item.price).toFixed(2)} each
                       </Typography>
                     </Box>
@@ -848,7 +944,6 @@ const Mybooking = () => {
                 ))}
               </Stack>
 
-              {/* Total */}
               <Box
                 sx={{
                   display: "flex",
@@ -860,7 +955,13 @@ const Mybooking = () => {
                   border: `2px solid ${getBorderColor(selectedOrder.status)}`,
                 }}
               >
-                <Typography sx={{ fontWeight: 700, color: colors.textPrimary, fontSize: "1.1rem" }}>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    color: colors.textPrimary,
+                    fontSize: "1.1rem",
+                  }}
+                >
                   Total Amount
                 </Typography>
                 <Typography
@@ -874,29 +975,32 @@ const Mybooking = () => {
                 </Typography>
               </Box>
 
-              {/* Admin Message */}
-              {selectedOrder.status?.toLowerCase() === "rejected" && selectedOrder.admin_message && (
-                <Box
-                  sx={{
-                    mt: 3,
-                    p: 2.5,
-                    borderRadius: 2,
-                    bgcolor: colors.dangerLight,
-                    border: `2px solid ${colors.danger}`,
-                  }}
-                >
-                  <Typography sx={{ color: colors.danger, fontWeight: 700, mb: 0.5 }}>
-                    Admin Message
-                  </Typography>
-                  <Typography color={colors.textPrimary}>
-                    {selectedOrder.admin_message}
-                  </Typography>
-                </Box>
-              )}
+              {selectedOrder.status?.toLowerCase() === "rejected" &&
+                selectedOrder.admin_message && (
+                  <Box
+                    sx={{
+                      mt: 3,
+                      p: 2.5,
+                      borderRadius: 2,
+                      bgcolor: colors.dangerLight,
+                      border: `2px solid ${colors.danger}`,
+                    }}
+                  >
+                    <Typography
+                      sx={{ color: colors.danger, fontWeight: 700, mb: 0.5 }}
+                    >
+                      Admin Message
+                    </Typography>
+                    <Typography color={colors.textPrimary}>
+                      {selectedOrder.admin_message}
+                    </Typography>
+                  </Box>
+                )}
             </DialogContent>
 
-            {/* Dialog Actions */}
-            <DialogActions sx={{ p: 3, borderTop: "1px solid rgba(201,168,76,0.2)" }}>
+            <DialogActions
+              sx={{ p: 3, borderTop: "1px solid rgba(201,168,76,0.2)" }}
+            >
               <Button
                 onClick={handleCloseDialog}
                 variant="contained"

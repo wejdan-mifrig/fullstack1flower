@@ -14,14 +14,13 @@ import {
 import { keyframes } from "@emotion/react";
 import CloseIcon from "@mui/icons-material/Close";
 import Footer from "../../Components/Footer/Footer.jsx";
-import NavbarUser from '../../Components/NavUserAdmin/Navuser.jsx';
+import NavbarUser from "../../Components/NavUserAdmin/Navuser.jsx";
 import { categoriesContext } from "../../Context/CategoriesContext.jsx";
 import { menuContext } from "../../Context/MenuContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useCart } from '../../Context/CartContext.jsx'; // ✅ تم التصحيح
+import { useCart } from "../../Context/CartContext.jsx";
 
-// ===== استيرادات الصور (نفسها) =====
 import whiteTulip from "../../assets/images/white-tulip.jpg";
 import whiteRoseBouquet from "../../assets/images/white-rose-bouquet.jpg";
 import whiteLily from "../../assets/images/white-lily.jpg";
@@ -82,7 +81,6 @@ import romanticBox from "../../assets/images/romantic-box.jpg";
 import birthdayBox from "../../assets/images/birthday-box.jpg";
 import specialBox from "../../assets/images/special-box.jpg";
 
-// ===== استيرادات الفيديو =====
 import storeVideo from "../../assets/video/store22.mp4";
 import whiteVideo from "../../assets/video/white.mp4";
 import redVideo from "../../assets/video/Hero4.mp4";
@@ -222,7 +220,6 @@ const underlineGrow = keyframes`
   to { width: 80px; }
 `;
 
-// ===== Hook useInView =====
 const useInView = (options = { threshold: 0.15 }) => {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -243,20 +240,124 @@ const useInView = (options = { threshold: 0.15 }) => {
   return [ref, isVisible];
 };
 
-// ===== Product Card =====
 const ProductCard = ({ product, image, onSelect, delay }) => {
   const [ref, isVisible] = useInView({ threshold: 0.1 });
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Box ref={ref} sx={{ width: "100%", maxWidth: 400, justifySelf: "center", opacity: isVisible ? 1 : 0, animation: isVisible ? `${fadeInUp} 0.7s ease forwards` : "none", animationDelay: `${delay}ms` }}>
-      <Box sx={{ position: "relative", borderRadius: "22px", overflow: "hidden", background: "rgba(255,255,255,0.06)", backdropFilter: "blur(4px)", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 10px 30px rgba(0,0,0,0.2)", transition: "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease", cursor: "pointer", "&:hover": { transform: "translateY(-10px) scale(1.02)", boxShadow: `0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px ${colors.goldSoft}` }, "&:hover .product-image": { transform: "scale(1.12) rotate(0.5deg)" } }} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+    <Box
+      ref={ref}
+      sx={{
+        width: "100%",
+        maxWidth: 400,
+        justifySelf: "center",
+        opacity: isVisible ? 1 : 0,
+        animation: isVisible ? `${fadeInUp} 0.7s ease forwards` : "none",
+        animationDelay: `${delay}ms`,
+      }}
+    >
+      <Box
+        sx={{
+          position: "relative",
+          borderRadius: "22px",
+          overflow: "hidden",
+          background: "rgba(255,255,255,0.06)",
+          backdropFilter: "blur(4px)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+          transition:
+            "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease",
+          cursor: "pointer",
+          "&:hover": {
+            transform: "translateY(-10px) scale(1.02)",
+            boxShadow: `0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px ${colors.goldSoft}`,
+          },
+          "&:hover .product-image": { transform: "scale(1.12) rotate(0.5deg)" },
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <Box sx={{ position: "relative", height: 350, overflow: "hidden" }}>
-          <Box component="img" className="product-image" src={image} alt={product.name || "Product"} onError={(e) => { e.target.src = placeholder; }} sx={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)" }} />
-          <Box sx={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "45%", background: "linear-gradient(transparent, rgba(0,0,0,0.75))", pointerEvents: "none" }} />
-          <Box sx={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "24px 20px 20px 20px", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 1 }}>
-            <Typography sx={{ fontWeight: 700, fontSize: "1.2rem", color: "#fff", textAlign: "left", textShadow: "0 2px 10px rgba(0,0,0,0.6)", letterSpacing: "0.5px", width: "100%" }}>{product.name}</Typography>
-            <Button variant="contained" onClick={(e) => { e.stopPropagation(); onSelect(product); }} sx={{ backgroundColor: colors.gold, color: "#fff", fontWeight: 600, padding: "8px 28px", borderRadius: "25px", textTransform: "none", fontSize: "0.9rem", letterSpacing: "0.5px", boxShadow: "0 4px 15px rgba(212,168,67,0.4)", transition: "all 0.4s cubic-bezier(0.22, 1, 0.36, 1)", opacity: isHovered ? 1 : 0, transform: isHovered ? "translateY(0)" : "translateY(15px)", "&:hover": { backgroundColor: colors.goldHover, transform: "scale(1.05)", boxShadow: "0 8px 25px rgba(212,168,67,0.5)" } }}>
+          <Box
+            component="img"
+            className="product-image"
+            src={image}
+            alt={product.name || "Product"}
+            onError={(e) => {
+              e.target.src = placeholder;
+            }}
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+              transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: "45%",
+              background: "linear-gradient(transparent, rgba(0,0,0,0.75))",
+              pointerEvents: "none",
+            }}
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              padding: "24px 20px 20px 20px",
+              zIndex: 2,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: 1,
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: "1.2rem",
+                color: "#fff",
+                textAlign: "left",
+                textShadow: "0 2px 10px rgba(0,0,0,0.6)",
+                letterSpacing: "0.5px",
+                width: "100%",
+              }}
+            >
+              {product.name}
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelect(product);
+              }}
+              sx={{
+                backgroundColor: colors.gold,
+                color: "#fff",
+                fontWeight: 600,
+                padding: "8px 28px",
+                borderRadius: "25px",
+                textTransform: "none",
+                fontSize: "0.9rem",
+                letterSpacing: "0.5px",
+                boxShadow: "0 4px 15px rgba(212,168,67,0.4)",
+                transition: "all 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
+                opacity: isHovered ? 1 : 0,
+                transform: isHovered ? "translateY(0)" : "translateY(15px)",
+                "&:hover": {
+                  backgroundColor: colors.goldHover,
+                  transform: "scale(1.05)",
+                  boxShadow: "0 8px 25px rgba(212,168,67,0.5)",
+                },
+              }}
+            >
               More About It
             </Button>
           </Box>
@@ -266,30 +367,166 @@ const ProductCard = ({ product, image, onSelect, delay }) => {
   );
 };
 
-// ===== Category Section =====
-const CategorySection = ({ category, products, getImage, getVideo, onSelectProduct, bgColor }) => {
+const CategorySection = ({
+  category,
+  products,
+  getImage,
+  getVideo,
+  onSelectProduct,
+  bgColor,
+}) => {
   const [headerRef, headerVisible] = useInView({ threshold: 0.2 });
   const [videoRef, videoVisible] = useInView({ threshold: 0.15 });
 
   return (
-    <Box sx={{ width: "100%", py: { xs: 8, md: 12 }, px: { xs: 3, md: 6 }, bgcolor: bgColor }}>
-      <Box sx={{ maxWidth: 1300, mx: "auto", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-        <Box ref={headerRef} sx={{ display: "flex", flexDirection: "column", alignItems: "center", opacity: headerVisible ? 1 : 0, animation: headerVisible ? `${fadeInUp} 0.8s ease forwards` : "none" }}>
-          <Typography sx={{ fontSize: "0.8rem", letterSpacing: "4px", color: colors.gold, fontWeight: 700, mb: 1.5, textTransform: "uppercase" }}>Collection</Typography>
-          <Typography sx={{ fontSize: { xs: "2rem", md: "2.6rem" }, fontWeight: 800, color: bgColor === colors.primaryGreen ? colors.textPrimary : colors.textDark, textAlign: "center" }}>{category.name}</Typography>
-          <Box sx={{ height: "3px", width: headerVisible ? "80px" : "0px", background: `linear-gradient(90deg, ${colors.gold}, ${colors.goldHover})`, borderRadius: "3px", my: 2, animation: headerVisible ? `${underlineGrow} 0.8s ease forwards 0.3s` : "none" }} />
-          <Typography sx={{ color: bgColor === colors.primaryGreen ? colors.textSecondary : "#7a7a7a", maxWidth: 700, mb: 5, textAlign: "center", lineHeight: 1.8 }}>{category.description || "High-quality curated items made with care and attention."}</Typography>
+    <Box
+      sx={{
+        width: "100%",
+        py: { xs: 8, md: 12 },
+        px: { xs: 3, md: 6 },
+        bgcolor: bgColor,
+      }}
+    >
+      <Box
+        sx={{
+          maxWidth: 1300,
+          mx: "auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
+        <Box
+          ref={headerRef}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            opacity: headerVisible ? 1 : 0,
+            animation: headerVisible
+              ? `${fadeInUp} 0.8s ease forwards`
+              : "none",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "0.8rem",
+              letterSpacing: "4px",
+              color: colors.gold,
+              fontWeight: 700,
+              mb: 1.5,
+              textTransform: "uppercase",
+            }}
+          >
+            Collection
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: { xs: "2rem", md: "2.6rem" },
+              fontWeight: 800,
+              color:
+                bgColor === colors.primaryGreen
+                  ? colors.textPrimary
+                  : colors.textDark,
+              textAlign: "center",
+            }}
+          >
+            {category.name}
+          </Typography>
+          <Box
+            sx={{
+              height: "3px",
+              width: headerVisible ? "80px" : "0px",
+              background: `linear-gradient(90deg, ${colors.gold}, ${colors.goldHover})`,
+              borderRadius: "3px",
+              my: 2,
+              animation: headerVisible
+                ? `${underlineGrow} 0.8s ease forwards 0.3s`
+                : "none",
+            }}
+          />
+          <Typography
+            sx={{
+              color:
+                bgColor === colors.primaryGreen
+                  ? colors.textSecondary
+                  : "#7a7a7a",
+              maxWidth: 700,
+              mb: 5,
+              textAlign: "center",
+              lineHeight: 1.8,
+            }}
+          >
+            {category.description ||
+              "High-quality curated items made with care and attention."}
+          </Typography>
         </Box>
-        <Box ref={videoRef} sx={{ width: "100%", maxWidth: 1100, mb: 3, display: "flex", justifyContent: "center", opacity: videoVisible ? 1 : 0, animation: videoVisible ? `${scaleIn} 0.9s ease forwards` : "none", borderRadius: "20px", overflow: "hidden" }}>
-          <video width="100%" height="auto" autoPlay loop muted playsInline style={{ display: "block", maxWidth: "1200px" }}>
-            <source src={category.video_url || getVideo(category)} type="video/mp4" />
+        <Box
+          ref={videoRef}
+          sx={{
+            width: "100%",
+            maxWidth: 1100,
+            mb: 3,
+            display: "flex",
+            justifyContent: "center",
+            opacity: videoVisible ? 1 : 0,
+            animation: videoVisible ? `${scaleIn} 0.9s ease forwards` : "none",
+            borderRadius: "20px",
+            overflow: "hidden",
+          }}
+        >
+          <video
+            width="100%"
+            height="auto"
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{ display: "block", maxWidth: "1200px" }}
+          >
+            <source
+              src={category.video_url || getVideo(category)}
+              type="video/mp4"
+            />
             Your browser does not support the video tag.
           </video>
         </Box>
-        <Typography sx={{ color: bgColor === colors.primaryGreen ? colors.textSecondary : "#7a7a7a", mb: 6, fontStyle: "italic" }}>{category.video_title || "Explore our collection"}</Typography>
-        <Box sx={{ width: "100%", maxWidth: 1300, display: "grid", gridTemplateColumns: { xs: "repeat(auto-fit, minmax(220px, 1fr))", sm: "repeat(auto-fit, minmax(260px, 1fr))", md: "repeat(3, minmax(280px, 400px))" }, justifyContent: "center", justifyItems: "center", gap: { xs: 3, md: 4 } }}>
+        <Typography
+          sx={{
+            color:
+              bgColor === colors.primaryGreen
+                ? colors.textSecondary
+                : "#7a7a7a",
+            mb: 6,
+            fontStyle: "italic",
+          }}
+        >
+          {category.video_title || "Explore our collection"}
+        </Typography>
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: 1300,
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "repeat(auto-fit, minmax(220px, 1fr))",
+              sm: "repeat(auto-fit, minmax(260px, 1fr))",
+              md: "repeat(3, minmax(280px, 400px))",
+            },
+            justifyContent: "center",
+            justifyItems: "center",
+            gap: { xs: 3, md: 4 },
+          }}
+        >
           {products.map((product, i) => (
-            <ProductCard key={product.id} product={product} image={getImage(product.image)} onSelect={onSelectProduct} delay={(i % 3) * 120} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              image={getImage(product.image)}
+              onSelect={onSelectProduct}
+              delay={(i % 3) * 120}
+            />
           ))}
         </Box>
       </Box>
@@ -297,12 +534,23 @@ const CategorySection = ({ category, products, getImage, getVideo, onSelectProdu
   );
 };
 
-// ===== Divider Section =====
 const dividerTexts = [
-  { title: '"Where Every Petal Tells a Story"', desc: "From our garden to your heart, each bloom is carefully selected and thoughtfully arranged to bring beauty and joy to every moment." },
-  { title: '"Nature\'s Poetry in Full Bloom"', desc: "Every flower carries a silent whisper of nature's love. Let our arrangements speak the words your heart longs to say." },
-  { title: '"The Art of Floral Expression"', desc: "More than just flowers, we create moments. Each petal, each stem, each arrangement tells a unique story of beauty and grace." },
-  { title: '"Timeless Elegance, Freshly Picked"', desc: "From sunrise to sunset, our flowers capture the essence of nature's finest moments. Bringing freshness and joy to your everyday life." }
+  {
+    title: '"Where Every Petal Tells a Story"',
+    desc: "From our garden to your heart, each bloom is carefully selected and thoughtfully arranged to bring beauty and joy to every moment.",
+  },
+  {
+    title: '"Nature\'s Poetry in Full Bloom"',
+    desc: "Every flower carries a silent whisper of nature's love. Let our arrangements speak the words your heart longs to say.",
+  },
+  {
+    title: '"The Art of Floral Expression"',
+    desc: "More than just flowers, we create moments. Each petal, each stem, each arrangement tells a unique story of beauty and grace.",
+  },
+  {
+    title: '"Timeless Elegance, Freshly Picked"',
+    desc: "From sunrise to sunset, our flowers capture the essence of nature's finest moments. Bringing freshness and joy to your everyday life.",
+  },
 ];
 
 const DividerSection = ({ bgColor, index }) => {
@@ -310,19 +558,61 @@ const DividerSection = ({ bgColor, index }) => {
   const text = dividerTexts[index % dividerTexts.length];
 
   return (
-    <Box ref={ref} sx={{ width: "100%", py: { xs: 6, md: 10 }, px: { xs: 2, md: 0 }, bgcolor: bgColor, textAlign: "center", opacity: isVisible ? 1 : 0, animation: isVisible ? `${fadeInUp} 0.8s ease forwards` : "none" }}>
+    <Box
+      ref={ref}
+      sx={{
+        width: "100%",
+        py: { xs: 6, md: 10 },
+        px: { xs: 2, md: 0 },
+        bgcolor: bgColor,
+        textAlign: "center",
+        opacity: isVisible ? 1 : 0,
+        animation: isVisible ? `${fadeInUp} 0.8s ease forwards` : "none",
+      }}
+    >
       <Box sx={{ maxWidth: 800, mx: "auto" }}>
-        <Typography sx={{ fontFamily: "'Cormorant Garamond', serif", fontSize: { xs: "1.8rem", md: "2.8rem" }, color: bgColor === colors.primaryGreen ? colors.textPrimary : colors.textDark, mb: 2, fontWeight: 600 }}>{text.title}</Typography>
-        <Typography sx={{ color: bgColor === colors.primaryGreen ? colors.textSecondary : "#7a7a7a", fontSize: { xs: "1rem", md: "1.1rem" }, lineHeight: 2, maxWidth: 600, mx: "auto" }}>{text.desc}</Typography>
-        <Box sx={{ width: 60, height: "2px", background: `linear-gradient(90deg, transparent, ${colors.gold}, transparent)`, mx: "auto", mt: 3 }} />
+        <Typography
+          sx={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: { xs: "1.8rem", md: "2.8rem" },
+            color:
+              bgColor === colors.primaryGreen
+                ? colors.textPrimary
+                : colors.textDark,
+            mb: 2,
+            fontWeight: 600,
+          }}
+        >
+          {text.title}
+        </Typography>
+        <Typography
+          sx={{
+            color:
+              bgColor === colors.primaryGreen
+                ? colors.textSecondary
+                : "#7a7a7a",
+            fontSize: { xs: "1rem", md: "1.1rem" },
+            lineHeight: 2,
+            maxWidth: 600,
+            mx: "auto",
+          }}
+        >
+          {text.desc}
+        </Typography>
+        <Box
+          sx={{
+            width: 60,
+            height: "2px",
+            background: `linear-gradient(90deg, transparent, ${colors.gold}, transparent)`,
+            mx: "auto",
+            mt: 3,
+          }}
+        />
       </Box>
     </Box>
   );
 };
 
-// ============================================================
-// 🛍️ Shopuser Component
-// ============================================================
 const Shopuser = () => {
   const { categories, loadCategories } = useContext(categoriesContext);
   const { menu, loadMenu } = useContext(menuContext);
@@ -330,7 +620,11 @@ const Shopuser = () => {
 
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const navigate = useNavigate();
 
@@ -343,8 +637,19 @@ const Shopuser = () => {
   }, []);
 
   const getImage = (imageName) => {
-    if (!imageName || imageName === "" || imageName === "null" || imageName === "undefined") return placeholder;
-    if (imageName.startsWith("http://") || imageName.startsWith("https://") || imageName.startsWith("data:")) return imageName;
+    if (
+      !imageName ||
+      imageName === "" ||
+      imageName === "null" ||
+      imageName === "undefined"
+    )
+      return placeholder;
+    if (
+      imageName.startsWith("http://") ||
+      imageName.startsWith("https://") ||
+      imageName.startsWith("data:")
+    )
+      return imageName;
     if (imageName.startsWith("/uploads")) return `${API_BASE_URL}${imageName}`;
     if (!imagesMap[imageName]) return `${API_BASE_URL}/uploads/${imageName}`;
     return imagesMap[imageName] || placeholder;
@@ -358,7 +663,15 @@ const Shopuser = () => {
 
   if (loading) {
     return (
-      <Box sx={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", bgcolor: colors.primaryGreen }}>
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          bgcolor: colors.primaryGreen,
+        }}
+      >
         <CircularProgress sx={{ color: colors.gold }} />
       </Box>
     );
@@ -369,50 +682,259 @@ const Shopuser = () => {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", position: "relative", overflow: "hidden", bgcolor: colors.primaryGreen, display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <Box sx={{ position: "absolute", top: "5%", left: "-5%", width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 70%)", filter: "blur(10px)", animation: `${floatSlow} 12s ease-in-out infinite`, pointerEvents: "none" }} />
-      <Box sx={{ position: "absolute", bottom: "10%", right: "-8%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(92,112,82,0.06) 0%, transparent 70%)", filter: "blur(14px)", animation: `${floatSlowReverse} 16s ease-in-out infinite`, pointerEvents: "none" }} />
+    <Box
+      sx={{
+        minHeight: "100vh",
+        position: "relative",
+        overflow: "hidden",
+        bgcolor: colors.primaryGreen,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Box
+        sx={{
+          position: "absolute",
+          top: "5%",
+          left: "-5%",
+          width: 300,
+          height: 300,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 70%)",
+          filter: "blur(10px)",
+          animation: `${floatSlow} 12s ease-in-out infinite`,
+          pointerEvents: "none",
+        }}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: "10%",
+          right: "-8%",
+          width: 400,
+          height: 400,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(92,112,82,0.06) 0%, transparent 70%)",
+          filter: "blur(14px)",
+          animation: `${floatSlowReverse} 16s ease-in-out infinite`,
+          pointerEvents: "none",
+        }}
+      />
 
       <NavbarUser />
 
-      <Container maxWidth="lg" sx={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", position: "relative", zIndex: 1, px: { xs: 0, md: 2 } }}>
-        {/* قسم الفيديو الرئيسي */}
-        <Box sx={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden", marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <Box component="video" src={storeVideo} autoPlay loop muted playsInline sx={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }} />
-          <Box sx={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.08)", zIndex: 1 }} />
-          <Box sx={{ position: "relative", zIndex: 2, textAlign: "center", px: 3 }}>
-            <Typography sx={{ fontFamily: "'Cormorant Garamond', serif", fontSize: { xs: "1.5rem", sm: "2rem", md: "2.8rem" }, fontWeight: 600, color: "#fff", textShadow: "0 2px 20px rgba(0,0,0,0.4)", letterSpacing: "1px" }}>Blossoms &amp; Elegance</Typography>
-            <Box sx={{ width: 50, height: "2px", background: `linear-gradient(90deg, transparent, ${colors.gold}, transparent)`, mx: "auto", mt: 1.5 }} />
+      <Container
+        maxWidth="lg"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          position: "relative",
+          zIndex: 1,
+          px: { xs: 0, md: 2 },
+        }}
+      >
+        <Box
+          sx={{
+            width: "100vw",
+            height: "100vh",
+            position: "relative",
+            overflow: "hidden",
+            marginLeft: "calc(-50vw + 50%)",
+            marginRight: "calc(-50vw + 50%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Box
+            component="video"
+            src={storeVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              zIndex: 0,
+            }}
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: "rgba(0,0,0,0.08)",
+              zIndex: 1,
+            }}
+          />
+          <Box
+            sx={{ position: "relative", zIndex: 2, textAlign: "center", px: 3 }}
+          >
+            <Typography
+              sx={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.8rem" },
+                fontWeight: 600,
+                color: "#fff",
+                textShadow: "0 2px 20px rgba(0,0,0,0.4)",
+                letterSpacing: "1px",
+              }}
+            >
+              Blossoms &amp; Elegance
+            </Typography>
+            <Box
+              sx={{
+                width: 50,
+                height: "2px",
+                background: `linear-gradient(90deg, transparent, ${colors.gold}, transparent)`,
+                mx: "auto",
+                mt: 1.5,
+              }}
+            />
           </Box>
         </Box>
 
-        {/* عرض التصنيفات */}
         {categories.map((category, index) => {
-          const categoryProducts = menu.filter((item) => item.category_name === category.name);
+          const categoryProducts = menu.filter(
+            (item) => item.category_name === category.name,
+          );
           const bgColor = getBgColor(index);
           return (
             <React.Fragment key={category.id}>
-              <CategorySection category={category} products={categoryProducts} getImage={getImage} getVideo={getVideo} onSelectProduct={setSelectedProduct} bgColor={bgColor} />
-              {index < categories.length - 1 && <DividerSection bgColor={getBgColor(index + 1)} index={index} />}
+              <CategorySection
+                category={category}
+                products={categoryProducts}
+                getImage={getImage}
+                getVideo={getVideo}
+                onSelectProduct={setSelectedProduct}
+                bgColor={bgColor}
+              />
+              {index < categories.length - 1 && (
+                <DividerSection bgColor={getBgColor(index + 1)} index={index} />
+              )}
             </React.Fragment>
           );
         })}
         <Box sx={{ height: { xs: 60, md: 80 } }} />
       </Container>
 
-      {/* Dialog لعرض تفاصيل المنتج وإضافته للسلة */}
-      <Dialog open={Boolean(selectedProduct)} onClose={() => setSelectedProduct(null)} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: "20px", overflow: "hidden", animation: `${scaleIn} 0.35s ease`, bgcolor: colors.primaryGreen } }}>
+      <Dialog
+        open={Boolean(selectedProduct)}
+        onClose={() => setSelectedProduct(null)}
+        fullWidth
+        maxWidth="sm"
+        PaperProps={{
+          sx: {
+            borderRadius: "20px",
+            overflow: "hidden",
+            animation: `${scaleIn} 0.35s ease`,
+            bgcolor: colors.primaryGreen,
+          },
+        }}
+      >
         {selectedProduct && (
           <Box sx={{ bgcolor: colors.primaryGreen }}>
             <Box display="flex" justifyContent="flex-end" p={1}>
-              <IconButton onClick={() => setSelectedProduct(null)} sx={{ color: colors.beige }}><CloseIcon /></IconButton>
+              <IconButton
+                onClick={() => setSelectedProduct(null)}
+                sx={{ color: colors.beige }}
+              >
+                <CloseIcon />
+              </IconButton>
             </Box>
             <DialogContent sx={{ textAlign: "center", pt: 0 }}>
-              <Box component="img" src={getImage(selectedProduct.image)} alt={selectedProduct.name || "Product"} onError={(e) => { e.target.src = placeholder; }} sx={{ width: "100%", maxHeight: "400px", objectFit: "cover", borderRadius: "16px", mb: 2, animation: `${fadeIn} 0.5s ease` }} />
-              <Typography sx={{ fontSize: "1.8rem", fontWeight: "bold", color: colors.beige, mb: 1 }}>{selectedProduct.name}</Typography>
-              <Typography sx={{ color: "rgba(245,240,232,0.7)", mb: 2, fontSize: "1rem", lineHeight: 1.6 }}>{selectedProduct.description || "No description available"}</Typography>
-              <Typography sx={{ fontSize: "1.8rem", fontWeight: "bold", color: colors.gold, mb: 3 }}>${selectedProduct.price ? Number(selectedProduct.price).toFixed(2) : "0.00"}</Typography>
-              <Button fullWidth variant="contained" sx={{ position: "relative", overflow: "hidden", backgroundColor: colors.gold, color: "#fff", fontWeight: "bold", padding: "12px", borderRadius: "30px", fontSize: "1.1rem", textTransform: "none", backgroundImage: `linear-gradient(90deg, ${colors.gold} 0%, ${colors.goldHover} 25%, ${colors.gold} 50%, ${colors.goldHover} 75%, ${colors.gold} 100%)`, backgroundSize: "200% 100%", transition: "all 0.35s ease", "&:hover": { transform: "scale(1.02)", animation: `${shimmer} 1.6s linear infinite` } }} onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); setSnackbar({ open: true, message: `"${selectedProduct.name}" added to cart!`, severity: "success" }); }}>
+              <Box
+                component="img"
+                src={getImage(selectedProduct.image)}
+                alt={selectedProduct.name || "Product"}
+                onError={(e) => {
+                  e.target.src = placeholder;
+                }}
+                sx={{
+                  width: "100%",
+                  maxHeight: "400px",
+                  objectFit: "cover",
+                  borderRadius: "16px",
+                  mb: 2,
+                  animation: `${fadeIn} 0.5s ease`,
+                }}
+              />
+              <Typography
+                sx={{
+                  fontSize: "1.8rem",
+                  fontWeight: "bold",
+                  color: colors.beige,
+                  mb: 1,
+                }}
+              >
+                {selectedProduct.name}
+              </Typography>
+              <Typography
+                sx={{
+                  color: "rgba(245,240,232,0.7)",
+                  mb: 2,
+                  fontSize: "1rem",
+                  lineHeight: 1.6,
+                }}
+              >
+                {selectedProduct.description || "No description available"}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "1.8rem",
+                  fontWeight: "bold",
+                  color: colors.gold,
+                  mb: 3,
+                }}
+              >
+                $
+                {selectedProduct.price
+                  ? Number(selectedProduct.price).toFixed(2)
+                  : "0.00"}
+              </Typography>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{
+                  position: "relative",
+                  overflow: "hidden",
+                  backgroundColor: colors.gold,
+                  color: "#fff",
+                  fontWeight: "bold",
+                  padding: "12px",
+                  borderRadius: "30px",
+                  fontSize: "1.1rem",
+                  textTransform: "none",
+                  backgroundImage: `linear-gradient(90deg, ${colors.gold} 0%, ${colors.goldHover} 25%, ${colors.gold} 50%, ${colors.goldHover} 75%, ${colors.gold} 100%)`,
+                  backgroundSize: "200% 100%",
+                  transition: "all 0.35s ease",
+                  "&:hover": {
+                    transform: "scale(1.02)",
+                    animation: `${shimmer} 1.6s linear infinite`,
+                  },
+                }}
+                onClick={() => {
+                  addToCart(selectedProduct);
+                  setSelectedProduct(null);
+                  setSnackbar({
+                    open: true,
+                    message: `"${selectedProduct.name}" added to cart!`,
+                    severity: "success",
+                  });
+                }}
+              >
                 Add to Cart
               </Button>
             </DialogContent>
@@ -420,8 +942,24 @@ const Shopuser = () => {
         )}
       </Dialog>
 
-      <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={() => setSnackbar({ ...snackbar, open: false })} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-        <Alert onClose={() => setSnackbar({ ...snackbar, open: false })} severity={snackbar.severity} sx={{ width: "100%", borderRadius: "12px", fontWeight: "bold", fontSize: "1rem" }}>{snackbar.message}</Alert>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          severity={snackbar.severity}
+          sx={{
+            width: "100%",
+            borderRadius: "12px",
+            fontWeight: "bold",
+            fontSize: "1rem",
+          }}
+        >
+          {snackbar.message}
+        </Alert>
       </Snackbar>
 
       <Footer />

@@ -131,7 +131,6 @@ export default function Myprofile() {
     >
       <NavbarUser />
 
-      {/* Hero Section - صورة كاملة */}
       <Box
         sx={{
           position: "relative",
@@ -150,7 +149,6 @@ export default function Myprofile() {
           },
         }}
       >
-        {/* صورة الخلفية */}
         <Box
           sx={{
             position: "absolute",
@@ -172,7 +170,6 @@ export default function Myprofile() {
           />
         </Box>
 
-        {/* المحتوى - فقط Account Settings */}
         <Box
           sx={{
             position: "absolute",
@@ -202,7 +199,6 @@ export default function Myprofile() {
           </Fade>
         </Box>
 
-        {/* خط ذهبي في الأسفل */}
         <Box
           sx={{
             position: "absolute",
@@ -216,7 +212,6 @@ export default function Myprofile() {
         />
       </Box>
 
-      {/* Main Content - White Background */}
       <Box
         sx={{
           position: "relative",
@@ -237,12 +232,18 @@ export default function Myprofile() {
                 gap: 4,
               }}
             >
-              {/* Profile Info Cards */}
-              <Fade in={fadeIn} timeout={1000} style={{ transitionDelay: "200ms" }}>
+              <Fade
+                in={fadeIn}
+                timeout={1000}
+                style={{ transitionDelay: "200ms" }}
+              >
                 <Box
                   sx={{
                     display: "grid",
-                    gridTemplateColumns: { xs: "1fr 1fr", sm: "repeat(3, 1fr)" },
+                    gridTemplateColumns: {
+                      xs: "1fr 1fr",
+                      sm: "repeat(3, 1fr)",
+                    },
                     gap: 2.5,
                   }}
                 >
@@ -375,7 +376,12 @@ export default function Myprofile() {
               </Fade>
 
               {/* Edit Form */}
-              <Slide direction="up" in={fadeIn} timeout={800} style={{ transitionDelay: "400ms" }}>
+              <Slide
+                direction="up"
+                in={fadeIn}
+                timeout={800}
+                style={{ transitionDelay: "400ms" }}
+              >
                 <Paper
                   elevation={0}
                   sx={{

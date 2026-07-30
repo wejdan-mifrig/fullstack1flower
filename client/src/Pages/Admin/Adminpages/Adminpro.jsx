@@ -62,7 +62,8 @@ export default function AdminPro() {
       setForm({
         name: item.name || "",
         description: item.description || "",
-        price: item.price !== undefined && item.price !== null ? item.price : "",
+        price:
+          item.price !== undefined && item.price !== null ? item.price : "",
         category_id: item.category_id || "",
       });
     } else {
@@ -123,7 +124,7 @@ export default function AdminPro() {
       }
 
       handleClose();
-      await loadMenu(); // ✅ جلب المنيو المحدثة من السيرفر فوراً
+      await loadMenu();
     } catch (err) {
       toast.error(err.response?.data?.message || "Something went wrong");
     } finally {
@@ -265,12 +266,14 @@ export default function AdminPro() {
                     <TableRow key={item.id}>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.description}</TableCell>
-                      
-                      {/* ✅ عرض السعر مع التأكد من تحويل الرقم */}
+
                       <TableCell sx={{ fontWeight: "bold", color: "#6f8a67" }}>
-                        ${item.price !== undefined && item.price !== null ? Number(item.price).toFixed(2) : "0.00"}
+                        $
+                        {item.price !== undefined && item.price !== null
+                          ? Number(item.price).toFixed(2)
+                          : "0.00"}
                       </TableCell>
-                      
+
                       <TableCell>
                         {item.category_name || "No Category"}
                       </TableCell>
@@ -293,7 +296,6 @@ export default function AdminPro() {
         </Container>
       </Box>
 
-      {/* Dialog إضافة / تعديل منتج */}
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>{editId ? "Edit Item" : "Add Item"}</DialogTitle>
 
@@ -318,7 +320,6 @@ export default function AdminPro() {
               rows={2}
             />
 
-            {/* ✅ حقل السعر المحدث باستخدام slotProps للتخلص من تحذيرات MUI */}
             <TextField
               label="Price ($)"
               name="price"

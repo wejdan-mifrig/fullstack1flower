@@ -4,10 +4,7 @@ import { validate } from "../middleware/validate.Middleware.js";
 import { protect } from "../middleware/protect.Middleware.js";
 import { authRateLimit } from "../middleware/rateLimit.Middleware.js";
 
-import {
-  registerSchema,
-  loginSchema,
-} from "../validation/auth.Validation.js";
+import { registerSchema, loginSchema } from "../validation/auth.Validation.js";
 
 import {
   registerController,
@@ -19,33 +16,19 @@ import {
 
 const route = express.Router();
 
-// ================= AUTH =================
-
-route.post(
-  "/auth/register",
-  validate(registerSchema),
-  registerController
-);
+route.post("/auth/register", validate(registerSchema), registerController);
 
 route.post(
   "/auth/login",
   validate(loginSchema),
   authRateLimit,
-  loginController
+  loginController,
 );
 
 route.post("/auth/refresh", refreshToken);
 
-route.post(
-  "/auth/logout",
-  protect,
-  logoutController
-);
+route.post("/auth/logout", protect, logoutController);
 
-route.get(
-  "/auth/me",
-  protect,
-  me
-);
+route.get("/auth/me", protect, me);
 
 export default route;

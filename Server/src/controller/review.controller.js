@@ -1,355 +1,202 @@
 import Review from "../model/review.Model.js";
 
-// ==========================================
-// CREATE REVIEW
-// ==========================================
+const createReview = async (req, res, next) => {
+  try {
+    const { rating, comment } = req.body;
 
-const createReview = async (
-    req,
-    res,
-    next
-) => {
-    try {
-        const {
-            rating,
-            comment,
-        } = req.body;
+    const userId = req.user.id;
 
-        const userId =
-            req.user.id;
+    const review = await Review.createReview(userId, rating, comment);
 
-        const review =
-            await Review.createReview(
-                userId,
-                rating,
-                comment
-            );
+    res.status(201).json({
+      success: true,
 
-        res.status(201).json({
-            success: true,
+      message: "Review created successfully",
 
-            message:
-                "Review created successfully",
-
-            review,
-        });
-
-    } catch (error) {
-        next(error);
-    }
+      review,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
+const getAllReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.getAllReviews();
 
-// ==========================================
-// GET ALL REVIEWS
-// ==========================================
-
-const getAllReviews = async (
-    req,
-    res,
-    next
-) => {
-    try {
-        const reviews =
-            await Review.getAllReviews();
-
-        res.status(200).json({
-            success: true,
-            reviews,
-        });
-
-    } catch (error) {
-        next(error);
-    }
+    res.status(200).json({
+      success: true,
+      reviews,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
+const getReviewById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-// ==========================================
-// GET REVIEW BY ID
-// ==========================================
+    const review = await Review.getReviewById(id);
 
-const getReviewById = async (
-    req,
-    res,
-    next
-) => {
-    try {
-        const {
-            id,
-        } = req.params;
+    if (!review) {
+      return res.status(404).json({
+        success: false,
 
-        const review =
-            await Review.getReviewById(
-                id
-            );
-
-        if (!review) {
-            return res.status(404).json({
-                success: false,
-
-                message:
-                    "Review not found",
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            review,
-        });
-
-    } catch (error) {
-        next(error);
+        message: "Review not found",
+      });
     }
+
+    res.status(200).json({
+      success: true,
+      review,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
+const updateReview = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-// ==========================================
-// UPDATE OWN REVIEW
-// ==========================================
+    const { rating, comment } = req.body;
 
-const updateReview = async (
-    req,
-    res,
-    next
-) => {
-    try {
-        const {
-            id,
-        } = req.params;
+    const userId = req.user.id;
 
-        const {
-            rating,
-            comment,
-        } = req.body;
+    const review = await Review.updateReview(id, userId, rating, comment);
 
-        const userId =
-            req.user.id;
+    if (!review) {
+      return res.status(404).json({
+        success: false,
 
-        const review =
-            await Review.updateReview(
-                id,
-                userId,
-                rating,
-                comment
-            );
-
-        if (!review) {
-            return res.status(404).json({
-                success: false,
-
-                message:
-                    "Review not found or you are not the owner",
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-
-            message:
-                "Review updated successfully",
-
-            review,
-        });
-
-    } catch (error) {
-        next(error);
+        message: "Review not found or you are not the owner",
+      });
     }
+
+    res.status(200).json({
+      success: true,
+
+      message: "Review updated successfully",
+
+      review,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
+const deleteReview = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-// ==========================================
-// USER DELETE OWN REVIEW
-// ==========================================
+    const userId = req.user.id;
 
-const deleteReview = async (
-    req,
-    res,
-    next
-) => {
-    try {
-        const {
-            id,
-        } = req.params;
+    const review = await Review.deleteReview(id, userId);
 
-        const userId =
-            req.user.id;
+    if (!review) {
+      return res.status(404).json({
+        success: false,
 
-        const review =
-            await Review.deleteReview(
-                id,
-                userId
-            );
-
-        if (!review) {
-            return res.status(404).json({
-                success: false,
-
-                message:
-                    "Review not found or you are not the owner",
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-
-            message:
-                "Review deleted successfully",
-        });
-
-    } catch (error) {
-        next(error);
+        message: "Review not found or you are not the owner",
+      });
     }
+
+    res.status(200).json({
+      success: true,
+
+      message: "Review deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
+const adminDeleteReview = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-// ==========================================
-// ADMIN DELETE ANY REVIEW
-// ==========================================
+    const review = await Review.adminDeleteReview(id);
 
-const adminDeleteReview = async (
-    req,
-    res,
-    next
-) => {
-    try {
-        const {
-            id,
-        } = req.params;
+    if (!review) {
+      return res.status(404).json({
+        success: false,
 
-        const review =
-            await Review.adminDeleteReview(
-                id
-            );
-
-        if (!review) {
-            return res.status(404).json({
-                success: false,
-
-                message:
-                    "Review not found",
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-
-            message:
-                "Review deleted by admin successfully",
-        });
-
-    } catch (error) {
-        next(error);
+        message: "Review not found",
+      });
     }
+
+    res.status(200).json({
+      success: true,
+
+      message: "Review deleted by admin successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
+const likeReview = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-// ==========================================
-// LIKE REVIEW
-// ==========================================
+    const userId = req.user.id;
 
-const likeReview = async (
-    req,
-    res,
-    next
-) => {
-    try {
-        const {
-            id,
-        } = req.params;
+    const like = await Review.likeReview(id, userId);
 
-        const userId =
-            req.user.id;
+    res.status(201).json({
+      success: true,
 
-        const like =
-            await Review.likeReview(
-                id,
-                userId
-            );
+      message: "Review liked successfully",
 
-        res.status(201).json({
-            success: true,
+      like,
+    });
+  } catch (error) {
+    if (error.code === "23505") {
+      return res.status(409).json({
+        success: false,
 
-            message:
-                "Review liked successfully",
-
-            like,
-        });
-
-    } catch (error) {
-
-        if (
-            error.code ===
-            "23505"
-        ) {
-            return res.status(409).json({
-                success: false,
-
-                message:
-                    "You already liked this review",
-            });
-        }
-
-        next(error);
+        message: "You already liked this review",
+      });
     }
+
+    next(error);
+  }
 };
 
+const unlikeReview = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-// ==========================================
-// UNLIKE REVIEW
-// ==========================================
+    const userId = req.user.id;
 
-const unlikeReview = async (
-    req,
-    res,
-    next
-) => {
-    try {
-        const {
-            id,
-        } = req.params;
+    const unlike = await Review.unlikeReview(id, userId);
 
-        const userId =
-            req.user.id;
+    if (!unlike) {
+      return res.status(404).json({
+        success: false,
 
-        const unlike =
-            await Review.unlikeReview(
-                id,
-                userId
-            );
-
-        if (!unlike) {
-            return res.status(404).json({
-                success: false,
-
-                message:
-                    "Like not found",
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-
-            message:
-                "Review unliked successfully",
-        });
-
-    } catch (error) {
-        next(error);
+        message: "Like not found",
+      });
     }
+
+    res.status(200).json({
+      success: true,
+
+      message: "Review unliked successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
 };
-
-
-// ==========================================
-// EXPORT
-// ==========================================
 
 export {
-    createReview,
-    getAllReviews,
-    getReviewById,
-    updateReview,
-    deleteReview,
-    adminDeleteReview,
-    likeReview,
-    unlikeReview,
+  createReview,
+  getAllReviews,
+  getReviewById,
+  updateReview,
+  deleteReview,
+  adminDeleteReview,
+  likeReview,
+  unlikeReview,
 };

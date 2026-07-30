@@ -1,8 +1,4 @@
-// ============================================================
-// 📄 src/Components/NavUserAdmin/Navuser.jsx
-// ============================================================
-
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,7 +8,7 @@ import {
   Drawer,
   Divider,
   Avatar,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Menu as MenuIcon,
   Close,
@@ -28,58 +24,38 @@ import {
   Info,
   ContactMail,
   RateReview,
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../Context/AuthContext.jsx';
-
-// ============================================================
-// NAVIGATION ITEMS
-// ============================================================
+} from "@mui/icons-material";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/AuthContext.jsx";
 
 const navItems = [
-  { label: 'HOME', path: '/user' },
-  { label: 'EVENT DECORATION', path: '/eventsuser' },
-  { label: 'SHOP', path: '/shopuser' },
-  { label: 'ABOUT', path: '/aboutuser' },
-  { label: 'CONTACT US', path: '/contactuser' },
-  { label: 'CUSTOMER REVIEWS', path: '/reviewsuser' },
+  { label: "HOME", path: "/user" },
+  { label: "EVENT DECORATION", path: "/eventsuser" },
+  { label: "SHOP", path: "/shopuser" },
+  { label: "ABOUT", path: "/aboutuser" },
+  { label: "CONTACT US", path: "/contactuser" },
+  { label: "CUSTOMER REVIEWS", path: "/reviewsuser" },
 ];
-
-// ============================================================
-// EVENT TYPES (Sub-menu)
-// ============================================================
 
 const eventTypes = [
-  { label: 'WEDDING', path: '/weddinguser' },
-  { label: 'BIRTHDAY', path: '/birthdayuser' },
-  { label: 'GRADUATION', path: '/graduationuser' },
-  { label: 'NEWBORN', path: '/newbornuser' },
+  { label: "WEDDING", path: "/weddinguser" },
+  { label: "BIRTHDAY", path: "/birthdayuser" },
+  { label: "GRADUATION", path: "/graduationuser" },
+  { label: "NEWBORN", path: "/newbornuser" },
 ];
-
-// ============================================================
-// USER LINKS
-// ============================================================
 
 const userLinks = [
-  { label: 'MY PROFILE', path: '/myprofile', icon: <Person /> },
-  { label: 'MY ORDERS', path: '/mybooking', icon: <Storefront /> },
-  { label: 'CART', path: '/cart', icon: <ShoppingCart /> },
+  { label: "MY PROFILE", path: "/myprofile", icon: <Person /> },
+  { label: "MY ORDERS", path: "/mybooking", icon: <Storefront /> },
+  { label: "CART", path: "/cart", icon: <ShoppingCart /> },
 ];
-
-// ============================================================
-// COMPONENT
-// ============================================================
 
 export default function NavbarUser() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [eventsOpen, setEventsOpen] = useState(false);
   const navigate = useNavigate();
   const { user, logout } = useContext(UserContext);
-
-  // ============================================================
-  // HANDLERS
-  // ============================================================
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -89,70 +65,59 @@ export default function NavbarUser() {
   const handleLogout = async () => {
     await logout();
     setDrawerOpen(false);
-    navigate('/');
+    navigate("/");
   };
 
   const toggleEvents = () => setEventsOpen((prev) => !prev);
 
-  // ============================================================
-  // RENDER
-  // ============================================================
-
   return (
     <>
-      {/* ============================================================
-          TOP NAVBAR - Same as regular Navbar
-      ============================================================ */}
-
       <AppBar
         position="absolute"
         elevation={0}
         sx={{
-          bgcolor: 'transparent',
-          boxShadow: 'none',
+          bgcolor: "transparent",
+          boxShadow: "none",
           zIndex: 10,
         }}
       >
         <Toolbar
           sx={{
-            justifyContent: 'space-between',
+            justifyContent: "space-between",
             px: { xs: 2, md: 6 },
             py: 2,
           }}
         >
-          {/* Menu Icon */}
           <IconButton
             onClick={() => setDrawerOpen(true)}
-            sx={{ color: '#f4f1ea' }}
+            sx={{ color: "#f4f1ea" }}
           >
             <MenuIcon />
           </IconButton>
 
-          {/* Logo */}
           <Typography
-            onClick={() => handleNavigation('/user')}
+            onClick={() => handleNavigation("/user")}
             sx={{
-              color: '#f4f1ea',
+              color: "#f4f1ea",
               fontFamily: "'Cormorant Garamond', serif",
               letterSpacing: 8,
               fontWeight: 600,
-              fontSize: { xs: '1.5rem', md: '2rem' },
-              cursor: 'pointer',
+              fontSize: { xs: "1.5rem", md: "2rem" },
+              cursor: "pointer",
             }}
           >
             FLORA
           </Typography>
 
-          {/* Store Button */}
           <Typography
-            onClick={() => handleNavigation('/shopuser')}
+            onClick={() => handleNavigation("/shopuser")}
             sx={{
-              color: '#f4f1ea',
+              color: "#f4f1ea",
               letterSpacing: 3,
-              fontSize: '.9rem',
-              textTransform: 'uppercase',
-              cursor: 'pointer',
-              '&:hover': { opacity: 0.7 },
+              fontSize: ".9rem",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              "&:hover": { opacity: 0.7 },
             }}
           >
             Store
@@ -160,50 +125,42 @@ export default function NavbarUser() {
         </Toolbar>
       </AppBar>
 
-      {/* ============================================================
-          SIDEBAR DRAWER - Same as regular Navbar
-      ============================================================ */}
-
       <Drawer
         anchor="left"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         PaperProps={{
           sx: {
-            width: { xs: '100%', md: '30%' },
-            bgcolor: '#f4f1ea',
+            width: { xs: "100%", md: "30%" },
+            bgcolor: "#f4f1ea",
           },
         }}
       >
         <Box
           sx={{
             p: 5,
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          {/* ============================================================
-              HEADER - Logo + Close
-          ============================================================ */}
-
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
               mb: 4,
             }}
           >
             <Typography
-              onClick={() => handleNavigation('/user')}
+              onClick={() => handleNavigation("/user")}
               sx={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '2.5rem',
+                fontSize: "2.5rem",
                 fontWeight: 600,
                 letterSpacing: 4,
-                color: '#1c1b18',
-                cursor: 'pointer',
+                color: "#1c1b18",
+                cursor: "pointer",
               }}
             >
               FLORA
@@ -214,49 +171,41 @@ export default function NavbarUser() {
             </IconButton>
           </Box>
 
-          {/* ============================================================
-              USER INFO
-          ============================================================ */}
-
           {user && (
             <Box
               sx={{
                 mb: 4,
                 p: 2,
                 borderRadius: 2,
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 gap: 2,
-                bgcolor: '#fff',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
+                bgcolor: "#fff",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
               }}
             >
               <Avatar
                 sx={{
-                  bgcolor: '#c98f6b',
+                  bgcolor: "#c98f6b",
                   width: 48,
                   height: 48,
-                  color: '#fff',
+                  color: "#fff",
                 }}
               >
-                {user.name?.charAt(0)?.toUpperCase() || 'U'}
+                {user.name?.charAt(0)?.toUpperCase() || "U"}
               </Avatar>
               <Box>
-                <Typography sx={{ fontWeight: 600, color: '#1c1b18' }}>
+                <Typography sx={{ fontWeight: 600, color: "#1c1b18" }}>
                   {user.name}
                 </Typography>
-                <Typography sx={{ fontSize: '.75rem', color: '#8a8479' }}>
-                  {user.email || 'Member'}
+                <Typography sx={{ fontSize: ".75rem", color: "#8a8479" }}>
+                  {user.email || "Member"}
                 </Typography>
               </Box>
             </Box>
           )}
 
-          <Divider sx={{ mb: 3, borderColor: '#e0dcd5' }} />
-
-          {/* ============================================================
-              NAVIGATION ITEMS
-          ============================================================ */}
+          <Divider sx={{ mb: 3, borderColor: "#e0dcd5" }} />
 
           {navItems.map((item, index) => (
             <motion.div
@@ -267,52 +216,48 @@ export default function NavbarUser() {
             >
               <Box
                 onClick={() => {
-                  if (item.label === 'EVENT DECORATION') {
+                  if (item.label === "EVENT DECORATION") {
                     toggleEvents();
                   } else {
                     handleNavigation(item.path);
                   }
                 }}
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  cursor: 'pointer',
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  cursor: "pointer",
                   py: 1,
                   mb: 0.5,
                   borderRadius: 1,
                   px: 1,
-                  '&:hover': {
-                    bgcolor: 'rgba(201,143,107,0.08)',
+                  "&:hover": {
+                    bgcolor: "rgba(201,143,107,0.08)",
                   },
                 }}
               >
                 <Typography
                   sx={{
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: '.9rem',
+                    fontSize: ".9rem",
                     fontWeight: 500,
                     letterSpacing: 2,
-                    color: '#1c1b18',
-                    '&:hover': { color: '#c98f6b' },
+                    color: "#1c1b18",
+                    "&:hover": { color: "#c98f6b" },
                   }}
                 >
                   {item.label}
                 </Typography>
 
-                {item.label === 'EVENT DECORATION' &&
+                {item.label === "EVENT DECORATION" &&
                   (eventsOpen ? (
-                    <KeyboardArrowUp sx={{ color: '#8a8479' }} />
+                    <KeyboardArrowUp sx={{ color: "#8a8479" }} />
                   ) : (
-                    <KeyboardArrowDown sx={{ color: '#8a8479' }} />
+                    <KeyboardArrowDown sx={{ color: "#8a8479" }} />
                   ))}
               </Box>
 
-              {/* ============================================================
-                  EVENT SUB-MENU
-              ============================================================ */}
-
-              {item.label === 'EVENT DECORATION' && eventsOpen && (
+              {item.label === "EVENT DECORATION" && eventsOpen && (
                 <Box sx={{ ml: 4, mb: 2 }}>
                   {eventTypes.map((event) => (
                     <Typography
@@ -322,15 +267,15 @@ export default function NavbarUser() {
                         mb: 1,
                         py: 0.5,
                         px: 1,
-                        fontSize: '.8rem',
-                        color: '#6b665d',
-                        cursor: 'pointer',
+                        fontSize: ".8rem",
+                        color: "#6b665d",
+                        cursor: "pointer",
                         borderRadius: 1,
                         fontFamily: "'Inter', sans-serif",
                         letterSpacing: 1.5,
-                        '&:hover': {
-                          color: '#c98f6b',
-                          bgcolor: 'rgba(201,143,107,0.06)',
+                        "&:hover": {
+                          color: "#c98f6b",
+                          bgcolor: "rgba(201,143,107,0.06)",
                           pl: 2,
                         },
                       }}
@@ -343,18 +288,14 @@ export default function NavbarUser() {
             </motion.div>
           ))}
 
-          <Divider sx={{ my: 3, borderColor: '#e0dcd5' }} />
-
-          {/* ============================================================
-              USER LINKS
-          ============================================================ */}
+          <Divider sx={{ my: 3, borderColor: "#e0dcd5" }} />
 
           {user && (
             <>
               <Typography
                 sx={{
-                  fontSize: '.7rem',
-                  color: '#8a8479',
+                  fontSize: ".7rem",
+                  color: "#8a8479",
                   letterSpacing: 2,
                   fontWeight: 500,
                   mb: 1.5,
@@ -368,29 +309,35 @@ export default function NavbarUser() {
                   key={link.label}
                   onClick={() => handleNavigation(link.path)}
                   sx={{
-                    display: 'flex',
-                    alignItems: 'center',
+                    display: "flex",
+                    alignItems: "center",
                     gap: 2,
                     py: 1.5,
                     px: 1,
-                    cursor: 'pointer',
+                    cursor: "pointer",
                     borderRadius: 1,
                     mb: 0.5,
-                    '&:hover': {
-                      bgcolor: 'rgba(201,143,107,0.08)',
+                    "&:hover": {
+                      bgcolor: "rgba(201,143,107,0.08)",
                     },
                   }}
                 >
-                  <Box sx={{ color: '#8a8479', display: 'flex', alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      color: "#8a8479",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
                     {link.icon}
                   </Box>
                   <Typography
                     sx={{
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: '.85rem',
+                      fontSize: ".85rem",
                       fontWeight: 400,
                       letterSpacing: 1.5,
-                      color: '#1c1b18',
+                      color: "#1c1b18",
                     }}
                   >
                     {link.label}
@@ -398,34 +345,30 @@ export default function NavbarUser() {
                 </Box>
               ))}
 
-              <Divider sx={{ my: 3, borderColor: '#e0dcd5' }} />
+              <Divider sx={{ my: 3, borderColor: "#e0dcd5" }} />
             </>
           )}
 
           <Box sx={{ flexGrow: 1 }} />
 
-          {/* ============================================================
-              LOGOUT / LOGIN BUTTONS
-          ============================================================ */}
-
           {user ? (
             <Box
               onClick={handleLogout}
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 gap: 1.5,
-                bgcolor: '#1c1b18',
-                color: '#fff',
+                bgcolor: "#1c1b18",
+                color: "#fff",
                 py: 1.8,
                 borderRadius: 1,
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  bgcolor: '#c98f6b',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 24px rgba(201,143,107,0.3)',
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  bgcolor: "#c98f6b",
+                  transform: "translateY(-2px)",
+                  boxShadow: "0 8px 24px rgba(201,143,107,0.3)",
                 },
               }}
             >
@@ -433,7 +376,7 @@ export default function NavbarUser() {
               <Typography
                 sx={{
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: '.8rem',
+                  fontSize: ".8rem",
                   fontWeight: 500,
                   letterSpacing: 2,
                 }}
@@ -444,25 +387,25 @@ export default function NavbarUser() {
           ) : (
             <>
               <Box
-                onClick={() => handleNavigation('/register')}
+                onClick={() => handleNavigation("/register")}
                 sx={{
-                  border: '1px solid #1c1b18',
+                  border: "1px solid #1c1b18",
                   py: 1.5,
-                  textAlign: 'center',
-                  cursor: 'pointer',
+                  textAlign: "center",
+                  cursor: "pointer",
                   borderRadius: 1,
                   mb: 1.5,
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    bgcolor: '#1c1b18',
-                    color: '#fff',
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    bgcolor: "#1c1b18",
+                    color: "#fff",
                   },
                 }}
               >
                 <Typography
                   sx={{
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: '.8rem',
+                    fontSize: ".8rem",
                     fontWeight: 500,
                     letterSpacing: 2,
                   }}
@@ -472,26 +415,26 @@ export default function NavbarUser() {
               </Box>
 
               <Box
-                onClick={() => handleNavigation('/login')}
+                onClick={() => handleNavigation("/login")}
                 sx={{
-                  bgcolor: '#1c1b18',
-                  color: '#fff',
+                  bgcolor: "#1c1b18",
+                  color: "#fff",
                   py: 1.5,
-                  textAlign: 'center',
-                  cursor: 'pointer',
+                  textAlign: "center",
+                  cursor: "pointer",
                   borderRadius: 1,
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
+                  transition: "all 0.3s ease",
+                  "&:hover": {
                     opacity: 0.9,
-                    transform: 'translateY(-2px)',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
                   },
                 }}
               >
                 <Typography
                   sx={{
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: '.8rem',
+                    fontSize: ".8rem",
                     fontWeight: 500,
                     letterSpacing: 2,
                   }}
@@ -502,15 +445,23 @@ export default function NavbarUser() {
             </>
           )}
 
-          {/* ============================================================
-              FOOTER
-          ============================================================ */}
-
           <Box sx={{ mt: 4 }}>
-            <Typography sx={{ fontSize: '.75rem', color: '#8a8479', fontFamily: "'Inter', sans-serif" }}>
+            <Typography
+              sx={{
+                fontSize: ".75rem",
+                color: "#8a8479",
+                fontFamily: "'Inter', sans-serif",
+              }}
+            >
               Luxury Floral Design
             </Typography>
-            <Typography sx={{ fontSize: '.75rem', color: '#8a8479', fontFamily: "'Inter', sans-serif" }}>
+            <Typography
+              sx={{
+                fontSize: ".75rem",
+                color: "#8a8479",
+                fontFamily: "'Inter', sans-serif",
+              }}
+            >
               Weddings • Events • Flowers
             </Typography>
           </Box>

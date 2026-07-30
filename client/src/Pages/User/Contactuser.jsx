@@ -1,7 +1,15 @@
-
-
 import React, { useState, useEffect } from "react";
-import { Box, Typography, TextField, Button, Slide, IconButton, Container, Fade, Paper } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Slide,
+  IconButton,
+  Container,
+  Fade,
+  Paper,
+} from "@mui/material";
 import toast from "react-hot-toast";
 import api from "../../api.js";
 
@@ -9,26 +17,25 @@ import contactImage from "../../assets/images/cont.jpg";
 import NavbarUser from "../../Components/NavUserAdmin/Navuser.jsx";
 
 // Icons
-import SendRoundedIcon from '@mui/icons-material/SendRounded';
-import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
-import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
-import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
+import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
-// Color Scheme
 const colors = {
-  primary: "#8B0000", // Dark Red
-  primaryLight: "#ffffff", // White
-  secondary: "#ffffff", // White
-  accent: "#c9a84c", // Gold
+  primary: "#8B0000",
+  primaryLight: "#ffffff",
+  secondary: "#ffffff",
+  accent: "#c9a84c",
   accentLight: "#e8d48a",
-  textPrimary: "#000000", // Black
+  textPrimary: "#000000",
   textSecondary: "rgba(0,0,0,0.8)",
   textMuted: "rgba(0,0,0,0.5)",
   gold: "#c9a84c",
@@ -88,13 +95,20 @@ export default function Contactuser() {
   const contactInfo = [
     { icon: <PhoneRoundedIcon />, label: "Phone", value: "+962 7 9000 0000" },
     { icon: <EmailRoundedIcon />, label: "Email", value: "info@flora.com" },
-    { icon: <LocationOnRoundedIcon />, label: "Location", value: "Irbid, Jordan" },
-    { icon: <AccessTimeRoundedIcon />, label: "Working Hours", value: "10:00 AM - 6:00 PM" },
+    {
+      icon: <LocationOnRoundedIcon />,
+      label: "Location",
+      value: "Irbid, Jordan",
+    },
+    {
+      icon: <AccessTimeRoundedIcon />,
+      label: "Working Hours",
+      value: "10:00 AM - 6:00 PM",
+    },
   ];
 
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: colors.primaryLight }}>
-      {/* Fixed Background - White */}
       <Box
         sx={{
           position: "fixed",
@@ -107,7 +121,6 @@ export default function Contactuser() {
         }}
       />
 
-      {/* Image Background - First Section with subtle black overlay */}
       <Box
         sx={{
           position: "relative",
@@ -122,7 +135,7 @@ export default function Contactuser() {
             left: 0,
             right: 0,
             bottom: 0,
-            background: "rgba(0,0,0,0.3)", // Subtle black overlay
+            background: "rgba(0,0,0,0.3)",
             zIndex: 2,
           },
         }}
@@ -137,7 +150,6 @@ export default function Contactuser() {
           }}
         />
 
-        {/* Content Overlay on Image */}
         <Box
           sx={{
             position: "absolute",
@@ -154,8 +166,8 @@ export default function Contactuser() {
             px: { xs: 3, md: 6 },
           }}
         >
-          <NavbarUser/>
-          
+          <NavbarUser />
+
           <Box sx={{ mt: { xs: 10, md: 12 } }}>
             <Typography
               sx={{
@@ -170,7 +182,7 @@ export default function Contactuser() {
             >
               WELCOME
             </Typography>
-            
+
             <Typography
               sx={{
                 color: "#ffffff",
@@ -189,7 +201,6 @@ export default function Contactuser() {
         </Box>
       </Box>
 
-      {/* Main Content - White Background */}
       <Box
         sx={{
           position: "relative",
@@ -209,12 +220,18 @@ export default function Contactuser() {
                 gap: 4,
               }}
             >
-              {/* Contact Info Cards - Red Background */}
-              <Fade in={fadeIn} timeout={1000} style={{ transitionDelay: "200ms" }}>
+              <Fade
+                in={fadeIn}
+                timeout={1000}
+                style={{ transitionDelay: "200ms" }}
+              >
                 <Box
                   sx={{
                     display: "grid",
-                    gridTemplateColumns: { xs: "1fr 1fr", sm: "repeat(4, 1fr)" },
+                    gridTemplateColumns: {
+                      xs: "1fr 1fr",
+                      sm: "repeat(4, 1fr)",
+                    },
                     gap: 2.5,
                   }}
                 >
@@ -284,7 +301,6 @@ export default function Contactuser() {
                 </Box>
               </Fade>
 
-              {/* Social Links & Form Row */}
               <Box
                 sx={{
                   display: "grid",
@@ -293,8 +309,11 @@ export default function Contactuser() {
                   alignItems: "start",
                 }}
               >
-                {/* Social Links - Left Side */}
-                <Fade in={fadeIn} timeout={1000} style={{ transitionDelay: "300ms" }}>
+                <Fade
+                  in={fadeIn}
+                  timeout={1000}
+                  style={{ transitionDelay: "300ms" }}
+                >
                   <Box
                     sx={{
                       display: "flex",
@@ -332,7 +351,8 @@ export default function Contactuser() {
                           mb: 2.5,
                         }}
                       >
-                        Follow us on social media for inspiration, updates, and behind-the-scenes content.
+                        Follow us on social media for inspiration, updates, and
+                        behind-the-scenes content.
                       </Typography>
                     </Box>
 
@@ -360,7 +380,6 @@ export default function Contactuser() {
                       ))}
                     </Box>
 
-                    {/* Trust Badges */}
                     <Box
                       sx={{
                         mt: 1.5,
@@ -369,7 +388,11 @@ export default function Contactuser() {
                         gap: 1,
                       }}
                     >
-                      {["100% Confidential", "Response in 24h", "Free Consultation"].map((badge, index) => (
+                      {[
+                        "100% Confidential",
+                        "Response in 24h",
+                        "Free Consultation",
+                      ].map((badge, index) => (
                         <Box
                           key={index}
                           sx={{
@@ -400,8 +423,12 @@ export default function Contactuser() {
                   </Box>
                 </Fade>
 
-                {/* Form Box - Right Side with Red Background */}
-                <Slide direction="up" in={fadeIn} timeout={800} style={{ transitionDelay: "400ms" }}>
+                <Slide
+                  direction="up"
+                  in={fadeIn}
+                  timeout={800}
+                  style={{ transitionDelay: "400ms" }}
+                >
                   <Paper
                     elevation={0}
                     sx={{
@@ -476,19 +503,19 @@ export default function Contactuser() {
                         disabled={loading}
                         sx={{
                           "& .MuiInputBase-root": {
-                            bgcolor: "#ffffff", // White background
-                            color: "#000000", // Black text
+                            bgcolor: "#ffffff",
+                            color: "#000000",
                             borderRadius: 2,
                             fontSize: "0.85rem",
                             transition: "all 0.3s ease",
-                            "& fieldset": { 
+                            "& fieldset": {
                               borderColor: "rgba(201,168,76,0.4)",
                               borderWidth: "1.5px",
                             },
-                            "&:hover fieldset": { 
+                            "&:hover fieldset": {
                               borderColor: colors.gold,
                             },
-                            "&.Mui-focused fieldset": { 
+                            "&.Mui-focused fieldset": {
                               borderColor: colors.gold,
                               boxShadow: "0 0 20px rgba(201,168,76,0.1)",
                             },
@@ -497,10 +524,10 @@ export default function Contactuser() {
                             },
                           },
                           "& .MuiInputBase-input": {
-                            color: "#000000", // Black text
+                            color: "#000000",
                           },
                           "& .MuiInputBase-input::placeholder": {
-                            color: "rgba(0,0,0,0.4)", // Black placeholder
+                            color: "rgba(0,0,0,0.4)",
                           },
                         }}
                       />
@@ -515,19 +542,19 @@ export default function Contactuser() {
                         disabled={loading}
                         sx={{
                           "& .MuiInputBase-root": {
-                            bgcolor: "#ffffff", // White background
-                            color: "#000000", // Black text
+                            bgcolor: "#ffffff",
+                            color: "#000000",
                             borderRadius: 2,
                             fontSize: "0.85rem",
                             transition: "all 0.3s ease",
-                            "& fieldset": { 
+                            "& fieldset": {
                               borderColor: "rgba(201,168,76,0.4)",
                               borderWidth: "1.5px",
                             },
-                            "&:hover fieldset": { 
+                            "&:hover fieldset": {
                               borderColor: colors.gold,
                             },
-                            "&.Mui-focused fieldset": { 
+                            "&.Mui-focused fieldset": {
                               borderColor: colors.gold,
                               boxShadow: "0 0 20px rgba(201,168,76,0.1)",
                             },
@@ -536,10 +563,10 @@ export default function Contactuser() {
                             },
                           },
                           "& .MuiInputBase-input": {
-                            color: "#000000", // Black text
+                            color: "#000000",
                           },
                           "& .MuiInputBase-input::placeholder": {
-                            color: "rgba(0,0,0,0.4)", // Black placeholder
+                            color: "rgba(0,0,0,0.4)",
                           },
                         }}
                       />
@@ -555,19 +582,19 @@ export default function Contactuser() {
                         disabled={loading}
                         sx={{
                           "& .MuiInputBase-root": {
-                            bgcolor: "#ffffff", // White background
-                            color: "#000000", // Black text
+                            bgcolor: "#ffffff",
+                            color: "#000000",
                             borderRadius: 2,
                             fontSize: "0.85rem",
                             transition: "all 0.3s ease",
-                            "& fieldset": { 
+                            "& fieldset": {
                               borderColor: "rgba(201,168,76,0.4)",
                               borderWidth: "1.5px",
                             },
-                            "&:hover fieldset": { 
+                            "&:hover fieldset": {
                               borderColor: colors.gold,
                             },
-                            "&.Mui-focused fieldset": { 
+                            "&.Mui-focused fieldset": {
                               borderColor: colors.gold,
                               boxShadow: "0 0 20px rgba(201,168,76,0.1)",
                             },
@@ -576,7 +603,7 @@ export default function Contactuser() {
                             },
                           },
                           "& .MuiInputBase-input": {
-                            color: "#000000", // Black text
+                            color: "#000000",
                           },
                           "& .MuiInputBase-input::placeholder": {
                             color: "rgba(0,0,0,0.4)", // Black placeholder
@@ -625,7 +652,9 @@ export default function Contactuser() {
                         ) : (
                           <>
                             Send Message
-                            <ArrowForwardRoundedIcon sx={{ ml: 1, fontSize: "1rem" }} />
+                            <ArrowForwardRoundedIcon
+                              sx={{ ml: 1, fontSize: "1rem" }}
+                            />
                           </>
                         )}
                       </Button>

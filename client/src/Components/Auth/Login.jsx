@@ -29,7 +29,6 @@ export default function Login() {
     try {
       setLoading(true);
       await login(userData);
-      // الدالة login تقوم بدمج السلة تلقائياً
     } catch (error) {
       console.error('Login error:', error);
     } finally {

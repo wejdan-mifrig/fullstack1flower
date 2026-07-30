@@ -1,8 +1,4 @@
-// ============================================================
-// 📄 src/Components/Navhero/Nav.jsx
-// ============================================================
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -10,31 +6,31 @@ import {
   Box,
   IconButton,
   Drawer,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Menu as MenuIcon,
   Close,
   KeyboardArrowDown,
   KeyboardArrowUp,
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+} from "@mui/icons-material";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const navItems = [
-  { label: 'HOME', path: '/' },
-  { label: 'EVENT DECORATION', path: '/event-decoration' },
- 
-  { label: 'SHOP', path: '/shop' },
-  { label: 'ABOUT', path: '/about' },
-  { label: 'CONTACT US', path: '/contact' },
-  { label: 'CART', path: '/carts' }, // ✅ المسار صحيح
+  { label: "HOME", path: "/" },
+  { label: "EVENT DECORATION", path: "/event-decoration" },
+
+  { label: "SHOP", path: "/shop" },
+  { label: "ABOUT", path: "/about" },
+  { label: "CONTACT US", path: "/contact" },
+  { label: "CART", path: "/carts" }, // ✅ المسار صحيح
 ];
 
 const eventTypes = [
-  { label: 'WEDDING', path: '/events/wedding' },
-  { label: 'BIRTHDAY', path: '/events/birthday' },
-  { label: 'GRADUATION', path: '/events/graduation' },
-  { label: 'NEWBORN', path: '/events/newborn' },
+  { label: "WEDDING", path: "/events/wedding" },
+  { label: "BIRTHDAY", path: "/events/birthday" },
+  { label: "GRADUATION", path: "/events/graduation" },
+  { label: "NEWBORN", path: "/events/newborn" },
 ];
 
 export default function Navbar() {
@@ -52,42 +48,42 @@ export default function Navbar() {
       <AppBar
         position="absolute"
         elevation={0}
-        sx={{ bgcolor: 'transparent', boxShadow: 'none' }}
+        sx={{ bgcolor: "transparent", boxShadow: "none" }}
       >
         <Toolbar
           sx={{
-            justifyContent: 'space-between',
+            justifyContent: "space-between",
             px: { xs: 2, md: 6 },
             py: 2,
           }}
         >
-          <IconButton onClick={() => setOpen(true)} sx={{ color: '#f4f1ea' }}>
+          <IconButton onClick={() => setOpen(true)} sx={{ color: "#f4f1ea" }}>
             <MenuIcon />
           </IconButton>
 
           <Typography
-            onClick={() => handleNav('/')}
+            onClick={() => handleNav("/")}
             sx={{
-              color: '#f4f1ea',
+              color: "#f4f1ea",
               fontFamily: "'Cormorant Garamond', serif",
               letterSpacing: 8,
               fontWeight: 600,
-              fontSize: { xs: '1.5rem', md: '2rem' },
-              cursor: 'pointer',
+              fontSize: { xs: "1.5rem", md: "2rem" },
+              cursor: "pointer",
             }}
           >
             FLORA
           </Typography>
 
           <Typography
-            onClick={() => handleNav('/shop')}
+            onClick={() => handleNav("/shop")}
             sx={{
-              color: '#f4f1ea',
+              color: "#f4f1ea",
               letterSpacing: 3,
-              fontSize: '.9rem',
-              textTransform: 'uppercase',
-              cursor: 'pointer',
-              '&:hover': { opacity: 0.7 },
+              fontSize: ".9rem",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              "&:hover": { opacity: 0.7 },
             }}
           >
             Store
@@ -101,36 +97,36 @@ export default function Navbar() {
         onClose={() => setOpen(false)}
         PaperProps={{
           sx: {
-            width: { xs: '100%', md: '30%' },
-            bgcolor: '#f4f1ea',
+            width: { xs: "100%", md: "30%" },
+            bgcolor: "#f4f1ea",
           },
         }}
       >
         <Box
           sx={{
             p: 5,
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
               mb: 7,
             }}
           >
             <Typography
-              onClick={() => handleNav('/')}
+              onClick={() => handleNav("/")}
               sx={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '2.5rem',
+                fontSize: "2.5rem",
                 fontWeight: 600,
                 letterSpacing: 4,
-                color: '#1c1b18',
-                cursor: 'pointer',
+                color: "#1c1b18",
+                cursor: "pointer",
               }}
             >
               FLORA
@@ -150,41 +146,37 @@ export default function Navbar() {
             >
               <Box
                 onClick={() => {
-                  if (item.label === 'EVENT DECORATION') {
+                  if (item.label === "EVENT DECORATION") {
                     setEventsOpen(!eventsOpen);
                   } else {
                     handleNav(item.path);
                   }
                 }}
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  cursor: 'pointer',
+                  display: "flex",
+                  justifyContent: "space-between",
+                  cursor: "pointer",
                 }}
               >
                 <Typography
                   sx={{
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: '.9rem',
+                    fontSize: ".9rem",
                     fontWeight: 500,
                     letterSpacing: 2,
-                    color: '#1c1b18',
+                    color: "#1c1b18",
                     mb: 2,
-                    '&:hover': { color: '#c98f6b' },
+                    "&:hover": { color: "#c98f6b" },
                   }}
                 >
                   {item.label}
                 </Typography>
 
-                {item.label === 'EVENT DECORATION' &&
-                  (eventsOpen ? (
-                    <KeyboardArrowUp />
-                  ) : (
-                    <KeyboardArrowDown />
-                  ))}
+                {item.label === "EVENT DECORATION" &&
+                  (eventsOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />)}
               </Box>
 
-              {item.label === 'EVENT DECORATION' && eventsOpen && (
+              {item.label === "EVENT DECORATION" && eventsOpen && (
                 <Box sx={{ ml: 3, mb: 2 }}>
                   {eventTypes.map((event) => (
                     <Typography
@@ -192,11 +184,11 @@ export default function Navbar() {
                       onClick={() => handleNav(event.path)}
                       sx={{
                         mb: 1,
-                        fontSize: '.8rem',
-                        color: '#6b665d',
-                        cursor: 'pointer',
-                        '&:hover': {
-                          color: '#c98f6b',
+                        fontSize: ".8rem",
+                        color: "#6b665d",
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "#c98f6b",
                           pl: 1,
                         },
                       }}
@@ -211,29 +203,29 @@ export default function Navbar() {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Box
-              onClick={() => handleNav('/register')}
+              onClick={() => handleNav("/register")}
               sx={{
-                border: '1px solid #1c1b18',
+                border: "1px solid #1c1b18",
                 py: 1.5,
-                textAlign: 'center',
-                cursor: 'pointer',
-                '&:hover': { bgcolor: '#1c1b18', color: '#fff' },
+                textAlign: "center",
+                cursor: "pointer",
+                "&:hover": { bgcolor: "#1c1b18", color: "#fff" },
               }}
             >
               REGISTER
             </Box>
 
             <Box
-              onClick={() => handleNav('/login')}
+              onClick={() => handleNav("/login")}
               sx={{
-                bgcolor: '#1c1b18',
-                color: '#fff',
+                bgcolor: "#1c1b18",
+                color: "#fff",
                 py: 1.5,
-                textAlign: 'center',
-                cursor: 'pointer',
-                '&:hover': { opacity: 0.9 },
+                textAlign: "center",
+                cursor: "pointer",
+                "&:hover": { opacity: 0.9 },
               }}
             >
               LOG IN
@@ -241,10 +233,10 @@ export default function Navbar() {
           </Box>
 
           <Box sx={{ mt: 4 }}>
-            <Typography sx={{ fontSize: '.75rem', color: '#8a8479' }}>
+            <Typography sx={{ fontSize: ".75rem", color: "#8a8479" }}>
               Luxury Floral Design
             </Typography>
-            <Typography sx={{ fontSize: '.75rem', color: '#8a8479' }}>
+            <Typography sx={{ fontSize: ".75rem", color: "#8a8479" }}>
               Weddings • Events • Flowers
             </Typography>
           </Box>

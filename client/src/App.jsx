@@ -1,14 +1,9 @@
-// ============================================================
-// 📄 src/App.js
-// ============================================================
-
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Hero from "./Pages/Hero/Hero.jsx";
 import Contact from "./Pages/Sidpages/Contact.jsx";
 import About from "./Pages/Sidpages/About.jsx";
-// ✅ تم تصحيح الاستيراد (بحرف كبير C)
 import Carts from "./Pages/Sidpages/Carts.jsx";
 import Shop from "./Pages/Sidpages/Shop.jsx";
 
@@ -27,7 +22,7 @@ import Aboutuser from "./Pages/User/Aboutuser.jsx";
 import Birthdayuser from "./Pages/User/Birthdayuser.jsx";
 import Bookuser from "./Pages/User/Bookuser.jsx";
 import Contactuser from "./Pages/User/Contactuser.jsx";
-import Eventuser from "./Pages/User/Eventuser.jsx";
+
 import Graduationuser from "./Pages/User/Graduationuser.jsx";
 import Mybooking from "./Pages/User/Mybooking.jsx";
 import Myprofile from "./Pages/User/Myprofile.jsx";
@@ -44,43 +39,37 @@ import AdminPro from "./Pages/Admin/Adminpages/Adminpro.jsx";
 import AdminUser from "./Pages/Admin/Adminpages/Adminuser.jsx";
 import AddForm from "./Pages/Admin/AdminComponants/AddForm.jsx";
 import EditUser from "./Pages/Admin/Adminpages/EditUser.jsx";
-import AdminOrders from "./Pages/Admin/Adminpages/Adminord.jsx"; 
-import AdminReviews from "./Pages/Admin/Adminpages/Reviewad.jsx";  // ✅ تم إضافة استيراد AdminReviews
+import AdminOrders from "./Pages/Admin/Adminpages/Adminord.jsx";
+import AdminReviews from "./Pages/Admin/Adminpages/Reviewad.jsx"; // ✅ تم إضافة استيراد AdminReviews
 function App() {
   return (
     <>
       <Toaster position="top-center" />
 
       <Routes>
-        {/* الصفحة الرئيسية */}
         <Route path="/" element={<Hero />} />
 
-        {/* الصفحات العامة */}
         <Route path="/event-decoration" element={<Event />} />
-    
+
         <Route path="/shop" element={<Shop />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        
-        {/* ✅ تم تصحيح استخدام المكون (بحرف كبير C) */}
+
         <Route path="/carts" element={<Carts />} />
 
-        {/* أنواع الفعاليات */}
         <Route path="/events/wedding" element={<Wedding />} />
         <Route path="/events/birthday" element={<Birthday />} />
         <Route path="/events/graduation" element={<Graduation />} />
         <Route path="/events/newborn" element={<Newborn />} />
 
-        {/* صفحات المصادقة */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
-        {/* صفحات المستخدم */}
         <Route path="/user" element={<User />} />
         <Route path="/myprofile" element={<Myprofile />} />
         <Route path="/mybooking" element={<Mybooking />} />
         <Route path="/bookuser" element={<Bookuser />} />
-        <Route path="/eventsuser" element={<Eventuser />} />
+       
         <Route path="/shopuser" element={<Shopuser />} />
         <Route path="/aboutuser" element={<Aboutuser />} />
         <Route path="/contactuser" element={<Contactuser />} />
@@ -91,7 +80,6 @@ function App() {
         <Route path="/graduationuser" element={<Graduationuser />} />
         <Route path="/newbornuser" element={<Newbornuser />} />
 
-        {/* صفحات الأدمن */}
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/categories" element={<AdminCat />} />
         <Route path="/admin/messages" element={<AdminMass />} />
@@ -100,10 +88,7 @@ function App() {
         <Route path="/admin/add/:type" element={<AddForm />} />
         <Route path="/edit/user/:id" element={<EditUser />} />
         <Route path="/admin/orders" element={<AdminOrders />} />
-        <Route
-  path="/admin/reviews"
-  element={<AdminReviews />}
-/>
+        <Route path="/admin/reviews" element={<AdminReviews />} />
       </Routes>
     </>
   );

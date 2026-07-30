@@ -1,28 +1,18 @@
 import pool from "../config/db.js";
 
-
-
-
-// Create Order
-
 export const createOrder = async (
+  userId,
 
-userId,
+  totalPrice,
 
-totalPrice,
+  phone,
 
-phone,
+  address,
 
-address,
-
-paymentMethod
-
-)=>{
-
-
-const result = await pool.query(
-
-`
+  paymentMethod,
+) => {
+  const result = await pool.query(
+    `
 
 INSERT INTO orders
 
@@ -38,59 +28,25 @@ VALUES($1,$2,$3,$4,$5)
 
 RETURNING *
 
-`
+`,
 
-,
+    [userId, totalPrice, phone, address, paymentMethod],
+  );
 
-[
-
-userId,
-
-totalPrice,
-
-phone,
-
-address,
-
-paymentMethod
-
-]
-
-
-);
-
-
-return result.rows[0];
-
-
+  return result.rows[0];
 };
 
+export const createOrderItem = async (
+  orderId,
 
+  productId,
 
+  quantity,
 
-
-
-
-
-
-// Create Order Item
-
-export const createOrderItem = async(
-
-orderId,
-
-productId,
-
-quantity,
-
-price
-
-)=>{
-
-
-const result = await pool.query(
-
-`
+  price,
+) => {
+  const result = await pool.query(
+    `
 
 INSERT INTO order_items
 
@@ -105,48 +61,17 @@ VALUES($1,$2,$3,$4)
 
 RETURNING *
 
-`
+`,
 
-,
+    [orderId, productId, quantity, price],
+  );
 
-[
-
-orderId,
-
-productId,
-
-quantity,
-
-price
-
-]
-
-
-);
-
-
-
-return result.rows[0];
-
-
+  return result.rows[0];
 };
 
-
-
-
-
-
-
-
-
-// Get All Orders
-
-export const getAllOrders = async()=>{
-
-
-const result = await pool.query(
-
-`
+export const getAllOrders = async () => {
+  const result = await pool.query(
+    `
 
 SELECT
 
@@ -171,38 +96,19 @@ ON orders.user_id = users.id
 ORDER BY orders.created_at DESC
 
 
-`
+`,
+  );
 
-);
-
-
-return result.rows;
-
-
+  return result.rows;
 };
 
+export const getOrderById = async (
+  id,
 
-
-
-
-
-
-
-
-// Get Order By Id
-
-export const getOrderById = async(
-
-id,
-
-userId
-
-)=>{
-
-
-const result = await pool.query(
-
-`
+  userId,
+) => {
+  const result = await pool.query(
+    `
 
 SELECT
 
@@ -229,44 +135,17 @@ WHERE orders.id=$1
 AND orders.user_id=$2
 
 
-`
+`,
 
-,
+    [id, userId],
+  );
 
-[
-
-id,
-
-userId
-
-]
-
-
-);
-
-
-
-return result.rows[0];
-
-
+  return result.rows[0];
 };
 
-
-
-
-
-
-
-
-
-// Get Order Items
-
-export const getOrderItems = async(orderId)=>{
-
-
-const result = await pool.query(
-
-`
+export const getOrderItems = async (orderId) => {
+  const result = await pool.query(
+    `
 
 SELECT
 
@@ -303,182 +182,56 @@ ON menu.id = order_items.product_id
 WHERE order_items.order_id=$1
 
 
-`
+`,
 
-,
+    [orderId],
+  );
 
-[orderId]
-
-
-);
-
-
-
-return result.rows;
-
-
+  return result.rows;
 };
 
-
-
-
-
-
-
-
-
-// User Orders
-
-export const getOrdersByUser = async(userId)=>{
-
-
-const result = await pool.query(
-
-`
+export const getOrdersByUser = async (userId) => {
+  const result = await pool.query(
+    `
 
 SELECT
-
-
 orders.*,
-
-
 users.name,
-
-
 users.email
-
-
 FROM orders
-
-
 JOIN users
-
-
 ON orders.user_id = users.id
-
-
-
 WHERE orders.user_id=$1
-
-
 ORDER BY orders.created_at DESC
-
-
-`
-
-,
-
-[userId]
-
-
-);
-
-
-
-return result.rows;
-
-
+`,
+    [userId],
+  );
+  return result.rows;
 };
-
-
-
-
-
-
-
-
-
-// Update Status
-
-export const updateOrderStatus = async(
-
-id,
-
-status,
-
-adminMessage=null
-
-)=>{
-
-
-const result = await pool.query(
-
-`
+export const updateOrderStatus = async (id, status, adminMessage = null) => {
+  const result = await pool.query(
+    `
 
 UPDATE orders
-
-
 SET
-
 status=$1,
-
 admin_message=$2
-
-
 WHERE id=$3
-
-
 RETURNING *
-
-`
-
-,
-
-[
-
-status,
-
-adminMessage,
-
-id
-
-]
-
-
-);
-
-
-
-return result.rows[0];
-
-
+`,
+    [status, adminMessage, id],
+  );
+  return result.rows[0];
 };
 
-
-
-
-
-
-
-
-
-// Delete Order
-
-export const deleteOrder = async(id)=>{
-
-
-const result = await pool.query(
-
-`
-
+export const deleteOrder = async (id) => {
+  const result = await pool.query(
+    `
 DELETE FROM orders
-
 WHERE id=$1
-
 RETURNING *
-
-`
-
-,
-
-[id]
-
-
-);
-
-
-
-return result.rows[0];
-
-
+`,
+    [id],
+  );
+  return result.rows[0];
 };

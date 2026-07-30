@@ -1,16 +1,8 @@
 import pool from "../config/db.js";
 
-// ==========================================
-// CREATE REVIEW
-// ==========================================
-
-const createReview = async (
-    userId,
-    rating,
-    comment
-) => {
-    const result = await pool.query(
-        `
+const createReview = async (userId, rating, comment) => {
+  const result = await pool.query(
+    `
         INSERT INTO reviews (
             user_id,
             rating,
@@ -19,24 +11,15 @@ const createReview = async (
         VALUES ($1, $2, $3)
         RETURNING *
         `,
-        [
-            userId,
-            rating,
-            comment,
-        ]
-    );
+    [userId, rating, comment],
+  );
 
-    return result.rows[0];
+  return result.rows[0];
 };
 
-
-// ==========================================
-// GET ALL REVIEWS
-// ==========================================
-
 const getAllReviews = async () => {
-    const result = await pool.query(
-        `
+  const result = await pool.query(
+    `
         SELECT 
             reviews.id,
             reviews.user_id,
@@ -64,22 +47,15 @@ const getAllReviews = async () => {
 
         ORDER BY
             reviews.created_at DESC
-        `
-    );
+        `,
+  );
 
-    return result.rows;
+  return result.rows;
 };
 
-
-// ==========================================
-// GET REVIEW BY ID
-// ==========================================
-
-const getReviewById = async (
-    reviewId
-) => {
-    const result = await pool.query(
-        `
+const getReviewById = async (reviewId) => {
+  const result = await pool.query(
+    `
         SELECT
             reviews.id,
             reviews.user_id,
@@ -107,25 +83,15 @@ const getReviewById = async (
             users.name,
             users.email
         `,
-        [reviewId]
-    );
+    [reviewId],
+  );
 
-    return result.rows[0];
+  return result.rows[0];
 };
 
-
-// ==========================================
-// UPDATE OWN REVIEW
-// ==========================================
-
-const updateReview = async (
-    reviewId,
-    userId,
-    rating,
-    comment
-) => {
-    const result = await pool.query(
-        `
+const updateReview = async (reviewId, userId, rating, comment) => {
+  const result = await pool.query(
+    `
         UPDATE reviews
 
         SET
@@ -138,28 +104,15 @@ const updateReview = async (
 
         RETURNING *
         `,
-        [
-            rating,
-            comment,
-            reviewId,
-            userId,
-        ]
-    );
+    [rating, comment, reviewId, userId],
+  );
 
-    return result.rows[0];
+  return result.rows[0];
 };
 
-
-// ==========================================
-// DELETE REVIEW BY OWNER
-// ==========================================
-
-const deleteReview = async (
-    reviewId,
-    userId
-) => {
-    const result = await pool.query(
-        `
+const deleteReview = async (reviewId, userId) => {
+  const result = await pool.query(
+    `
         DELETE FROM reviews
 
         WHERE
@@ -168,48 +121,30 @@ const deleteReview = async (
 
         RETURNING *
         `,
-        [
-            reviewId,
-            userId,
-        ]
-    );
+    [reviewId, userId],
+  );
 
-    return result.rows[0];
+  return result.rows[0];
 };
 
-
-// ==========================================
-// ADMIN DELETE ANY REVIEW
-// ==========================================
-
-const adminDeleteReview = async (
-    reviewId
-) => {
-    const result = await pool.query(
-        `
+const adminDeleteReview = async (reviewId) => {
+  const result = await pool.query(
+    `
         DELETE FROM reviews
 
         WHERE id = $1
 
         RETURNING *
         `,
-        [reviewId]
-    );
+    [reviewId],
+  );
 
-    return result.rows[0];
+  return result.rows[0];
 };
 
-
-// ==========================================
-// LIKE REVIEW
-// ==========================================
-
-const likeReview = async (
-    reviewId,
-    userId
-) => {
-    const result = await pool.query(
-        `
+const likeReview = async (reviewId, userId) => {
+  const result = await pool.query(
+    `
         INSERT INTO review_likes (
             review_id,
             user_id
@@ -219,26 +154,15 @@ const likeReview = async (
 
         RETURNING *
         `,
-        [
-            reviewId,
-            userId,
-        ]
-    );
+    [reviewId, userId],
+  );
 
-    return result.rows[0];
+  return result.rows[0];
 };
 
-
-// ==========================================
-// UNLIKE REVIEW
-// ==========================================
-
-const unlikeReview = async (
-    reviewId,
-    userId
-) => {
-    const result = await pool.query(
-        `
+const unlikeReview = async (reviewId, userId) => {
+  const result = await pool.query(
+    `
         DELETE FROM review_likes
 
         WHERE
@@ -247,29 +171,21 @@ const unlikeReview = async (
 
         RETURNING *
         `,
-        [
-            reviewId,
-            userId,
-        ]
-    );
+    [reviewId, userId],
+  );
 
-    return result.rows[0];
+  return result.rows[0];
 };
 
-
-// ==========================================
-// EXPORT
-// ==========================================
-
 const Review = {
-    createReview,
-    getAllReviews,
-    getReviewById,
-    updateReview,
-    deleteReview,
-    adminDeleteReview,
-    likeReview,
-    unlikeReview,
+  createReview,
+  getAllReviews,
+  getReviewById,
+  updateReview,
+  deleteReview,
+  adminDeleteReview,
+  likeReview,
+  unlikeReview,
 };
 
 export default Review;

@@ -55,9 +55,6 @@ const AdminOrders = () => {
     severity: "success",
   });
 
-  // ==============================
-  // CHECK ADMIN
-  // ==============================
   useEffect(() => {
     if (user && user.role === "admin") {
       getAllOrders();
@@ -66,18 +63,13 @@ const AdminOrders = () => {
     }
   }, [user]);
 
-  // ==============================
-  // SEARCH FILTER
-  // ==============================
-  const filteredOrders = orders?.filter((order) =>
-    order?.name?.toLowerCase().includes(search.toLowerCase()) ||
-    order?.email?.toLowerCase().includes(search.toLowerCase()) ||
-    order?.id?.toString().includes(search)
+  const filteredOrders = orders?.filter(
+    (order) =>
+      order?.name?.toLowerCase().includes(search.toLowerCase()) ||
+      order?.email?.toLowerCase().includes(search.toLowerCase()) ||
+      order?.id?.toString().includes(search),
   );
 
-  // ==============================
-  // ACCEPT
-  // ==============================
   const handleAccept = async (id) => {
     setActionLoading(true);
     try {
@@ -99,9 +91,6 @@ const AdminOrders = () => {
     }
   };
 
-  // ==============================
-  // REJECT
-  // ==============================
   const handleReject = async () => {
     const { orderId, reason } = rejectDialog;
 
@@ -139,9 +128,6 @@ const AdminOrders = () => {
     }
   };
 
-  // ==============================
-  // DETAILS
-  // ==============================
   const openDetails = (order) => {
     setSelectedOrder(order);
     setDetailsDialog(true);
@@ -152,9 +138,6 @@ const AdminOrders = () => {
     setDetailsDialog(false);
   };
 
-  // ==============================
-  // STATUS
-  // ==============================
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "accepted":
@@ -177,23 +160,23 @@ const AdminOrders = () => {
     }
   };
 
-  // ==============================
-  // STATISTICS
-  // ==============================
   const getStats = () => {
     const total = orders.length;
-    const accepted = orders.filter((o) => o.status?.toLowerCase() === "accepted").length;
-    const rejected = orders.filter((o) => o.status?.toLowerCase() === "rejected").length;
-    const pending = orders.filter((o) => o.status?.toLowerCase() === "pending").length;
+    const accepted = orders.filter(
+      (o) => o.status?.toLowerCase() === "accepted",
+    ).length;
+    const rejected = orders.filter(
+      (o) => o.status?.toLowerCase() === "rejected",
+    ).length;
+    const pending = orders.filter(
+      (o) => o.status?.toLowerCase() === "pending",
+    ).length;
 
     return { total, accepted, rejected, pending };
   };
 
   const stats = getStats();
 
-  // ==============================
-  // LOADING
-  // ==============================
   if (loading) {
     return (
       <>
@@ -213,9 +196,6 @@ const AdminOrders = () => {
     );
   }
 
-  // ==============================
-  // PAGE
-  // ==============================
   return (
     <>
       <AdminNavbar />
@@ -229,9 +209,6 @@ const AdminOrders = () => {
         }}
       >
         <Container maxWidth="xl">
-          {/* ======================================
-              HEADER
-              ====================================== */}
           <Paper
             elevation={0}
             sx={{
@@ -271,9 +248,6 @@ const AdminOrders = () => {
             </Box>
           </Paper>
 
-          {/* ======================================
-              STATISTICS - CENTERED
-              ====================================== */}
           <Grid container spacing={3} sx={{ mb: 4, justifyContent: "center" }}>
             <Grid item xs={12} sm={6} md={3}>
               <Paper
@@ -286,10 +260,20 @@ const AdminOrders = () => {
                   textAlign: "center",
                 }}
               >
-                <Typography sx={{ color: "#899186", mb: 1, fontSize: "0.8rem", fontWeight: 600 }}>
+                <Typography
+                  sx={{
+                    color: "#899186",
+                    mb: 1,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                  }}
+                >
                   TOTAL ORDERS
                 </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 700, color: "#1f3d2b" }}>
+                <Typography
+                  variant="h3"
+                  sx={{ fontWeight: 700, color: "#1f3d2b" }}
+                >
                   {stats.total}
                 </Typography>
               </Paper>
@@ -306,10 +290,20 @@ const AdminOrders = () => {
                   textAlign: "center",
                 }}
               >
-                <Typography sx={{ color: "#899186", mb: 1, fontSize: "0.8rem", fontWeight: 600 }}>
+                <Typography
+                  sx={{
+                    color: "#899186",
+                    mb: 1,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                  }}
+                >
                   ACCEPTED
                 </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 700, color: "#4caf50" }}>
+                <Typography
+                  variant="h3"
+                  sx={{ fontWeight: 700, color: "#4caf50" }}
+                >
                   {stats.accepted}
                 </Typography>
               </Paper>
@@ -326,10 +320,20 @@ const AdminOrders = () => {
                   textAlign: "center",
                 }}
               >
-                <Typography sx={{ color: "#899186", mb: 1, fontSize: "0.8rem", fontWeight: 600 }}>
+                <Typography
+                  sx={{
+                    color: "#899186",
+                    mb: 1,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                  }}
+                >
                   REJECTED
                 </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 700, color: "#d9534f" }}>
+                <Typography
+                  variant="h3"
+                  sx={{ fontWeight: 700, color: "#d9534f" }}
+                >
                   {stats.rejected}
                 </Typography>
               </Paper>
@@ -346,19 +350,26 @@ const AdminOrders = () => {
                   textAlign: "center",
                 }}
               >
-                <Typography sx={{ color: "#899186", mb: 1, fontSize: "0.8rem", fontWeight: 600 }}>
+                <Typography
+                  sx={{
+                    color: "#899186",
+                    mb: 1,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                  }}
+                >
                   PENDING
                 </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 700, color: "#f9a825" }}>
+                <Typography
+                  variant="h3"
+                  sx={{ fontWeight: 700, color: "#f9a825" }}
+                >
                   {stats.pending}
                 </Typography>
               </Paper>
             </Grid>
           </Grid>
 
-          {/* ======================================
-              SEARCH & ORDERS
-              ====================================== */}
           <Paper
             elevation={0}
             sx={{
@@ -397,21 +408,24 @@ const AdminOrders = () => {
               />
             </Box>
 
-            {/* ======================================
-                ORDERS CARDS - CENTERED LIKE REVIEWS
-                ====================================== */}
             {filteredOrders?.length === 0 ? (
               <Alert severity="info" sx={{ borderRadius: 3 }}>
                 No orders found.
               </Alert>
             ) : (
-              <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                <Grid 
-                  container 
-                  spacing={3} 
-                  sx={{ 
-                    maxWidth: '1200px',
-                    justifyContent: 'center',
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                <Grid
+                  container
+                  spacing={3}
+                  sx={{
+                    maxWidth: "1200px",
+                    justifyContent: "center",
                   }}
                 >
                   {filteredOrders?.map((order) => (
@@ -428,7 +442,7 @@ const AdminOrders = () => {
                     >
                       <Card
                         sx={{
-                          width: '100%',
+                          width: "100%",
                           maxWidth: 360,
                           borderRadius: 4,
                           background: "#fff",
@@ -441,7 +455,6 @@ const AdminOrders = () => {
                         }}
                       >
                         <CardContent sx={{ p: 3 }}>
-                          {/* ORDER HEADER */}
                           <Box
                             sx={{
                               display: "flex",
@@ -450,7 +463,13 @@ const AdminOrders = () => {
                               mb: 2,
                             }}
                           >
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 1.5,
+                              }}
+                            >
                               <Avatar
                                 sx={{
                                   width: 48,
@@ -464,10 +483,18 @@ const AdminOrders = () => {
                               </Avatar>
 
                               <Box>
-                                <Typography sx={{ fontWeight: 700, color: "#1f3d2b", fontSize: '0.95rem' }}>
+                                <Typography
+                                  sx={{
+                                    fontWeight: 700,
+                                    color: "#1f3d2b",
+                                    fontSize: "0.95rem",
+                                  }}
+                                >
                                   {order.name}
                                 </Typography>
-                                <Typography sx={{ fontSize: "0.75rem", color: "#8b9388" }}>
+                                <Typography
+                                  sx={{ fontSize: "0.75rem", color: "#8b9388" }}
+                                >
                                   {order.email}
                                 </Typography>
                               </Box>
@@ -481,7 +508,6 @@ const AdminOrders = () => {
                             />
                           </Box>
 
-                          {/* ORDER DETAILS */}
                           <Box
                             sx={{
                               p: 2,
@@ -491,21 +517,32 @@ const AdminOrders = () => {
                               mb: 2,
                             }}
                           >
-                            <Typography sx={{ fontSize: "0.85rem", color: "#596257" }}>
+                            <Typography
+                              sx={{ fontSize: "0.85rem", color: "#596257" }}
+                            >
                               <strong>Order #:</strong> {order.id}
                             </Typography>
-                            <Typography sx={{ fontSize: "0.85rem", color: "#596257" }}>
+                            <Typography
+                              sx={{ fontSize: "0.85rem", color: "#596257" }}
+                            >
                               <strong>Total:</strong> {order.total_price} JD
                             </Typography>
-                            <Typography sx={{ fontSize: "0.85rem", color: "#596257" }}>
+                            <Typography
+                              sx={{ fontSize: "0.85rem", color: "#596257" }}
+                            >
                               <strong>Payment:</strong> {order.payment_method}
                             </Typography>
-                            <Typography sx={{ fontSize: "0.75rem", color: "#9ba39a", mt: 1 }}>
+                            <Typography
+                              sx={{
+                                fontSize: "0.75rem",
+                                color: "#9ba39a",
+                                mt: 1,
+                              }}
+                            >
                               {new Date(order.created_at).toLocaleString()}
                             </Typography>
                           </Box>
 
-                          {/* ACTION BUTTONS */}
                           <Stack spacing={1}>
                             <Button
                               fullWidth
@@ -571,9 +608,6 @@ const AdminOrders = () => {
         </Container>
       </Box>
 
-      {/* ======================================
-          ORDER DETAILS DIALOG
-          ====================================== */}
       <Dialog
         open={detailsDialog}
         onClose={closeDetails}
@@ -603,7 +637,9 @@ const AdminOrders = () => {
                 <Typography variant="h6" fontWeight="bold">
                   Order #{selectedOrder.id}
                 </Typography>
-                <Typography fontSize="0.9rem">Complete Order Details</Typography>
+                <Typography fontSize="0.9rem">
+                  Complete Order Details
+                </Typography>
               </Box>
               <IconButton onClick={closeDetails} sx={{ color: "#fff" }}>
                 <CloseIcon />
@@ -611,7 +647,6 @@ const AdminOrders = () => {
             </Box>
 
             <DialogContent sx={{ p: 3 }}>
-              {/* CUSTOMER INFO */}
               <Typography fontWeight="bold" color="#1f3d2b" mb={2}>
                 Customer Information
               </Typography>
@@ -629,10 +664,11 @@ const AdminOrders = () => {
                 <Typography>Email : {selectedOrder.email}</Typography>
                 <Typography>Phone : {selectedOrder.phone}</Typography>
                 <Typography>Address : {selectedOrder.address}</Typography>
-                <Typography>Payment : {selectedOrder.payment_method}</Typography>
+                <Typography>
+                  Payment : {selectedOrder.payment_method}
+                </Typography>
               </Paper>
 
-              {/* PRODUCTS */}
               <Typography fontWeight="bold" color="#1f3d2b" mb={2}>
                 Products
               </Typography>
@@ -650,7 +686,9 @@ const AdminOrders = () => {
                   <Typography fontWeight="700" color="#1f3d2b">
                     {item.name}
                   </Typography>
-                  <Typography color="#777">Quantity : {item.quantity}</Typography>
+                  <Typography color="#777">
+                    Quantity : {item.quantity}
+                  </Typography>
                   <Typography color="#777">Price : {item.price} JD</Typography>
                 </Paper>
               ))}
@@ -660,14 +698,20 @@ const AdminOrders = () => {
               <Typography fontWeight="bold" color="#1f3d2b">
                 Total Amount
               </Typography>
-              <Typography variant="h5" fontWeight="bold" sx={{ color: "#6f8a67" }}>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                sx={{ color: "#6f8a67" }}
+              >
                 {selectedOrder.total_price} JD
               </Typography>
 
               {selectedOrder.admin_message && (
                 <Alert
                   severity={
-                    selectedOrder.status?.toLowerCase() === "rejected" ? "error" : "success"
+                    selectedOrder.status?.toLowerCase() === "rejected"
+                      ? "error"
+                      : "success"
                   }
                   sx={{
                     mt: 3,
@@ -682,9 +726,6 @@ const AdminOrders = () => {
         )}
       </Dialog>
 
-      {/* ======================================
-          REJECT DIALOG
-          ====================================== */}
       <Dialog
         open={rejectDialog.open}
         onClose={() =>
@@ -751,9 +792,6 @@ const AdminOrders = () => {
         </DialogActions>
       </Dialog>
 
-      {/* ======================================
-          SNACKBAR
-          ====================================== */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}

@@ -49,12 +49,7 @@ import Footer from "../../Components/Footer/Footer.jsx";
 import api from "../../api.js";
 import { useAuth } from "../../Hooks/useAuth.js";
 
-// استيراد الفيديو
 import reviewVideo from "../../assets/video/rev11.mp4";
-
-// =====================================================
-// ANIMATION
-// =====================================================
 
 const fadeInUp = keyframes`
   from {
@@ -66,10 +61,6 @@ const fadeInUp = keyframes`
     transform: translateY(0);
   }
 `;
-
-// =====================================================
-// COLORS - أحمر دافئ، بيج، ذهبي
-// =====================================================
 
 const colors = {
   primary: "#8B0000",
@@ -93,16 +84,8 @@ const colors = {
   facebookLight: "#fdf0ea",
 };
 
-// =====================================================
-// COMPONENT
-// =====================================================
-
 const Reviewuser = () => {
   const { user, authLoading } = useAuth();
-
-  // =====================================================
-  // STATES
-  // =====================================================
 
   const [reviews, setReviews] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -110,35 +93,26 @@ const Reviewuser = () => {
   const [loading, setLoading] = useState(false);
   const [fetchingReviews, setFetchingReviews] = useState(true);
 
-  // EDIT STATES
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedReview, setSelectedReview] = useState(null);
   const [editComment, setEditComment] = useState("");
   const [editRating, setEditRating] = useState(5);
   const [editLoading, setEditLoading] = useState(false);
 
-  // DELETE STATES
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  // ✅ VIEW FULL REVIEW DIALOG (لتعليق واحد)
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [viewReview, setViewReview] = useState(null);
 
-  // ✅ VIEW ALL REVIEWS DIALOG (لكل التعليقات)
   const [viewAllDialogOpen, setViewAllDialogOpen] = useState(false);
 
-  // SNACKBAR
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
-
-  // =====================================================
-  // SHOW MESSAGE
-  // =====================================================
 
   const showMessage = (message, severity = "success") => {
     setSnackbar({
@@ -148,40 +122,28 @@ const Reviewuser = () => {
     });
   };
 
-  // =====================================================
-  // FETCH REVIEWS
-  // =====================================================
-
   const fetchReviews = async () => {
     try {
       setFetchingReviews(true);
       const response = await api.get("/all-reviews");
       const sortedReviews = (response.data.reviews || []).sort(
-        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        (a, b) => new Date(b.created_at) - new Date(a.created_at),
       );
       setReviews(sortedReviews);
     } catch (error) {
       console.error("Fetch reviews error:", error);
       showMessage(
         error.response?.data?.message || "Failed to load reviews",
-        "error"
+        "error",
       );
     } finally {
       setFetchingReviews(false);
     }
   };
 
-  // =====================================================
-  // PAGE LOAD
-  // =====================================================
-
   useEffect(() => {
     fetchReviews();
   }, []);
-
-  // =====================================================
-  // STATISTICS
-  // =====================================================
 
   const getStats = () => {
     const total = reviews.length;
@@ -214,10 +176,6 @@ const Reviewuser = () => {
 
   const stats = getStats();
 
-  // =====================================================
-  // LIKE / UNLIKE
-  // =====================================================
-
   const handleLike = async (reviewId) => {
     if (authLoading) return;
     if (!user) {
@@ -246,21 +204,17 @@ const Reviewuser = () => {
                   ? Math.max(0, (item.likes_count || 0) - 1)
                   : (item.likes_count || 0) + 1,
               }
-            : item
-        )
+            : item,
+        ),
       );
     } catch (error) {
       console.error("Like error:", error);
       showMessage(
         error.response?.data?.message || "Like action failed",
-        "error"
+        "error",
       );
     }
   };
-
-  // =====================================================
-  // ADD REVIEW
-  // =====================================================
 
   const handleAddReview = async () => {
     if (!newComment.trim()) {
@@ -287,22 +241,18 @@ const Reviewuser = () => {
 
       showMessage(
         "✨ Your review has been posted! Thank you for your feedback!",
-        "success"
+        "success",
       );
     } catch (error) {
       console.error("Create review error:", error);
       showMessage(
         error.response?.data?.message || "Failed to create review",
-        "error"
+        "error",
       );
     } finally {
       setLoading(false);
     }
   };
-
-  // =====================================================
-  // OPEN EDIT DIALOG
-  // =====================================================
 
   const handleOpenEdit = (review) => {
     setSelectedReview(review);
@@ -311,10 +261,6 @@ const Reviewuser = () => {
     setEditDialogOpen(true);
   };
 
-  // =====================================================
-  // CLOSE EDIT DIALOG
-  // =====================================================
-
   const handleCloseEdit = () => {
     if (editLoading) return;
     setEditDialogOpen(false);
@@ -322,10 +268,6 @@ const Reviewuser = () => {
     setEditComment("");
     setEditRating(5);
   };
-
-  // =====================================================
-  // UPDATE REVIEW
-  // =====================================================
 
   const handleUpdateReview = async () => {
     if (!editComment.trim()) {
@@ -352,8 +294,8 @@ const Reviewuser = () => {
                 rating: updatedReview?.rating || editRating,
                 comment: updatedReview?.comment || editComment.trim(),
               }
-            : review
-        )
+            : review,
+        ),
       );
 
       handleCloseEdit();
@@ -362,25 +304,17 @@ const Reviewuser = () => {
       console.error("Update review error:", error);
       showMessage(
         error.response?.data?.message || "Failed to update review",
-        "error"
+        "error",
       );
     } finally {
       setEditLoading(false);
     }
   };
 
-  // =====================================================
-  // OPEN DELETE DIALOG
-  // =====================================================
-
   const handleOpenDelete = (review) => {
     setReviewToDelete(review);
     setDeleteDialogOpen(true);
   };
-
-  // =====================================================
-  // DELETE REVIEW
-  // =====================================================
 
   const handleDeleteReview = async () => {
     if (!reviewToDelete) return;
@@ -390,7 +324,7 @@ const Reviewuser = () => {
       await api.delete(`/review/${reviewToDelete.id}`);
 
       setReviews((previousReviews) =>
-        previousReviews.filter((review) => review.id !== reviewToDelete.id)
+        previousReviews.filter((review) => review.id !== reviewToDelete.id),
       );
 
       setDeleteDialogOpen(false);
@@ -400,52 +334,31 @@ const Reviewuser = () => {
       console.error("Delete review error:", error);
       showMessage(
         error.response?.data?.message || "Failed to delete review",
-        "error"
+        "error",
       );
     } finally {
       setDeleteLoading(false);
     }
   };
 
-  // =====================================================
-  // ✅ OPEN VIEW SINGLE REVIEW (للتعليق الواحد)
-  // =====================================================
-
   const handleOpenView = (review) => {
     setViewReview(review);
     setViewDialogOpen(true);
   };
-
-  // =====================================================
-  // ✅ CLOSE VIEW SINGLE REVIEW
-  // =====================================================
 
   const handleCloseView = () => {
     setViewDialogOpen(false);
     setViewReview(null);
   };
 
-  // =====================================================
-  // ✅ OPEN VIEW ALL REVIEWS (لكل التعليقات)
-  // =====================================================
-
   const handleOpenViewAll = () => {
     setViewAllDialogOpen(true);
   };
-
-  // =====================================================
-  // ✅ CLOSE VIEW ALL REVIEWS
-  // =====================================================
 
   const handleCloseViewAll = () => {
     setViewAllDialogOpen(false);
   };
 
-  // =====================================================
-  // RENDER
-  // =====================================================
-
-  // عرض أول 3 تعليقات فقط
   const displayedReviews = reviews.slice(0, 3);
   const hasMoreReviews = reviews.length > 3;
 
@@ -457,10 +370,6 @@ const Reviewuser = () => {
       }}
     >
       <NavbarUser />
-
-      {/* ============================================
-          HERO SECTION - فيديو كامل الطول
-      ============================================ */}
 
       <Box
         sx={{
@@ -532,10 +441,6 @@ const Reviewuser = () => {
         </Box>
       </Box>
 
-      {/* ============================================
-          MAIN CONTENT
-      ============================================ */}
-
       <Container
         maxWidth="md"
         sx={{
@@ -543,10 +448,6 @@ const Reviewuser = () => {
           pb: 8,
         }}
       >
-        {/* ============================================
-            STATISTICS
-        ============================================ */}
-
         <Paper
           sx={{
             p: { xs: 2, md: 3 },
@@ -656,10 +557,6 @@ const Reviewuser = () => {
           </Box>
         </Paper>
 
-        {/* ============================================
-            CREATE POST
-        ============================================ */}
-
         <Paper
           sx={{
             p: { xs: 2, md: 3 },
@@ -686,7 +583,9 @@ const Reviewuser = () => {
               <Typography sx={{ fontWeight: 600, color: colors.textPrimary }}>
                 {user?.name || "Guest User"}
               </Typography>
-              <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>
+              <Typography
+                sx={{ fontSize: "0.75rem", color: colors.textSecondary }}
+              >
                 Share your experience
               </Typography>
             </Box>
@@ -700,7 +599,9 @@ const Reviewuser = () => {
               mb: 2,
             }}
           >
-            <Typography sx={{ color: colors.textSecondary, fontSize: "0.9rem" }}>
+            <Typography
+              sx={{ color: colors.textSecondary, fontSize: "0.9rem" }}
+            >
               Rating:
             </Typography>
             <Rating
@@ -762,10 +663,6 @@ const Reviewuser = () => {
           </Box>
         </Paper>
 
-        {/* ============================================
-            REVIEWS FEED - عرض 3 تعليقات فقط
-        ============================================ */}
-
         {fetchingReviews ? (
           <Box
             sx={{
@@ -797,10 +694,9 @@ const Reviewuser = () => {
                 const isOwner =
                   user && Number(user.id) === Number(review.user_id);
                 const isLongComment = review.comment?.length > 50;
-                const displayComment =
-                  isLongComment
-                    ? review.comment?.slice(0, 50) + "..."
-                    : review.comment;
+                const displayComment = isLongComment
+                  ? review.comment?.slice(0, 50) + "..."
+                  : review.comment;
 
                 return (
                   <Card
@@ -836,24 +732,37 @@ const Reviewuser = () => {
                         </Avatar>
                       }
                       title={
-                        <Typography sx={{ fontWeight: 600, color: colors.textPrimary }}>
+                        <Typography
+                          sx={{ fontWeight: 600, color: colors.textPrimary }}
+                        >
                           {review.user_name}
                         </Typography>
                       }
                       subheader={
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <Box
+                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                        >
                           <Rating
                             value={Number(review.rating)}
                             readOnly
                             size="small"
                             sx={{ color: colors.accent }}
                           />
-                          <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>
-                            • {new Date(review.created_at).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })}
+                          <Typography
+                            sx={{
+                              fontSize: "0.75rem",
+                              color: colors.textSecondary,
+                            }}
+                          >
+                            •{" "}
+                            {new Date(review.created_at).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              },
+                            )}
                           </Typography>
                         </Box>
                       }
@@ -885,7 +794,6 @@ const Reviewuser = () => {
                       }}
                     />
 
-                    {/* CONTENT */}
                     <CardContent sx={{ pt: 0, pb: 1 }}>
                       <Typography
                         sx={{
@@ -899,7 +807,6 @@ const Reviewuser = () => {
                         {displayComment}
                       </Typography>
 
-                      {/* ✅ See More - يظهر التعليق كاملاً في Dialog */}
                       {isLongComment && (
                         <Button
                           size="small"
@@ -920,7 +827,6 @@ const Reviewuser = () => {
                       )}
                     </CardContent>
 
-                    {/* ACTIONS - Like فقط */}
                     <Box
                       sx={{
                         px: 2,
@@ -937,11 +843,15 @@ const Reviewuser = () => {
                           review.liked ? (
                             <ThumbUpIcon sx={{ color: colors.primary }} />
                           ) : (
-                            <ThumbUpOffAltIcon sx={{ color: colors.textSecondary }} />
+                            <ThumbUpOffAltIcon
+                              sx={{ color: colors.textSecondary }}
+                            />
                           )
                         }
                         sx={{
-                          color: review.liked ? colors.primary : colors.textSecondary,
+                          color: review.liked
+                            ? colors.primary
+                            : colors.textSecondary,
                           textTransform: "none",
                           fontWeight: review.liked ? 600 : 400,
                           "&:hover": {
@@ -957,7 +867,6 @@ const Reviewuser = () => {
               })}
             </Stack>
 
-            {/* ✅ See All Reviews - يعرض كل التعليقات في Dialog */}
             {hasMoreReviews && (
               <Box sx={{ textAlign: "center", mt: 4 }}>
                 <Button
@@ -991,10 +900,6 @@ const Reviewuser = () => {
           </Typography>
         </Box>
       </Container>
-
-      {/* ============================================
-          ✅ DIALOG 1: VIEW SINGLE REVIEW (تعليق واحد)
-      ============================================ */}
 
       <Dialog
         open={viewDialogOpen}
@@ -1035,7 +940,9 @@ const Reviewuser = () => {
                 </Avatar>
 
                 <Box>
-                  <Typography sx={{ fontWeight: 600, color: colors.textPrimary }}>
+                  <Typography
+                    sx={{ fontWeight: 600, color: colors.textPrimary }}
+                  >
                     {viewReview.user_name}
                   </Typography>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -1045,14 +952,19 @@ const Reviewuser = () => {
                       size="small"
                       sx={{ color: colors.accent }}
                     />
-                    <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>
+                    <Typography
+                      sx={{ fontSize: "0.75rem", color: colors.textSecondary }}
+                    >
                       {viewReview.rating}/5
                     </Typography>
                   </Box>
                 </Box>
               </Box>
 
-              <IconButton onClick={handleCloseView} sx={{ color: colors.textSecondary }}>
+              <IconButton
+                onClick={handleCloseView}
+                sx={{ color: colors.textSecondary }}
+              >
                 <CloseIcon />
               </IconButton>
             </Box>
@@ -1085,7 +997,9 @@ const Reviewuser = () => {
               </Typography>
             </DialogContent>
 
-            <DialogActions sx={{ p: 2, borderTop: "1px solid rgba(201,168,76,0.2)" }}>
+            <DialogActions
+              sx={{ p: 2, borderTop: "1px solid rgba(201,168,76,0.2)" }}
+            >
               <Button
                 onClick={handleCloseView}
                 sx={{
@@ -1102,10 +1016,6 @@ const Reviewuser = () => {
           </>
         )}
       </Dialog>
-
-      {/* ============================================
-          ✅ DIALOG 2: VIEW ALL REVIEWS (كل التعليقات)
-      ============================================ */}
 
       <Dialog
         open={viewAllDialogOpen}
@@ -1131,11 +1041,20 @@ const Reviewuser = () => {
             borderBottom: "1px solid rgba(201,168,76,0.2)",
           }}
         >
-          <Typography sx={{ fontWeight: 700, color: colors.textPrimary, fontSize: "1.2rem" }}>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              color: colors.textPrimary,
+              fontSize: "1.2rem",
+            }}
+          >
             All Reviews ({reviews.length})
           </Typography>
 
-          <IconButton onClick={handleCloseViewAll} sx={{ color: colors.textSecondary }}>
+          <IconButton
+            onClick={handleCloseViewAll}
+            sx={{ color: colors.textSecondary }}
+          >
             <CloseIcon />
           </IconButton>
         </Box>
@@ -1143,20 +1062,30 @@ const Reviewuser = () => {
         <DialogContent sx={{ p: 0 }}>
           <Stack spacing={0}>
             {reviews.map((review, index) => {
-              const isOwner = user && Number(user.id) === Number(review.user_id);
-              
+              const isOwner =
+                user && Number(user.id) === Number(review.user_id);
+
               return (
                 <Box
                   key={review.id}
                   sx={{
                     p: 3,
-                    borderBottom: index < reviews.length - 1 ? "1px solid rgba(201,168,76,0.1)" : "none",
+                    borderBottom:
+                      index < reviews.length - 1
+                        ? "1px solid rgba(201,168,76,0.1)"
+                        : "none",
                     "&:hover": {
                       bgcolor: colors.lightBg,
                     },
                   }}
                 >
-                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                    }}
+                  >
                     <Box sx={{ display: "flex", gap: 2, flex: 1 }}>
                       <Avatar
                         sx={{
@@ -1172,16 +1101,34 @@ const Reviewuser = () => {
                       </Avatar>
 
                       <Box sx={{ flex: 1 }}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
-                          <Typography sx={{ fontWeight: 600, color: colors.textPrimary }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          <Typography
+                            sx={{ fontWeight: 600, color: colors.textPrimary }}
+                          >
                             {review.user_name}
                           </Typography>
-                          <Typography sx={{ fontSize: "0.75rem", color: colors.textSecondary }}>
-                            • {new Date(review.created_at).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })}
+                          <Typography
+                            sx={{
+                              fontSize: "0.75rem",
+                              color: colors.textSecondary,
+                            }}
+                          >
+                            •{" "}
+                            {new Date(review.created_at).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              },
+                            )}
                           </Typography>
                         </Box>
 
@@ -1233,20 +1180,28 @@ const Reviewuser = () => {
                     )}
                   </Box>
 
-                  {/* Like Button */}
                   <Box sx={{ mt: 1, ml: 7 }}>
                     <Button
                       size="small"
                       onClick={() => handleLike(review.id)}
                       startIcon={
                         review.liked ? (
-                          <ThumbUpIcon sx={{ color: colors.primary, fontSize: "0.9rem" }} />
+                          <ThumbUpIcon
+                            sx={{ color: colors.primary, fontSize: "0.9rem" }}
+                          />
                         ) : (
-                          <ThumbUpOffAltIcon sx={{ color: colors.textSecondary, fontSize: "0.9rem" }} />
+                          <ThumbUpOffAltIcon
+                            sx={{
+                              color: colors.textSecondary,
+                              fontSize: "0.9rem",
+                            }}
+                          />
                         )
                       }
                       sx={{
-                        color: review.liked ? colors.primary : colors.textSecondary,
+                        color: review.liked
+                          ? colors.primary
+                          : colors.textSecondary,
                         textTransform: "none",
                         fontWeight: review.liked ? 600 : 400,
                         fontSize: "0.8rem",
@@ -1264,10 +1219,6 @@ const Reviewuser = () => {
           </Stack>
         </DialogContent>
       </Dialog>
-
-      {/* ============================================
-          EDIT DIALOG
-      ============================================ */}
 
       <Dialog
         open={editDialogOpen}
@@ -1328,7 +1279,9 @@ const Reviewuser = () => {
           </Box>
         </DialogContent>
 
-        <DialogActions sx={{ p: 2, borderTop: "1px solid rgba(201,168,76,0.2)" }}>
+        <DialogActions
+          sx={{ p: 2, borderTop: "1px solid rgba(201,168,76,0.2)" }}
+        >
           <Button
             onClick={handleCloseEdit}
             disabled={editLoading}
@@ -1359,10 +1312,6 @@ const Reviewuser = () => {
         </DialogActions>
       </Dialog>
 
-      {/* ============================================
-          DELETE DIALOG
-      ============================================ */}
-
       <Dialog
         open={deleteDialogOpen}
         onClose={() => !deleteLoading && setDeleteDialogOpen(false)}
@@ -1381,11 +1330,14 @@ const Reviewuser = () => {
 
         <DialogContent>
           <Typography color="text.secondary">
-            Are you sure you want to delete this review? This action cannot be undone.
+            Are you sure you want to delete this review? This action cannot be
+            undone.
           </Typography>
         </DialogContent>
 
-        <DialogActions sx={{ p: 2, borderTop: "1px solid rgba(201,168,76,0.2)" }}>
+        <DialogActions
+          sx={{ p: 2, borderTop: "1px solid rgba(201,168,76,0.2)" }}
+        >
           <Button
             onClick={() => setDeleteDialogOpen(false)}
             disabled={deleteLoading}
@@ -1415,10 +1367,6 @@ const Reviewuser = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      {/* ============================================
-          SNACKBAR
-      ============================================ */}
 
       <Snackbar
         open={snackbar.open}

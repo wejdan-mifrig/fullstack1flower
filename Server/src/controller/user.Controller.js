@@ -90,12 +90,7 @@ export const updateUserInfoController = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    const {
-      email,
-      name,
-      role,
-      password,
-    } = req.body;
+    const { email, name, role, password } = req.body;
 
     const existedUser = await getUserById(userId);
 
@@ -129,19 +124,11 @@ export const updateUserInfoController = async (req, res) => {
   }
 };
 
-// =======================================================
-// USER UPDATE HIS OWN PROFILE
-// =======================================================
-
 export const updateProfileController = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const {
-      name,
-      email,
-      password,
-    } = req.body;
+    const { name, email, password } = req.body;
 
     const existedUser = await getUserById(userId);
 
@@ -151,7 +138,6 @@ export const updateProfileController = async (req, res) => {
       });
     }
 
-    // منع تكرار الإيميل
     if (email && email !== existedUser.email) {
       const emailExists = await getUserByEmail(email);
 
@@ -179,7 +165,6 @@ export const updateProfileController = async (req, res) => {
       message: "Profile updated successfully",
       user: updatedUser,
     });
-
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -189,12 +174,7 @@ export const updateProfileController = async (req, res) => {
 
 export const createUserController = async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      password,
-      role,
-    } = req.body;
+    const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -223,7 +203,6 @@ export const createUserController = async (req, res) => {
       message: "User created successfully",
       user,
     });
-
   } catch (error) {
     return res.status(500).json({
       message: error.message,
