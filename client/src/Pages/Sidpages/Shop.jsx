@@ -21,7 +21,6 @@ import { useCart } from "../../Context/CartContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-// White Flowers
 import whiteTulip from "../../assets/images/white-tulip.jpg";
 import whiteRoseBouquet from "../../assets/images/white-rose-bouquet.jpg";
 import whiteLily from "../../assets/images/white-lily.jpg";
@@ -29,7 +28,6 @@ import whiteOrchid from "../../assets/images/white-orchid.jpg";
 import whiteMix from "../../assets/images/white-mix.jpg";
 import whiteGarden from "../../assets/images/white-garden.jpg";
 
-// Red Flowers
 import redRose from "../../assets/images/red-rose.jpg";
 import redTulip from "../../assets/images/red-tulip.jpg";
 import redMix from "../../assets/images/red-mix.jpg";
@@ -37,7 +35,6 @@ import luxRedRose from "../../assets/images/lux-red-rose.jpg";
 import redLove from "../../assets/images/red-love.jpg";
 import redGarden from "../../assets/images/red-garden.jpg";
 
-// Pink Flowers
 import pinkRose from "../../assets/images/pink-rose.jpg";
 import pinkTulip from "../../assets/images/pink-tulip.jpg";
 import pinkLily from "../../assets/images/pink-lily.jpg";
@@ -45,7 +42,6 @@ import pinkMix from "../../assets/images/pink-mix.jpg";
 import pinkRomantic from "../../assets/images/pink-romantic.jpg";
 import pinkGarden from "../../assets/images/pink-garden.jpg";
 
-// Yellow Flowers
 import sunflower from "../../assets/images/sunflower.jpg";
 import yellowRose from "../../assets/images/yellow-rose.jpg";
 import yellowTulip from "../../assets/images/yellow-tulip.jpg";
@@ -53,7 +49,6 @@ import yellowMix from "../../assets/images/yellow-mix.jpg";
 import golden from "../../assets/images/golden.jpg";
 import yellowGarden from "../../assets/images/yellow-garden.jpg";
 
-// Purple Flowers
 import purpleOrchid from "../../assets/images/purple-orchid.jpg";
 import purpleRose from "../../assets/images/purple-rose.jpg";
 import purpleTulip from "../../assets/images/purple-tulip.jpg";
@@ -61,14 +56,12 @@ import purpleMix from "../../assets/images/purple-mix.jpg";
 import royalPurple from "../../assets/images/royal-purple.jpg";
 import purpleGarden from "../../assets/images/purple-garden.jpg";
 
-// Mixed Flowers
 import springMix from "../../assets/images/spring-mix.jpg";
 import rainbow from "../../assets/images/rainbow.jpg";
 import luxMix from "../../assets/images/lux-mix.jpg";
 import seasonal from "../../assets/images/seasonal.jpg";
 import elegantMix from "../../assets/images/elegant-mix.jpg";
 
-// Rose Bouquets
 import classicRose from "../../assets/images/classic-rose.jpg";
 import luxRose from "../../assets/images/lux-rose.jpg";
 import romanticRose from "../../assets/images/romantic-rose.jpg";
@@ -76,7 +69,6 @@ import whiteRedRose from "../../assets/images/white-red-rose.jpg";
 import pinkLuxRose from "../../assets/images/pink-lux-rose.jpg";
 import royalRose from "../../assets/images/royal-rose.jpg";
 
-// Wedding Flowers
 import weddingWhite from "../../assets/images/wedding-white.jpg";
 import bridalRose from "../../assets/images/bridal-rose.jpg";
 import centerpiece from "../../assets/images/centerpiece.jpg";
@@ -84,7 +76,6 @@ import weddingSet from "../../assets/images/wedding-set.jpg";
 import arch from "../../assets/images/arch.jpg";
 import bridePremium from "../../assets/images/bride-premium.jpg";
 
-// Birthday Flowers
 import birthdaySurprise from "../../assets/images/birthday-surprise.jpg";
 import birthdayRoses from "../../assets/images/birthday-roses.jpg";
 import birthdayMix from "../../assets/images/birthday-mix.jpg";
@@ -92,7 +83,6 @@ import balloonSet from "../../assets/images/balloon-set.jpg";
 import birthdayLux from "../../assets/images/birthday-lux.jpg";
 import celebration from "../../assets/images/celebration.jpg";
 
-// Gift Boxes
 import chocoBox from "../../assets/images/choco-box.jpg";
 import teddyBox from "../../assets/images/teddy-box.jpg";
 import luxBox from "../../assets/images/lux-box.jpg";
@@ -100,14 +90,8 @@ import romanticBox from "../../assets/images/romantic-box.jpg";
 import birthdayBox from "../../assets/images/birthday-box.jpg";
 import specialBox from "../../assets/images/special-box.jpg";
 
-// ============================================================
-// 🖼️ فيديو الخلفية الرئيسية للسكشن الأول
-// ============================================================
 import storeVideo from "../../assets/video/store22.mp4";
 
-// ============================================================
-// 🎥 فيديوهات الأقسام
-// ============================================================
 import whiteVideo from "../../assets/video/white.mp4";
 import redVideo from "../../assets/video/Hero4.mp4";
 import pinkVideo from "../../assets/video/pink.mp4";
@@ -217,9 +201,6 @@ const videosMap = {
   box: giftBoxVideo,
 };
 
-// ============================================================
-// 🎞️ Keyframes
-// ============================================================
 const fadeInUp = keyframes`
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
@@ -255,9 +236,6 @@ const underlineGrow = keyframes`
   to { width: 80px; }
 `;
 
-// ============================================================
-// 🔭 Hook
-// ============================================================
 const useInView = (options = { threshold: 0.15 }) => {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -280,9 +258,6 @@ const useInView = (options = { threshold: 0.15 }) => {
   return [ref, isVisible];
 };
 
-// ============================================================
-// 🌸 بطاقة المنتج
-// ============================================================
 const ProductCard = ({ product, image, onSelect, delay }) => {
   const [ref, isVisible] = useInView({ threshold: 0.1 });
   const [isHovered, setIsHovered] = useState(false);
@@ -308,7 +283,8 @@ const ProductCard = ({ product, image, onSelect, delay }) => {
           backdropFilter: "blur(4px)",
           border: "1px solid rgba(255,255,255,0.1)",
           boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-          transition: "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease",
+          transition:
+            "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease",
           cursor: "pointer",
           "&:hover": {
             transform: "translateY(-10px) scale(1.02)",
@@ -338,7 +314,7 @@ const ProductCard = ({ product, image, onSelect, delay }) => {
               transition: "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
             }}
           />
-          
+
           <Box
             sx={{
               position: "absolute",
@@ -414,10 +390,14 @@ const ProductCard = ({ product, image, onSelect, delay }) => {
   );
 };
 
-// ============================================================
-// 🎬 قسم فئة كاملة
-// ============================================================
-const CategorySection = ({ category, products, getImage, getVideo, onSelectProduct, bgColor }) => {
+const CategorySection = ({
+  category,
+  products,
+  getImage,
+  getVideo,
+  onSelectProduct,
+  bgColor,
+}) => {
   const [headerRef, headerVisible] = useInView({ threshold: 0.2 });
   const [videoRef, videoVisible] = useInView({ threshold: 0.15 });
 
@@ -447,7 +427,9 @@ const CategorySection = ({ category, products, getImage, getVideo, onSelectProdu
             flexDirection: "column",
             alignItems: "center",
             opacity: headerVisible ? 1 : 0,
-            animation: headerVisible ? `${fadeInUp} 0.8s ease forwards` : "none",
+            animation: headerVisible
+              ? `${fadeInUp} 0.8s ease forwards`
+              : "none",
           }}
         >
           <Typography
@@ -467,7 +449,10 @@ const CategorySection = ({ category, products, getImage, getVideo, onSelectProdu
             sx={{
               fontSize: { xs: "2rem", md: "2.6rem" },
               fontWeight: 800,
-              color: bgColor === colors.primaryGreen ? colors.textPrimary : colors.textDark,
+              color:
+                bgColor === colors.primaryGreen
+                  ? colors.textPrimary
+                  : colors.textDark,
               textAlign: "center",
             }}
           >
@@ -481,13 +466,18 @@ const CategorySection = ({ category, products, getImage, getVideo, onSelectProdu
               background: `linear-gradient(90deg, ${colors.gold}, ${colors.goldHover})`,
               borderRadius: "3px",
               my: 2,
-              animation: headerVisible ? `${underlineGrow} 0.8s ease forwards 0.3s` : "none",
+              animation: headerVisible
+                ? `${underlineGrow} 0.8s ease forwards 0.3s`
+                : "none",
             }}
           />
 
           <Typography
             sx={{
-              color: bgColor === colors.primaryGreen ? colors.textSecondary : "#7a7a7a",
+              color:
+                bgColor === colors.primaryGreen
+                  ? colors.textSecondary
+                  : "#7a7a7a",
               maxWidth: 700,
               mb: 5,
               textAlign: "center",
@@ -522,14 +512,20 @@ const CategorySection = ({ category, products, getImage, getVideo, onSelectProdu
             playsInline
             style={{ display: "block", maxWidth: "1200px" }}
           >
-            <source src={category.video_url || getVideo(category)} type="video/mp4" />
+            <source
+              src={category.video_url || getVideo(category)}
+              type="video/mp4"
+            />
             Your browser does not support the video tag.
           </video>
         </Box>
 
         <Typography
           sx={{
-            color: bgColor === colors.primaryGreen ? colors.textSecondary : "#7a7a7a",
+            color:
+              bgColor === colors.primaryGreen
+                ? colors.textSecondary
+                : "#7a7a7a",
             mb: 6,
             fontStyle: "italic",
           }}
@@ -567,26 +563,23 @@ const CategorySection = ({ category, products, getImage, getVideo, onSelectProdu
   );
 };
 
-// ============================================================
-// 🏷️ قسم النص بين الكاتيقوريات (نصوص مختلفة عن الورد)
-// ============================================================
 const dividerTexts = [
   {
     title: '"Where Every Petal Tells a Story"',
-    desc: "From our garden to your heart, each bloom is carefully selected and thoughtfully arranged to bring beauty and joy to every moment."
+    desc: "From our garden to your heart, each bloom is carefully selected and thoughtfully arranged to bring beauty and joy to every moment.",
   },
   {
     title: '"Nature\'s Poetry in Full Bloom"',
-    desc: "Every flower carries a silent whisper of nature's love. Let our arrangements speak the words your heart longs to say."
+    desc: "Every flower carries a silent whisper of nature's love. Let our arrangements speak the words your heart longs to say.",
   },
   {
     title: '"The Art of Floral Expression"',
-    desc: "More than just flowers, we create moments. Each petal, each stem, each arrangement tells a unique story of beauty and grace."
+    desc: "More than just flowers, we create moments. Each petal, each stem, each arrangement tells a unique story of beauty and grace.",
   },
   {
     title: '"Timeless Elegance, Freshly Picked"',
-    desc: "From sunrise to sunset, our flowers capture the essence of nature's finest moments. Bringing freshness and joy to your everyday life."
-  }
+    desc: "From sunrise to sunset, our flowers capture the essence of nature's finest moments. Bringing freshness and joy to your everyday life.",
+  },
 ];
 
 const DividerSection = ({ bgColor, index }) => {
@@ -611,7 +604,10 @@ const DividerSection = ({ bgColor, index }) => {
           sx={{
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: { xs: "1.8rem", md: "2.8rem" },
-            color: bgColor === colors.primaryGreen ? colors.textPrimary : colors.textDark,
+            color:
+              bgColor === colors.primaryGreen
+                ? colors.textPrimary
+                : colors.textDark,
             mb: 2,
             fontWeight: 600,
           }}
@@ -620,7 +616,10 @@ const DividerSection = ({ bgColor, index }) => {
         </Typography>
         <Typography
           sx={{
-            color: bgColor === colors.primaryGreen ? colors.textSecondary : "#7a7a7a",
+            color:
+              bgColor === colors.primaryGreen
+                ? colors.textSecondary
+                : "#7a7a7a",
             fontSize: { xs: "1rem", md: "1.1rem" },
             lineHeight: 2,
             maxWidth: 600,
@@ -643,9 +642,6 @@ const DividerSection = ({ bgColor, index }) => {
   );
 };
 
-// ============================================================
-// 🏪 Shop Component الرئيسي
-// ============================================================
 const Shop = () => {
   const { categories, loadCategories } = useContext(categoriesContext);
   const { menu, loadMenu } = useContext(menuContext);
@@ -653,7 +649,11 @@ const Shop = () => {
 
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const navigate = useNavigate();
 
@@ -665,29 +665,33 @@ const Shop = () => {
     fetchData();
   }, []);
 
-  // ============================================================
-  // 🛒 دالة إضافة المنتج إلى السلة وإغلاق الـ Dialog
-  // ============================================================
   const handleAddToCart = (product) => {
-    // استخدام CartContext بدلاً من localStorage مباشرة
     addToCart(product);
-    
+
     setSnackbar({
       open: true,
       message: `"${product.name}" has been added to your cart!`,
-      severity: "success"
+      severity: "success",
     });
-    
-    // ✅ إغلاق الـ Dialog بعد إضافة المنتج
+
     setSelectedProduct(null);
   };
 
   const getImage = (imageName) => {
-    if (!imageName || imageName === "" || imageName === "null" || imageName === "undefined") {
+    if (
+      !imageName ||
+      imageName === "" ||
+      imageName === "null" ||
+      imageName === "undefined"
+    ) {
       return placeholder;
     }
 
-    if (imageName.startsWith("http://") || imageName.startsWith("https://") || imageName.startsWith("data:")) {
+    if (
+      imageName.startsWith("http://") ||
+      imageName.startsWith("https://") ||
+      imageName.startsWith("data:")
+    ) {
       return imageName;
     }
 
@@ -748,7 +752,8 @@ const Shop = () => {
           width: 300,
           height: 300,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 70%)",
           filter: "blur(10px)",
           animation: `${floatSlow} 12s ease-in-out infinite`,
           pointerEvents: "none",
@@ -762,7 +767,8 @@ const Shop = () => {
           width: 400,
           height: 400,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(92,112,82,0.06) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(92,112,82,0.06) 0%, transparent 70%)",
           filter: "blur(14px)",
           animation: `${floatSlowReverse} 16s ease-in-out infinite`,
           pointerEvents: "none",
@@ -783,10 +789,6 @@ const Shop = () => {
           px: { xs: 0, md: 2 },
         }}
       >
-
-        {/* ============================================================
-            🏷️ القسم الأول: فيديو خلفية store22.mp4 مع جملة صغيرة
-            ============================================================ */}
         <Box
           sx={{
             width: "100vw",
@@ -800,7 +802,6 @@ const Shop = () => {
             justifyContent: "center",
           }}
         >
-          {/* الفيديو كخلفية - يظهر فوراً */}
           <Box
             component="video"
             src={storeVideo}
@@ -819,7 +820,6 @@ const Shop = () => {
             }}
           />
 
-          {/* طبقة تعتيم خفيفة جداً */}
           <Box
             sx={{
               position: "absolute",
@@ -832,7 +832,6 @@ const Shop = () => {
             }}
           />
 
-          {/* ✅ الجملة - أصغر حجماً */}
           <Box
             sx={{
               position: "relative",
@@ -854,7 +853,6 @@ const Shop = () => {
               Blossoms &amp; Elegance
             </Typography>
 
-            {/* خط ذهبي صغير تحت الجملة */}
             <Box
               sx={{
                 width: 50,
@@ -867,12 +865,9 @@ const Shop = () => {
           </Box>
         </Box>
 
-        {/* ============================================================
-            🎨 الكولكشنات مع تقسيم الألوان
-            ============================================================ */}
         {categories.map((category, index) => {
           const categoryProducts = menu.filter(
-            (item) => item.category_name === category.name
+            (item) => item.category_name === category.name,
           );
 
           const bgColor = getBgColor(index);
@@ -887,14 +882,14 @@ const Shop = () => {
                 onSelectProduct={setSelectedProduct}
                 bgColor={bgColor}
               />
-              
+
               {index < categories.length - 1 && (
                 <DividerSection bgColor={getBgColor(index + 1)} index={index} />
               )}
             </React.Fragment>
           );
         })}
-        
+
         <Box sx={{ height: { xs: 60, md: 80 } }} />
       </Container>
 
@@ -916,7 +911,10 @@ const Shop = () => {
         {selectedProduct && (
           <Box sx={{ bgcolor: colors.primaryGreen }}>
             <Box display="flex" justifyContent="flex-end" p={1}>
-              <IconButton onClick={() => setSelectedProduct(null)} sx={{ color: colors.beige }}>
+              <IconButton
+                onClick={() => setSelectedProduct(null)}
+                sx={{ color: colors.beige }}
+              >
                 <CloseIcon />
               </IconButton>
             </Box>
@@ -969,7 +967,10 @@ const Shop = () => {
                   mb: 3,
                 }}
               >
-                ${selectedProduct.price ? Number(selectedProduct.price).toFixed(2) : "0.00"}
+                $
+                {selectedProduct.price
+                  ? Number(selectedProduct.price).toFixed(2)
+                  : "0.00"}
               </Typography>
 
               <Button

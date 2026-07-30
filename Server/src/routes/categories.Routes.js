@@ -14,12 +14,9 @@ import { globalRateLimit } from "../middleware/ratelimit.Middleware.js";
 
 const route = express.Router();
 
-
 route.get("/all-categories", getAllCategoriesController);
 
-
 route.get("/category/:id", protect, getCategoryByIdController);
-
 
 route.post(
   "/category",
@@ -30,23 +27,21 @@ route.post(
   createCategoryController,
 );
 
-
 route.put(
   "/category/:id",
   protect,
   // adminOnly,
   validate(categoriesSchema),
   globalRateLimit,
-  updateCategoryController
+  updateCategoryController,
 );
-
 
 route.delete(
   "/category/:id",
   protect,
   // adminOnly,
   globalRateLimit,
-  deleteCategoryController
+  deleteCategoryController,
 );
 
 export default route;

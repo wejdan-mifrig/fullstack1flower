@@ -23,7 +23,6 @@ export const getAccessToken = () => {
   return accessToken;
 };
 
-// إضافة Access Token لكل Request
 api.interceptors.request.use(
   (config) => {
     if (accessToken) {

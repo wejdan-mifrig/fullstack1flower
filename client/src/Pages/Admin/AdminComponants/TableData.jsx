@@ -34,16 +34,13 @@ export default function TableData({ data, onDelete }) {
     return <Typography sx={{ mt: 2 }}>No data available</Typography>;
   }
 
-  // 👇 مهم: نحدد الأعمدة بشكل آمن (بدون password وغيره)
   const headers = ["id", "name", "email", "role", "created_at"];
 
-  // Open delete dialog
   const handleOpenDelete = (id) => {
     setSelectedId(id);
     setOpen(true);
   };
 
-  // Confirm delete
   const handleConfirmDelete = () => {
     if (onDelete && selectedId) {
       onDelete(selectedId);
@@ -57,7 +54,6 @@ export default function TableData({ data, onDelete }) {
       <TableContainer component={Paper} sx={{ mt: 2, borderRadius: 2 }}>
         <Table>
 
-          {/* HEADER */}
           <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
             <TableRow>
               {headers.map((header) => (
@@ -71,7 +67,6 @@ export default function TableData({ data, onDelete }) {
             </TableRow>
           </TableHead>
 
-          {/* BODY */}
           <TableBody>
             {data.map((row) => (
               <TableRow key={row.id} hover>
@@ -89,7 +84,6 @@ export default function TableData({ data, onDelete }) {
                       </Box>
                     ) : header === "role" ? (
 
-                      /* ROLE badge */
                       <Chip
                         label={row.role}
                         size="small"
@@ -103,11 +97,9 @@ export default function TableData({ data, onDelete }) {
                   </TableCell>
                 ))}
 
-                {/* ACTIONS */}
                 <TableCell>
                   <Box sx={{ display: "flex", gap: 1 }}>
 
-                    {/* EDIT */}
                     <Tooltip title="Edit User">
                       <IconButton
                         color="primary"
@@ -117,7 +109,6 @@ export default function TableData({ data, onDelete }) {
                       </IconButton>
                     </Tooltip>
 
-                    {/* DELETE */}
                     <Tooltip title="Delete User">
                       <IconButton
                         color="error"
@@ -137,7 +128,6 @@ export default function TableData({ data, onDelete }) {
         </Table>
       </TableContainer>
 
-      {/* DELETE CONFIRM MODAL */}
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Delete User</DialogTitle>
 

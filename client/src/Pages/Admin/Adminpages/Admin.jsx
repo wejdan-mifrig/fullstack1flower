@@ -29,7 +29,6 @@ export default function Admin() {
   return (
     <Box sx={{ minHeight: "100vh", position: "relative" }}>
 
-      {/* VIDEO BACKGROUND */}
       <Box sx={{ position: "fixed", inset: 0, zIndex: 0 }}>
         <video
           src={adminVideo}
@@ -45,13 +44,11 @@ export default function Admin() {
         />
       </Box>
 
-      {/* CONTENT */}
       <Box sx={{ position: "relative", zIndex: 1 }}>
 
         <AdminNavbar />
         <Box sx={{ pt: "64px" }} />
 
-        {/* HERO */}
         <Box
           sx={{
             height: "100vh",
@@ -104,11 +101,9 @@ export default function Admin() {
           </Box>
         </Box>
 
-        {/* DASHBOARD */}
         <Box sx={{ py: 8, display: "flex", justifyContent: "center" }}>
           <Box sx={{ width: "90%", maxWidth: "1200px" }}>
 
-            {/* TITLE */}
             <Box sx={{ textAlign: "center", mb: 6 }}>
 
               <Typography
@@ -134,7 +129,6 @@ export default function Admin() {
 
             </Box>
 
-            {/* CARDS */}
             <Grid container spacing={4}>
 
               {[
@@ -207,10 +201,8 @@ export default function Admin() {
 
             </Grid>
 
-            {/* SPACE */}
             <Box sx={{ height: 80 }} />
 
-            {/* ABOUT SECTION */}
             <Box sx={{ textAlign: "center", p: 4 }}>
               <Typography
                 sx={{

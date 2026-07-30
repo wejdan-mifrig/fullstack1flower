@@ -35,7 +35,6 @@ export const registerController = asyncHandler(async (req, res) => {
   });
 });
 
-// ================= LOGIN =================
 export const loginController = asyncHandler(async (req, res) => {
   console.log(req.body);
   try {
@@ -86,7 +85,6 @@ export const loginController = asyncHandler(async (req, res) => {
   }
 });
 
-// ================= REFRESH TOKEN =================
 export const refreshToken = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies.refreshTokens;
 
@@ -127,7 +125,6 @@ export const refreshToken = asyncHandler(async (req, res) => {
   });
 });
 
-// ================= ME (FIXED) =================
 export const me = asyncHandler(async (req, res) => {
   try {
     const id = req.user?.id;
@@ -151,18 +148,15 @@ export const me = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
-// ================= LOGOUT =================
 export const logoutController = asyncHandler(async (req, res) => {
   const refreshToken = req.cookies.refreshTokens;
 
-  // احذف الكوكي حتى لو ما كان موجود
   res.clearCookie("refreshTokens", {
     httpOnly: true,
-    secure: false, // اجعليها true في الإنتاج مع HTTPS
+    secure: false,
     sameSite: "strict",
   });
 
-  // إذا كان المستخدم مسجل دخول، امسحي الـ refresh token من قاعدة البيانات
   if (req.user?.id) {
     await saveRefreshTokens(req.user.id, null);
   }

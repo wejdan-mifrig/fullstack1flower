@@ -65,7 +65,6 @@ export default function EditUser() {
       toast.success("User updated successfully");
 
       navigate("/admin/users");
-
     } catch (err) {
       console.log(err);
       toast.error("Update failed");
@@ -75,10 +74,6 @@ export default function EditUser() {
   };
 
   return (
-    
-    
-    
-    
     <Box sx={{ maxWidth: 500, mx: "auto", mt: 5 }}>
       <Paper
         sx={{
@@ -125,18 +120,11 @@ export default function EditUser() {
           fullWidth
         />
 
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          disabled={loading}
-        >
+        <Button variant="contained" onClick={handleSubmit} disabled={loading}>
           {loading ? "Saving..." : "Save Changes"}
         </Button>
 
-        <Button
-          color="error"
-          onClick={() => navigate("/admin/users")}
-        >
+        <Button color="error" onClick={() => navigate("/admin/users")}>
           Cancel
         </Button>
       </Paper>

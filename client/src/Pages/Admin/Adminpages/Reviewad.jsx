@@ -45,9 +45,6 @@ export default function AdminReviews() {
     severity: "success",
   });
 
-  // ======================================
-  // FETCH REVIEWS
-  // ======================================
   const fetchReviews = async () => {
     try {
       setLoading(true);
@@ -69,17 +66,12 @@ export default function AdminReviews() {
     fetchReviews();
   }, []);
 
-  // ======================================
-  // SEARCH FILTER
-  // ======================================
-  const filteredReviews = reviews?.filter((review) =>
-    review?.user_name?.toLowerCase().includes(search.toLowerCase()) ||
-    review?.comment?.toLowerCase().includes(search.toLowerCase())
+  const filteredReviews = reviews?.filter(
+    (review) =>
+      review?.user_name?.toLowerCase().includes(search.toLowerCase()) ||
+      review?.comment?.toLowerCase().includes(search.toLowerCase()),
   );
 
-  // ======================================
-  // DELETE DIALOG
-  // ======================================
   const handleOpenDelete = (review) => {
     setSelectedReview(review);
     setDeleteDialog(true);
@@ -95,7 +87,9 @@ export default function AdminReviews() {
 
     try {
       await api.delete(`/admin/review/${selectedReview.id}`);
-      setReviews((prev) => prev.filter((review) => review.id !== selectedReview.id));
+      setReviews((prev) =>
+        prev.filter((review) => review.id !== selectedReview.id),
+      );
       setSnackbar({
         open: true,
         message: "Review deleted successfully",
@@ -112,9 +106,6 @@ export default function AdminReviews() {
     }
   };
 
-  // ======================================
-  // VIEW FULL REVIEW
-  // ======================================
   const handleOpenView = (review) => {
     setSelectedReview(review);
     setViewDialog(true);
@@ -125,26 +116,23 @@ export default function AdminReviews() {
     setViewDialog(false);
   };
 
-  // ======================================
-  // STATISTICS
-  // ======================================
   const getStats = () => {
     const total = reviews.length;
-    const average = total > 0 
-      ? (reviews.reduce((sum, r) => sum + Number(r.rating), 0) / total).toFixed(1)
-      : 0;
-    const fiveStar = reviews.filter(r => Number(r.rating) === 5).length;
-    const fourStar = reviews.filter(r => Number(r.rating) === 4).length;
-    const threeStar = reviews.filter(r => Number(r.rating) === 3).length;
-    
+    const average =
+      total > 0
+        ? (
+            reviews.reduce((sum, r) => sum + Number(r.rating), 0) / total
+          ).toFixed(1)
+        : 0;
+    const fiveStar = reviews.filter((r) => Number(r.rating) === 5).length;
+    const fourStar = reviews.filter((r) => Number(r.rating) === 4).length;
+    const threeStar = reviews.filter((r) => Number(r.rating) === 3).length;
+
     return { total, average, fiveStar, fourStar, threeStar };
   };
 
   const stats = getStats();
 
-  // ======================================
-  // LOADING
-  // ======================================
   if (loading) {
     return (
       <>
@@ -164,9 +152,6 @@ export default function AdminReviews() {
     );
   }
 
-  // ======================================
-  // PAGE
-  // ======================================
   return (
     <>
       <AdminNavbar />
@@ -180,9 +165,6 @@ export default function AdminReviews() {
         }}
       >
         <Container maxWidth="xl">
-          {/* ======================================
-              HEADER
-              ====================================== */}
           <Paper
             elevation={0}
             sx={{
@@ -223,9 +205,6 @@ export default function AdminReviews() {
             </Box>
           </Paper>
 
-          {/* ======================================
-              STATISTICS - CENTERED
-              ====================================== */}
           <Grid container spacing={3} sx={{ mb: 4, justifyContent: "center" }}>
             <Grid item xs={12} sm={6} md={3}>
               <Paper
@@ -238,10 +217,20 @@ export default function AdminReviews() {
                   textAlign: "center",
                 }}
               >
-                <Typography sx={{ color: "#899186", mb: 1, fontSize: "0.8rem", fontWeight: 600 }}>
+                <Typography
+                  sx={{
+                    color: "#899186",
+                    mb: 1,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                  }}
+                >
                   TOTAL REVIEWS
                 </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 700, color: "#1f3d2b" }}>
+                <Typography
+                  variant="h3"
+                  sx={{ fontWeight: 700, color: "#1f3d2b" }}
+                >
                   {stats.total}
                 </Typography>
               </Paper>
@@ -258,11 +247,28 @@ export default function AdminReviews() {
                   textAlign: "center",
                 }}
               >
-                <Typography sx={{ color: "#899186", mb: 1, fontSize: "0.8rem", fontWeight: 600 }}>
+                <Typography
+                  sx={{
+                    color: "#899186",
+                    mb: 1,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                  }}
+                >
                   AVERAGE RATING
                 </Typography>
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1 }}>
-                  <Typography variant="h3" sx={{ fontWeight: 700, color: "#f9a825" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 1,
+                  }}
+                >
+                  <Typography
+                    variant="h3"
+                    sx={{ fontWeight: 700, color: "#f9a825" }}
+                  >
                     {stats.average}
                   </Typography>
                   <StarIcon sx={{ color: "#f9a825", fontSize: 30 }} />
@@ -281,10 +287,20 @@ export default function AdminReviews() {
                   textAlign: "center",
                 }}
               >
-                <Typography sx={{ color: "#899186", mb: 1, fontSize: "0.8rem", fontWeight: 600 }}>
+                <Typography
+                  sx={{
+                    color: "#899186",
+                    mb: 1,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                  }}
+                >
                   5 STAR REVIEWS
                 </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 700, color: "#4caf50" }}>
+                <Typography
+                  variant="h3"
+                  sx={{ fontWeight: 700, color: "#4caf50" }}
+                >
                   {stats.fiveStar}
                 </Typography>
               </Paper>
@@ -301,19 +317,26 @@ export default function AdminReviews() {
                   textAlign: "center",
                 }}
               >
-                <Typography sx={{ color: "#899186", mb: 1, fontSize: "0.8rem", fontWeight: 600 }}>
+                <Typography
+                  sx={{
+                    color: "#899186",
+                    mb: 1,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                  }}
+                >
                   4+ STAR REVIEWS
                 </Typography>
-                <Typography variant="h3" sx={{ fontWeight: 700, color: "#6f8a67" }}>
+                <Typography
+                  variant="h3"
+                  sx={{ fontWeight: 700, color: "#6f8a67" }}
+                >
                   {stats.fourStar + stats.fiveStar}
                 </Typography>
               </Paper>
             </Grid>
           </Grid>
 
-          {/* ======================================
-              SEARCH & REVIEWS
-              ====================================== */}
           <Paper
             elevation={0}
             sx={{
@@ -352,9 +375,6 @@ export default function AdminReviews() {
               />
             </Box>
 
-            {/* ======================================
-                REVIEWS CARDS - FULL WIDTH WITH SEE MORE (15 characters)
-                ====================================== */}
             {filteredReviews?.length === 0 ? (
               <Alert severity="info" sx={{ borderRadius: 3 }}>
                 No reviews found.
@@ -364,8 +384,8 @@ export default function AdminReviews() {
                 {filteredReviews?.map((review) => {
                   const commentLength = review.comment?.length || 0;
                   const isLongComment = commentLength > 15;
-                  const displayComment = isLongComment 
-                    ? review.comment?.slice(0, 15) + '...'
+                  const displayComment = isLongComment
+                    ? review.comment?.slice(0, 15) + "..."
                     : review.comment;
 
                   return (
@@ -385,7 +405,14 @@ export default function AdminReviews() {
                           },
                         }}
                       >
-                        <CardContent sx={{ p: 3, flex: 1, display: "flex", flexDirection: "column" }}>
+                        <CardContent
+                          sx={{
+                            p: 3,
+                            flex: 1,
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
                           {/* USER */}
                           <Box
                             sx={{
@@ -395,7 +422,13 @@ export default function AdminReviews() {
                               mb: 2,
                             }}
                           >
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 1.5,
+                              }}
+                            >
                               <Avatar
                                 sx={{
                                   width: 48,
@@ -409,10 +442,14 @@ export default function AdminReviews() {
                               </Avatar>
 
                               <Box>
-                                <Typography sx={{ fontWeight: 700, color: "#1f3d2b" }}>
+                                <Typography
+                                  sx={{ fontWeight: 700, color: "#1f3d2b" }}
+                                >
                                   {review.user_name}
                                 </Typography>
-                                <Typography sx={{ fontSize: "0.75rem", color: "#8b9388" }}>
+                                <Typography
+                                  sx={{ fontSize: "0.75rem", color: "#8b9388" }}
+                                >
                                   Customer
                                 </Typography>
                               </Box>
@@ -430,14 +467,26 @@ export default function AdminReviews() {
                           </Box>
 
                           {/* RATING */}
-                          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-                            <Rating value={Number(review.rating)} readOnly size="small" />
-                            <Typography sx={{ fontSize: "0.8rem", color: "#999" }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1,
+                              mb: 2,
+                            }}
+                          >
+                            <Rating
+                              value={Number(review.rating)}
+                              readOnly
+                              size="small"
+                            />
+                            <Typography
+                              sx={{ fontSize: "0.8rem", color: "#999" }}
+                            >
                               {review.rating}/5
                             </Typography>
                           </Box>
 
-                          {/* COMMENT with SEE MORE - يفتح Dialog */}
                           <Box
                             sx={{
                               p: 2,
@@ -449,7 +498,9 @@ export default function AdminReviews() {
                               flexDirection: "column",
                             }}
                           >
-                            <Typography sx={{ color: "#596257", lineHeight: 1.8 }}>
+                            <Typography
+                              sx={{ color: "#596257", lineHeight: 1.8 }}
+                            >
                               “{displayComment}”
                             </Typography>
 
@@ -474,7 +525,6 @@ export default function AdminReviews() {
                             )}
                           </Box>
 
-                          {/* DATE */}
                           <Typography
                             sx={{
                               mt: 2,
@@ -482,11 +532,14 @@ export default function AdminReviews() {
                               color: "#9ba39a",
                             }}
                           >
-                            {new Date(review.created_at).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })}
+                            {new Date(review.created_at).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              },
+                            )}
                           </Typography>
                         </CardContent>
                       </Card>
@@ -499,9 +552,6 @@ export default function AdminReviews() {
         </Container>
       </Box>
 
-      {/* ======================================
-          VIEW FULL REVIEW DIALOG
-          ====================================== */}
       <Dialog
         open={viewDialog}
         onClose={handleCloseView}
@@ -540,11 +590,21 @@ export default function AdminReviews() {
                   {selectedReview.user_name?.charAt(0)?.toUpperCase()}
                 </Avatar>
                 <Box>
-                  <Typography sx={{ fontWeight: 700, color: "#1f3d2b", fontSize: "1.1rem" }}>
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      color: "#1f3d2b",
+                      fontSize: "1.1rem",
+                    }}
+                  >
                     {selectedReview.user_name}
                   </Typography>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <Rating value={Number(selectedReview.rating)} readOnly size="small" />
+                    <Rating
+                      value={Number(selectedReview.rating)}
+                      readOnly
+                      size="small"
+                    />
                     <Typography sx={{ fontSize: "0.8rem", color: "#999" }}>
                       {selectedReview.rating}/5
                     </Typography>
@@ -576,11 +636,14 @@ export default function AdminReviews() {
                   color: "#9ba39a",
                 }}
               >
-                {new Date(selectedReview.created_at).toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
+                {new Date(selectedReview.created_at).toLocaleDateString(
+                  "en-US",
+                  {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  },
+                )}
               </Typography>
             </DialogContent>
 
@@ -601,9 +664,6 @@ export default function AdminReviews() {
         )}
       </Dialog>
 
-      {/* ======================================
-          DELETE DIALOG
-          ====================================== */}
       <Dialog
         open={deleteDialog}
         onClose={handleCloseDelete}
@@ -643,9 +703,6 @@ export default function AdminReviews() {
         </DialogActions>
       </Dialog>
 
-      {/* ======================================
-          SNACKBAR
-          ====================================== */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}

@@ -1,19 +1,8 @@
 import pool from "../config/db.js";
 
-
-// =======================================
-// Add Product To Cart
-// =======================================
-
-export const addToCart = async(
- userId,
- productId,
- quantity
-)=>{
-
-const result = await pool.query(
-
-`
+export const addToCart = async (userId, productId, quantity) => {
+  const result = await pool.query(
+    `
 INSERT INTO cart
 (
 user_id,
@@ -32,33 +21,15 @@ quantity = cart.quantity + EXCLUDED.quantity
 RETURNING *
 
 `,
-[
-userId,
-productId,
-quantity
-]
+    [userId, productId, quantity],
+  );
 
-);
-
-return result.rows[0];
-
+  return result.rows[0];
 };
 
-
-
-
-
-// =======================================
-// Get User Cart
-// =======================================
-
-export const getCartByUser = async(
- userId
-)=>{
-
-const result = await pool.query(
-
-`
+export const getCartByUser = async (userId) => {
+  const result = await pool.query(
+    `
 
 SELECT
 
@@ -92,31 +63,15 @@ ORDER BY cart.created_at DESC
 
 
 `,
-[
-userId
-]
+    [userId],
+  );
 
-);
-
-return result.rows;
-
+  return result.rows;
 };
 
-
-
-// =======================================
-// UPDATE QUANTITY
-// =======================================
-
-export const updateCartQuantity = async(
- id,
- userId,
- quantity
-)=>{
-
-const result = await pool.query(
-
-`
+export const updateCartQuantity = async (id, userId, quantity) => {
+  const result = await pool.query(
+    `
 
 UPDATE cart
 
@@ -129,34 +84,15 @@ AND user_id = $3
 RETURNING *
 
 `,
-[
-quantity,
-id,
-userId
+    [quantity, id, userId],
+  );
 
-]
-
-);
-
-return result.rows[0];
-
+  return result.rows[0];
 };
 
-
-
-// =======================================
-// Remove Item
-// =======================================
-
-
-export const removeFromCart = async(
- id,
- userId
-)=>{
-
-const result = await pool.query(
-
-`
+export const removeFromCart = async (id, userId) => {
+  const result = await pool.query(
+    `
 
 DELETE FROM cart
 
@@ -167,43 +103,22 @@ AND user_id=$2
 RETURNING *
 
 `,
-[
-id,
-userId
+    [id, userId],
+  );
 
-]
-
-);
-
-return result.rows[0];
-
+  return result.rows[0];
 };
 
-
-
-
-
-
-// =======================================
 // Clear Cart
 // =======================================
 
-
-export const clearCart = async(
- userId
-)=>{
-
-await pool.query(
-
-`
+export const clearCart = async (userId) => {
+  await pool.query(
+    `
 DELETE FROM cart
 
 WHERE user_id=$1
 `,
-[
-userId
-]
-
-);
-
+    [userId],
+  );
 };

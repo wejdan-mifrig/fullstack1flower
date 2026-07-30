@@ -16,56 +16,24 @@ import { globalRateLimit } from "../middleware/ratelimit.Middleware.js";
 
 const route = express.Router();
 
-route.get(
-  "/all-users",
-  protect,
-  adminOnly,
-  getAllUsersController
-);
+route.get("/all-users", protect, adminOnly, getAllUsersController);
 
-route.get(
-  "/user-email/:email",
-  protect,
-  adminOnly,
-  getUserByEmailController
-);
+route.get("/user-email/:email", protect, adminOnly, getUserByEmailController);
 
-route.get(
-  "/user-id/:id",
-  protect,
-  adminOnly,
-  getUserByIdController
-);
+route.get("/user-id/:id", protect, adminOnly, getUserByIdController);
 
-route.post(
-  "/user/create",
-  protect,
-  adminOnly,
-  createUserController
-);
+route.post("/user/create", protect, adminOnly, createUserController);
 
 route.put(
   "/user/update/:id",
   protect,
   adminOnly,
   globalRateLimit,
-  updateUserInfoController
+  updateUserInfoController,
 );
 
-// ===============================
-// USER UPDATE HIS OWN PROFILE
-// ===============================
-route.put(
-  "/profile",
-  protect,
-  updateProfileController
-);
+route.put("/profile", protect, updateProfileController);
 
-route.delete(
-  "/user/delete/:id",
-  protect,
-  adminOnly,
-  deleteUserController
-);
+route.delete("/user/delete/:id", protect, adminOnly, deleteUserController);
 
 export default route;

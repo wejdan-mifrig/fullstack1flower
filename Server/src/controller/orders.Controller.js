@@ -7,29 +7,15 @@ import {
   getOrdersByUser,
   getOrderItems,
   getOrderById,
-  updateOrderStatus
+  updateOrderStatus,
 } from "../model/orders.Model.js";
 
-import {
-  getCartByUser,
-  clearCart
-} from "../model/cart.Model.js";
-
-
-
-
-// ======================================================
-// Create Order
-// ======================================================
+import { getCartByUser, clearCart } from "../model/cart.Model.js";
 
 export const createOrderController = asyncHandler(async (req, res) => {
-
-
   const userId = req.user.id;
 
-
   const {
-
     phone,
 
     address,
@@ -38,59 +24,29 @@ export const createOrderController = asyncHandler(async (req, res) => {
 
     shipping_address,
 
-    paymentMethod
-
+    paymentMethod,
   } = req.body;
 
-
-
-  // يدعم جميع أسماء العنوان القادمة من الفرونت
-
   const orderAddress =
-    address ||
-    delivery_address ||
-    shipping_address ||
-    "Not specified";
-
-
-
+    address || delivery_address || shipping_address || "Not specified";
 
   const cartItems = await getCartByUser(userId);
 
-
-
   if (!cartItems || cartItems.length === 0) {
-
     return res.status(400).json({
-
-      message: "Cart is empty"
-
+      message: "Cart is empty",
     });
-
   }
 
-
-
-
   const totalPrice = cartItems.reduce(
-
     (total, item) => {
-
-      return total + 
-      (Number(item.price) * item.quantity);
-
+      return total + Number(item.price) * item.quantity;
     },
 
-    0
-
+    0,
   );
 
-
-
-
-
   const order = await createOrder(
-
     userId,
 
     totalPrice,
@@ -99,276 +55,104 @@ export const createOrderController = asyncHandler(async (req, res) => {
 
     orderAddress,
 
-    paymentMethod
-
+    paymentMethod,
   );
 
-
-
-
-
-
-
   for (const item of cartItems) {
-
-
     await createOrderItem(
-
       order.id,
 
       item.product_id,
 
       item.quantity,
 
-      item.price
-
+      item.price,
     );
-
-
   }
-
-
-
-
-
 
   await clearCart(userId);
 
-
-
-
-
-
   return res.status(201).json({
-
     message: "Order created successfully",
 
-    order
-
+    order,
   });
-
-
-
 });
-
-
-
-
-
-
-
-
-
-// ======================================================
-// Get My Orders
-// ======================================================
 
 export const getMyOrdersController = asyncHandler(async (req, res) => {
-
-
-  const orders = await getOrdersByUser(
-
-    req.user.id
-
-  );
-
-
+  const orders = await getOrdersByUser(req.user.id);
 
   for (const order of orders) {
-
-
-    order.items = await getOrderItems(
-
-      order.id
-
-    );
-
-
+    order.items = await getOrderItems(order.id);
   }
 
-
-
-
   res.status(200).json({
-
-    orders
-
+    orders,
   });
-
-
 });
-
-
-
-
-
-
-
-
-
-// ======================================================
-// Get All Orders Admin
-// ======================================================
 
 export const getAllOrdersController = asyncHandler(async (req, res) => {
-
-
   const orders = await getAllOrders();
 
-
-
   for (const order of orders) {
-
-
     order.items = await getOrderItems(order.id);
-
-
   }
 
+  res.status(200).json({
+    orders,
+  });
+});
 
+export const getSingleOrderController = asyncHandler(async (req, res) => {
+  const order = await getOrderById(
+    req.params.id,
 
+    req.user.id,
+  );
 
+  if (!order) {
+    return res.status(404).json({
+      message: "Order not found",
+    });
+  }
+
+  order.items = await getOrderItems(order.id);
 
   res.status(200).json({
-
-    orders
-
+    order,
   });
-
-
 });
 
+export const acceptOrderController = asyncHandler(async (req, res) => {
+  const order = await updateOrderStatus(
+    req.params.id,
 
+    "Accepted",
 
+    "Your booking has been accepted",
+  );
 
+  res.status(200).json({
+    message: "Order accepted successfully",
 
-
-
-
-
-// ======================================================
-// Single Order
-// ======================================================
-
-export const getSingleOrderController = asyncHandler(async (req,res)=>{
-
-
-const order = await getOrderById(
-
-req.params.id,
-
-req.user.id
-
-);
-
-
-
-if(!order){
-
-return res.status(404).json({
-
-message:"Order not found"
-
+    order,
+  });
 });
 
-}
+export const rejectOrderController = asyncHandler(async (req, res) => {
+  const { message } = req.body;
 
+  const order = await updateOrderStatus(
+    req.params.id,
 
+    "Rejected",
 
-order.items = await getOrderItems(order.id);
+    message,
+  );
 
+  res.status(200).json({
+    message: "Order rejected successfully",
 
-
-res.status(200).json({
-
-order
-
-});
-
-
-});
-
-
-
-
-
-
-
-
-
-// ======================================================
-// Accept Order
-// ======================================================
-
-export const acceptOrderController = asyncHandler(async(req,res)=>{
-
-
-const order = await updateOrderStatus(
-
-req.params.id,
-
-"Accepted",
-
-"Your booking has been accepted"
-
-);
-
-
-
-res.status(200).json({
-
-message:"Order accepted successfully",
-
-order
-
-});
-
-
-});
-
-
-
-
-
-
-
-
-
-// ======================================================
-// Reject Order
-// ======================================================
-
-export const rejectOrderController = asyncHandler(async(req,res)=>{
-
-
-const {
-
-message
-
-}=req.body;
-
-
-
-const order = await updateOrderStatus(
-
-req.params.id,
-
-"Rejected",
-
-message
-
-);
-
-
-
-
-res.status(200).json({
-
-message:"Order rejected successfully",
-
-order
-
-});
-
-
+    order,
+  });
 });

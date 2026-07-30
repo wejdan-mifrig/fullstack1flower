@@ -28,7 +28,6 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
-    // التحقق من تطابق كلمة المرور
     if (userData.password !== userData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -37,7 +36,6 @@ export default function Register() {
     try {
       setLoading(true);
       await register(userData);
-      // الدالة register تقوم بتسجيل الدخول ودمج السلة تلقائياً
     } catch (error) {
       console.error('Register error:', error);
     } finally {

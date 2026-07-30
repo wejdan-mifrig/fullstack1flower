@@ -114,7 +114,6 @@ const Bookuser = () => {
                 border: "1px solid rgba(255,255,255,0.1)",
               }}
             >
-              {/* رأس الطلب */}
               <Box
                 sx={{
                   display: "flex",
@@ -146,7 +145,6 @@ const Bookuser = () => {
 
               <Divider sx={{ my: 2, borderColor: "rgba(255,255,255,0.1)" }} />
 
-              {/* معلومات العميل */}
               <Typography sx={{ color: "#d6d1c4", mb: 0.5 }}>
                 <strong>Customer:</strong> {order.name || user?.name || "Guest"}
               </Typography>
@@ -165,14 +163,15 @@ const Bookuser = () => {
               </Typography>
 
               {order.notes && (
-                <Typography sx={{ color: "#d6d1c4", mb: 0.5, fontStyle: "italic" }}>
+                <Typography
+                  sx={{ color: "#d6d1c4", mb: 0.5, fontStyle: "italic" }}
+                >
                   <strong>Notes:</strong> {order.notes}
                 </Typography>
               )}
 
               <Divider sx={{ my: 2, borderColor: "rgba(255,255,255,0.1)" }} />
 
-              {/* المنتجات */}
               <Typography sx={{ color: "#d6d1c4", fontWeight: 600, mb: 1 }}>
                 Products:
               </Typography>
@@ -194,14 +193,20 @@ const Bookuser = () => {
                   <span>
                     {item.name} × {item.quantity || 1}
                   </span>
-                  <span>${(Number(item.price || 0) * (item.quantity || 1)).toFixed(2)}</span>
+                  <span>
+                    $
+                    {(Number(item.price || 0) * (item.quantity || 1)).toFixed(
+                      2,
+                    )}
+                  </span>
                 </Box>
               ))}
 
               <Divider sx={{ my: 2, borderColor: "rgba(255,255,255,0.1)" }} />
 
-              {/* الإجمالي */}
-              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
                 <Typography sx={{ color: "#d6d1c4" }}>
                   <strong>Subtotal:</strong>
                 </Typography>
@@ -209,7 +214,9 @@ const Bookuser = () => {
                   ${Number(order.subtotal || order.total_price || 0).toFixed(2)}
                 </Typography>
               </Box>
-              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
                 <Typography sx={{ color: "#d6d1c4" }}>
                   <strong>Delivery:</strong>
                 </Typography>
@@ -218,15 +225,18 @@ const Bookuser = () => {
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography sx={{ color: "#f4f1ea", fontWeight: 700, fontSize: "1.1rem" }}>
+                <Typography
+                  sx={{ color: "#f4f1ea", fontWeight: 700, fontSize: "1.1rem" }}
+                >
                   <strong>Total:</strong>
                 </Typography>
-                <Typography sx={{ color: "#d4a843", fontWeight: 700, fontSize: "1.2rem" }}>
+                <Typography
+                  sx={{ color: "#d4a843", fontWeight: 700, fontSize: "1.2rem" }}
+                >
                   ${Number(order.total_price || 0).toFixed(2)}
                 </Typography>
               </Box>
 
-              {/* رسالة الرفض إن وجدت */}
               {order.status === "rejected" && order.admin_message && (
                 <Alert severity="error" sx={{ mt: 2 }}>
                   Rejection Reason: {order.admin_message}
@@ -235,7 +245,7 @@ const Bookuser = () => {
 
               {order.status === "accepted" && (
                 <Alert severity="success" sx={{ mt: 2 }}>
-                  ✅ Your order has been accepted!
+                  Your order has been accepted!
                 </Alert>
               )}
             </Paper>

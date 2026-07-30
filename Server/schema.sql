@@ -1,8 +1,7 @@
--- Create user_role enum if it doesn't exist
 
 
 
--- Users table
+
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -13,14 +12,14 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Categories table
+
 CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
     name VARCHAR(150) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Menu table
+
 CREATE TABLE IF NOT EXISTS menu (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -76,9 +75,7 @@ CREATE TABLE IF NOT EXISTS review_likes (
 );
 
 
--- ===========================
--- Orders Table
--- ===========================
+
 
 
 CREATE TYPE order_status AS ENUM (
