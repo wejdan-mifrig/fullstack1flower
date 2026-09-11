@@ -23,8 +23,11 @@ dotenv.config();
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
-
 const __dirname = path.dirname(__filename);
+
+/* =========================
+   HELMET
+========================= */
 
 app.use(
   helmet({
@@ -34,15 +37,36 @@ app.use(
   }),
 );
 
+/* =========================
+   CORS
+========================= */
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://fullstack1flower-five.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
 
     credentials: true,
 
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
+
+/* =========================
+   MIDDLEWARES
+========================= */
 
 app.use(cookieParser());
 
@@ -54,7 +78,18 @@ app.use(
   }),
 );
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+/* =========================
+   UPLOADS
+========================= */
+
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads")),
+);
+
+/* =========================
+   ROUTES
+========================= */
 
 app.use("/api", authRoutes);
 
@@ -72,7 +107,15 @@ app.use("/api", ordersRoutes);
 
 app.use("/api", cartRoutes);
 
+/* =========================
+   ERROR HANDLER
+========================= */
+
 app.use(errorHandler);
+
+/* =========================
+   SERVER
+========================= */
 
 const port = process.env.PORT || 3000;
 
