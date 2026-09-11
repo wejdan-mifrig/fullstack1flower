@@ -9,7 +9,7 @@ import {
   adminDeleteReview,
   likeReview,
   unlikeReview,
-} from "../controller/review.Controller.js";
+} from "../controller/review.controller.js";
 
 import { protect } from "../middleware/protect.Middleware.js";
 import { adminOnly } from "../middleware/adminOnly.Middleware.js";
