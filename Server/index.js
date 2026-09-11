@@ -44,6 +44,7 @@ app.use(
 const allowedOrigins = [
   "http://localhost:5173",
   "https://fullstack1flower-five.vercel.app",
+  "https://fullstack1flower-5wkq9e1mr-wejdan4.vercel.app"
 ];
 
 app.use(
