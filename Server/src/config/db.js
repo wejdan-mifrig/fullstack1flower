@@ -3,12 +3,14 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// قراءة الرابط سواء كان اسمه DATABASE_URL أو CONNECTION_STRING
 const connectionString = process.env.DATABASE_URL || process.env.CONNECTION_STRING;
+
+// تفعيل SSL فقط إذا كان الرابط لا يحتوي على localhost
+const isLocal = connectionString && (connectionString.includes("localhost") || connectionString.includes("127.0.0.1"));
 
 const pool = new Pool({
   connectionString: connectionString,
-  ssl: connectionString ? { rejectUnauthorized: false } : false,
+  ssl: isLocal ? false : { rejectUnauthorized: false },
 });
 
 pool
