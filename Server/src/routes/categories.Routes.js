@@ -10,7 +10,7 @@ import {
 } from "../controller/categories.Controller.js";
 import { validate } from "../middleware/validate.Middleware.js";
 import categoriesSchema from "../validation/categories.Validation.js";
-import { globalRateLimit } from "../middleware/ratelimit.Middleware.js";
+import { globalRateLimit } from "../middleware/rateLimit.Middleware.js";
 
 const route = express.Router();
 
