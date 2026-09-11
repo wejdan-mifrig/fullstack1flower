@@ -12,7 +12,7 @@ import {
   updateProfileController,
 } from "../controller/user.Controller.js";
 
-import { globalRateLimit } from "../middleware/ratelimit.Middleware.js";
+import { globalRateLimit } from "../middleware/rateLimit.Middleware.js";
 
 const route = express.Router();
 
