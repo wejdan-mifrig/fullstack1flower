@@ -20,7 +20,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import Navbar from "../../Components/Navhero/Nav.jsx";
-import Footer from "../../Components/Footer/Footer.jsx";
+import Footer from "../../Components/Footer/footer.jsx";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import EmojiEventsRoundedIcon from "@mui/icons-material/EmojiEventsRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";

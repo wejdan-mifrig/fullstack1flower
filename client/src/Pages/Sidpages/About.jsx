@@ -16,7 +16,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { motion } from "framer-motion";
 import Navbar from "../../Components/Navhero/Nav.jsx";
-import Footer from "../../Components/Footer/Footer.jsx";
+import Footer from "../../Components/Footer/footer.jsx";
 
 import video1 from "../../assets/video/wedd.mp4";
 import video2 from "../../assets/video/birth.mp4";

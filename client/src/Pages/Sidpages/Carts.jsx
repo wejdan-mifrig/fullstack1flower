@@ -34,7 +34,7 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import Footer from "../../Components/Footer/Footer.jsx";
+import Footer from "../../Components/Footer/footer.jsx";
 import Navbar from "../../Components/Navhero/Nav.jsx";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
