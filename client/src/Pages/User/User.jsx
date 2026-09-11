@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import { FaLeaf, FaHeart, FaTruck, FaStar } from "react-icons/fa";
-import Footer from "../../Components/Footer/Footer.jsx";
+import Footer from "../../Components/Footer/footer.jsx";
 import NavbarUser from "../../Components/NavUserAdmin/Navuser.jsx";
 import heroVideo from "../../assets/video/Hero.mp4";
 import herooVideo from "../../assets/video/Hero2.mp4";

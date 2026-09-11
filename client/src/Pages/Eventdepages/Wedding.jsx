@@ -30,7 +30,7 @@ import DiamondRoundedIcon from "@mui/icons-material/DiamondRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
 import Navbar from "../../Components/Navhero/Nav.jsx";
-import Footer from "../../Components/Footer/Footer.jsx";
+import Footer from "../../Components/Footer/footer.jsx";
 
 import heroImage from "../../assets/images/designer1.jpg";
 import heroVideo2 from "../../assets/video/vv66.mp4";

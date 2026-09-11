@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { keyframes } from "@emotion/react";
 import CloseIcon from "@mui/icons-material/Close";
-import Footer from "../../Components/Footer/Footer.jsx";
+import Footer from "../../Components/Footer/footer.jsx";
 import Navbar from "../../Components/Navhero/Nav.jsx";
 import { categoriesContext } from "../../Context/CategoriesContext.jsx";
 import { menuContext } from "../../Context/MenuContext.jsx";

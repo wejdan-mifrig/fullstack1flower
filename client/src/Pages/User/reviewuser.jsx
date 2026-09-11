@@ -44,7 +44,7 @@ import {
 import { keyframes } from "@emotion/react";
 
 import NavbarUser from "../../Components/NavUserAdmin/Navuser.jsx";
-import Footer from "../../Components/Footer/Footer.jsx";
+import Footer from "../../Components/Footer/footer.jsx";
 
 import api from "../../api.js";
 import { useAuth } from "../../Hooks/useAuth.js";
