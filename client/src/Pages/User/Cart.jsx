@@ -34,7 +34,7 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import Footer from "../../Components/Footer/Footer.jsx";
+import Footer from "../../Components/Footer/footer.jsx";
 import NavbarUser from "../../Components/NavUserAdmin/Navuser.jsx";
 import { useCart } from "../../Context/CartContext.jsx";
 import { useOrders } from "../../Context/OrderContext.jsx";
