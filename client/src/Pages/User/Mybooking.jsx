@@ -45,7 +45,7 @@ import { useOrders } from "../../Context/OrderContext.jsx";
 import { useAuth } from "../../Context/AuthContext.jsx";
 
 import NavbarUser from "../../Components/NavUserAdmin/Navuser.jsx";
-import Footer from "../../Components/Footer/Footer.jsx";
+import Footer from "../../Components/Footer/footer.jsx";
 
 import { useNavigate } from "react-router-dom";
 
