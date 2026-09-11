@@ -1,13 +1,12 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://fullstack1flower.onrender.com/api",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
-
 
 let accessToken = null;
 
@@ -34,7 +33,6 @@ api.interceptors.request.use(
   (error) => {
     return Promise.reject(error);
   }
-  
 );
 
 export default api;
