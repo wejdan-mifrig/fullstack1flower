@@ -103,9 +103,9 @@ app.use("/api", cartRoutes);
 app.use(errorHandler);
 
 
-
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`server running on port ${port}`);
+
 });
