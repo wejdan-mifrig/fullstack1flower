@@ -25,9 +25,7 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-/* =========================
-   HELMET
-========================= */
+
 
 app.use(
   helmet({
@@ -37,14 +35,12 @@ app.use(
   }),
 );
 
-/* =========================
-   CORS
-========================= */
+
 
 const allowedOrigins = [
   "http://localhost:5173",
   "https://fullstack1flower-five.vercel.app",
-  "https://fullstack1flower-5wkq9e1mr-wejdan4.vercel.app"
+  "https://fullstack1flower-5wkq9e1mr-wejdan4.vercel.app",
 ];
 
 app.use(
@@ -65,9 +61,7 @@ app.use(
   }),
 );
 
-/* =========================
-   MIDDLEWARES
-========================= */
+
 
 app.use(cookieParser());
 
@@ -79,18 +73,14 @@ app.use(
   }),
 );
 
-/* =========================
-   UPLOADS
-========================= */
+
 
 app.use(
   "/uploads",
   express.static(path.join(__dirname, "uploads")),
 );
 
-/* =========================
-   ROUTES
-========================= */
+
 
 app.use("/api", authRoutes);
 
@@ -108,18 +98,14 @@ app.use("/api", ordersRoutes);
 
 app.use("/api", cartRoutes);
 
-/* =========================
-   ERROR HANDLER
-========================= */
+
 
 app.use(errorHandler);
 
-/* =========================
-   SERVER
-========================= */
+
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`server running on port ${port}`);
 });
