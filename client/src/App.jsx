@@ -40,7 +40,7 @@ import AdminUser from "./Pages/Admin/Adminpages/Adminuser.jsx";
 import AddForm from "./Pages/Admin/AdminComponants/AddForm.jsx";
 import EditUser from "./Pages/Admin/Adminpages/EditUser.jsx";
 import AdminOrders from "./Pages/Admin/Adminpages/Adminord.jsx";
-import AdminReviews from "./Pages/Admin/Adminpages/Reviewad.jsx"; // ✅ تم إضافة استيراد AdminReviews
+import AdminReviews from "./Pages/Admin/Adminpages/Reviewad.jsx"; 
 function App() {
   return (
     <>
